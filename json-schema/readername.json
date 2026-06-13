@@ -1,0 +1,8 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ReaderName",
+  "description": "Custom human-readable, user-defined name for easier identification of the reader.",
+  "type": "string",
+  "example": "Frontdesk",
+  "maxLength": 500
+}

@@ -1,0 +1,44 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Transaction Base",
+  "description": "Details of the transaction.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "description": "Unique ID of the transaction.",
+      "type": "string",
+      "example": "6b425463-3e1b-431d-83fa-1e51c2925e99"
+    },
+    "transaction_code": {
+      "description": "Transaction code returned by the acquirer/processing entity after processing the transaction.",
+      "type": "string",
+      "example": "TEENSK4W2K"
+    },
+    "amount": {
+      "description": "Total amount of the transaction.",
+      "type": "number",
+      "format": "float",
+      "example": 10.1
+    },
+    "currency": {
+      "$ref": "#/components/schemas/Currency"
+    },
+    "timestamp": {
+      "description": "Date and time of the creation of the transaction. Response format expressed according to [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) code.",
+      "type": "string",
+      "format": "date-time",
+      "example": "2020-02-29T10:56:56.876000+00:00"
+    },
+    "status": {
+      "$ref": "#/components/schemas/TransactionStatus"
+    },
+    "payment_type": {
+      "$ref": "#/components/schemas/PaymentType"
+    },
+    "installments_count": {
+      "description": "Current number of the installment for deferred payments.",
+      "type": "integer",
+      "minimum": 1
+    }
+  }
+}

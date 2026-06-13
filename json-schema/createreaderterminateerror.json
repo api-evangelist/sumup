@@ -1,0 +1,27 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CreateReaderTerminateError",
+  "description": "Error description",
+  "type": "object",
+  "properties": {
+    "errors": {
+      "type": "object",
+      "properties": {
+        "detail": {
+          "description": "Error message",
+          "type": "string"
+        },
+        "type": {
+          "description": "Error code",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type"
+      ]
+    }
+  },
+  "required": [
+    "errors"
+  ]
+}

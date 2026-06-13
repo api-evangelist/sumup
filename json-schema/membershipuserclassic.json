@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MembershipUserClassic",
+  "description": "Classic identifiers of the user.",
+  "type": "object",
+  "properties": {
+    "user_id": {
+      "type": "integer",
+      "format": "int32"
+    }
+  },
+  "deprecated": true,
+  "required": [
+    "user_id"
+  ]
+}

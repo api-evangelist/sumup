@@ -1,0 +1,49 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Event",
+  "description": "High-level transaction event details.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "$ref": "#/components/schemas/EventID"
+    },
+    "transaction_id": {
+      "$ref": "#/components/schemas/TransactionID"
+    },
+    "type": {
+      "$ref": "#/components/schemas/EventType"
+    },
+    "status": {
+      "$ref": "#/components/schemas/EventStatus"
+    },
+    "amount": {
+      "description": "Amount of the event.",
+      "type": "number",
+      "format": "float"
+    },
+    "timestamp": {
+      "description": "Date and time of the transaction event.",
+      "type": "string",
+      "format": "date-time"
+    },
+    "fee_amount": {
+      "description": "Amount of the fee related to the event.",
+      "type": "number",
+      "format": "float"
+    },
+    "installment_number": {
+      "description": "Consecutive number of the installment.",
+      "type": "integer"
+    },
+    "deducted_amount": {
+      "description": "Amount deducted for the event.",
+      "type": "number",
+      "format": "float"
+    },
+    "deducted_fee_amount": {
+      "description": "Amount of the fee deducted for the event.",
+      "type": "number",
+      "format": "float"
+    }
+  }
+}

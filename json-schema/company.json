@@ -1,0 +1,53 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Company",
+  "description": "Information about the company or business. This is legal information that is used for verification.\n",
+  "type": "object",
+  "properties": {
+    "name": {
+      "description": "The company's legal name.",
+      "type": "string",
+      "example": "Gin & Doughnuts Bar GmbH",
+      "maxLength": 150,
+      "minLength": 1
+    },
+    "merchant_category_code": {
+      "description": "The merchant category code for the account as specified by [ISO18245](https://www.iso.org/standard/33365.html). MCCs are used to classify businesses based on the goods or services they provide.\n",
+      "type": "string",
+      "example": "1532",
+      "pattern": "^[0-9]{4}$"
+    },
+    "legal_type": {
+      "$ref": "#/components/schemas/LegalType"
+    },
+    "address": {
+      "$ref": "#/components/schemas/Address"
+    },
+    "trading_address": {
+      "$ref": "#/components/schemas/Address"
+    },
+    "identifiers": {
+      "$ref": "#/components/schemas/CompanyIdentifiers"
+    },
+    "phone_number": {
+      "$ref": "#/components/schemas/PhoneNumber"
+    },
+    "website": {
+      "description": "HTTP(S) URL of the company's website.\n",
+      "type": "string",
+      "format": "uri",
+      "examples": [
+        "https://www.sumup.com"
+      ],
+      "maxLength": 255,
+      "nullable": true
+    },
+    "attributes": {
+      "$ref": "#/components/schemas/Attributes"
+    }
+  },
+  "externalDocs": {
+    "description": "Company documentation",
+    "url": "https://developer.sumup.com/tools/glossary/merchant#company"
+  }
+}

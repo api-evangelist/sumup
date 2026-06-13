@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ClassicMerchantIdentifiers",
+  "type": "object",
+  "properties": {
+    "id": {
+      "description": "Classic (serial) merchant ID.",
+      "type": "integer",
+      "format": "int64",
+      "example": 1234,
+      "deprecated": true
+    }
+  },
+  "required": [
+    "id"
+  ]
+}

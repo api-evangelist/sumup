@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CompanyIdentifier",
+  "type": "object",
+  "properties": {
+    "ref": {
+      "description": "The unique reference for the company identifier type as defined in the country SDK.\n",
+      "type": "string",
+      "examples": [
+        "de.gmbh"
+      ]
+    },
+    "value": {
+      "description": "The company identifier value.\n",
+      "type": "string",
+      "examples": [
+        "HRB 123456"
+      ],
+      "maxLength": 100
+    }
+  },
+  "examples": [
+    {
+      "ref": "de.gmbh",
+      "value": "HRB 123456"
+    }
+  ],
+  "externalDocs": {
+    "description": "Company identifier documentation",
+    "url": "https://developer.sumup.com/tools/glossary/merchant#company-identifiers"
+  },
+  "required": [
+    "ref",
+    "value"
+  ]
+}

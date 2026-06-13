@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Invite",
+  "description": "Pending invitation for membership.",
+  "type": "object",
+  "properties": {
+    "email": {
+      "description": "Email address of the invited user.",
+      "type": "string",
+      "format": "email",
+      "example": "boaty.mcboatface@sumup.com"
+    },
+    "expires_at": {
+      "type": "string",
+      "format": "date-time",
+      "example": "2023-01-20T15:16:17+00:00"
+    }
+  },
+  "required": [
+    "email",
+    "expires_at"
+  ]
+}

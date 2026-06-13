@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Error Extended",
+  "description": "Error payload with the invalid parameter reference.",
+  "allOf": [
+    {
+      "$ref": "#/components/schemas/Error"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "param": {
+          "description": "Parameter name (with relative location) to which the error applies. Parameters from embedded resources are displayed using dot notation. For example, `card.name` refers to the `name` parameter embedded in the `card` object.",
+          "type": "string"
+        }
+      }
+    }
+  ]
+}

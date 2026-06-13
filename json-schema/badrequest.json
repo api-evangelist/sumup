@@ -1,0 +1,39 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "BadRequest",
+  "description": "400 Bad Request",
+  "type": "object",
+  "properties": {
+    "errors": {
+      "type": "object",
+      "properties": {
+        "detail": {
+          "description": "Fuller message giving context to error",
+          "type": "string"
+        },
+        "type": {
+          "description": "Key indicating type of error",
+          "type": "string",
+          "enum": [
+            "INVALID_BEARER_TOKEN",
+            "INVALID_USER_AGENT",
+            "NOT_ENOUGH_UNPAID_PAYOUTS",
+            "DUPLICATE_HEADERS"
+          ]
+        }
+      },
+      "required": [
+        "type"
+      ]
+    }
+  },
+  "example": {
+    "errors": {
+      "detail": "Bad request",
+      "type": "INVALID_BEARER_TOKEN"
+    }
+  },
+  "required": [
+    "errors"
+  ]
+}

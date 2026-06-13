@@ -1,0 +1,50 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Resource",
+  "description": "Information about the resource the membership is in.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "description": "ID of the resource the membership is in.",
+      "type": "string",
+      "example": "M2DDT39A"
+    },
+    "type": {
+      "$ref": "#/components/schemas/ResourceType"
+    },
+    "name": {
+      "description": "Display name of the resource.",
+      "type": "string",
+      "example": "Acme Corp"
+    },
+    "logo": {
+      "description": "Logo fo the resource.",
+      "type": "string",
+      "format": "uri",
+      "example": "https://images.sumup.com/img_2x4y6z8a0b1c2d3e4f5g6h7j8k.png",
+      "maxLength": 256
+    },
+    "created_at": {
+      "description": "The timestamp of when the membership resource was created.",
+      "type": "string",
+      "format": "date-time",
+      "example": "2023-01-20T15:16:17+00:00"
+    },
+    "updated_at": {
+      "description": "The timestamp of when the membership resource was last updated.",
+      "type": "string",
+      "format": "date-time",
+      "example": "2023-01-20T15:16:17+00:00"
+    },
+    "attributes": {
+      "$ref": "#/components/schemas/Attributes"
+    }
+  },
+  "required": [
+    "id",
+    "type",
+    "name",
+    "created_at",
+    "updated_at"
+  ]
+}

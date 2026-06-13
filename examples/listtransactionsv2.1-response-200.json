@@ -1,0 +1,21 @@
+{
+  "items": [
+    {
+      "transaction_code": "TEENSK4W2K",
+      "amount": 10.1,
+      "currency": "EUR",
+      "timestamp": "2020-02-29T10:56:56.876000+00:00",
+      "status": "SUCCESSFUL",
+      "payment_type": "ECOM",
+      "installments_count": 1,
+      "merchant_code": "MH4H92C7",
+      "transaction_id": "410fc44a-5956-44e1-b5cc-19c6f8d727a4",
+      "user": "merchant@example.com",
+      "type": "PAYMENT",
+      "payout_date": "2019-08-28",
+      "payout_type": "BANK_ACCOUNT",
+      "refunded_amount": 0
+    }
+  ],
+  "links": []
+}

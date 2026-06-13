@@ -1,0 +1,144 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Address",
+  "description": "An address somewhere in the world. The address fields used depend on the country conventions. For example, in Great Britain, `city` is `post_town`. In the United States, the top-level administrative unit used in addresses is `state`, whereas in Chile it's `region`.\nWhether an address is valid or not depends on whether the locally required fields are present. Fields not supported in a country will be ignored.",
+  "type": "object",
+  "properties": {
+    "street_address": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "description": "The first line of the address.",
+        "maxLength": 100
+      },
+      "example": [
+        "Paul-Linke-Ufer 39-40",
+        "2. Hinterhof"
+      ],
+      "maxItems": 2,
+      "minItems": 1
+    },
+    "post_code": {
+      "description": "The postal code (aka. zip code) of the address.\n",
+      "type": "string",
+      "example": "10999",
+      "maxLength": 10
+    },
+    "country": {
+      "$ref": "#/components/schemas/CountryCode"
+    },
+    "city": {
+      "description": "The city of the address.\n",
+      "type": "string",
+      "example": "Berlin",
+      "maxLength": 60
+    },
+    "province": {
+      "description": "The province where the address is located. This may not be relevant in some countries.\n",
+      "type": "string",
+      "example": "Ontario",
+      "maxLength": 60
+    },
+    "region": {
+      "description": "The region where the address is located. This may not be relevant in some countries.\n",
+      "type": "string",
+      "example": "Baden-Wuerttemberg",
+      "maxLength": 60
+    },
+    "county": {
+      "description": "A county is a geographic region of a country used for administrative or other purposes in some nations. Used in countries such as Ireland, Romania, etc.\n",
+      "type": "string",
+      "example": "Dublin",
+      "maxLength": 60
+    },
+    "autonomous_community": {
+      "description": "In Spain, an autonomous community is the first sub-national level of political and administrative division.\n",
+      "type": "string",
+      "example": "Catalonia",
+      "maxLength": 60
+    },
+    "post_town": {
+      "description": "A post town is a required part of all postal addresses in the United Kingdom and Ireland, and a basic unit of the postal delivery system.\n",
+      "type": "string",
+      "example": "London",
+      "maxLength": 60
+    },
+    "state": {
+      "description": "Most often, a country has a single state, with various administrative divisions. The term \"state\" is sometimes used to refer to the federated polities that make up the federation. Used in countries such as the United States and Brazil.\n",
+      "type": "string",
+      "example": "California",
+      "maxLength": 60
+    },
+    "neighborhood": {
+      "description": "Locality level of the address. Used in countries such as Brazil or Chile.\n",
+      "type": "string",
+      "example": "Copacabana",
+      "maxLength": 60
+    },
+    "commune": {
+      "description": "In many countries, terms cognate with \"commune\" are used, referring to the community living in the area and the common interest. Used in countries such as Chile.\n",
+      "type": "string",
+      "example": "Providencia",
+      "maxLength": 60
+    },
+    "department": {
+      "description": "A department (French: d\u00e9partement, Spanish: departamento) is an administrative or political division in several countries. Used in countries such as Colombia.\n",
+      "type": "string",
+      "example": "Antioquia",
+      "maxLength": 60
+    },
+    "municipality": {
+      "description": "A municipality is usually a single administrative division having corporate status and powers of self-government or jurisdiction as granted by national and regional laws to which it is subordinate. Used in countries such as Colombia.\n",
+      "type": "string",
+      "example": "Medellin",
+      "maxLength": 60
+    },
+    "district": {
+      "description": "A district is a type of administrative division that in some countries is managed by the local government. Used in countries such as Portugal.\n",
+      "type": "string",
+      "example": "Lisbon",
+      "maxLength": 60
+    },
+    "zip_code": {
+      "description": "A US system of postal codes used by the United States Postal Service (USPS).\n",
+      "type": "string",
+      "example": "94103",
+      "maxLength": 10
+    },
+    "eircode": {
+      "description": "A postal address in Ireland.\n",
+      "type": "string",
+      "example": "D02 X285",
+      "maxLength": 10
+    }
+  },
+  "examples": [
+    {
+      "street_address": [
+        "Paul-Linke-Ufer 39-40",
+        "2. Hinterhof"
+      ],
+      "post_code": "10999",
+      "city": "Berlin",
+      "country": "DE"
+    },
+    {
+      "street_address": [
+        "156 Avenida Vida Nova",
+        "Apto 2"
+      ],
+      "city": "Tabo\u00e3o da Serra",
+      "post_code": "06764045",
+      "state": "SP",
+      "neighborhood": "Jardim Maria Rosa",
+      "country": "BR"
+    }
+  ],
+  "externalDocs": {
+    "description": "Address documentation",
+    "url": "https://developer.sumup.com/tools/glossary/merchant#addresses"
+  },
+  "required": [
+    "country"
+  ]
+}

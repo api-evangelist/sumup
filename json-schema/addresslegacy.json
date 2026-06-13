@@ -1,0 +1,38 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Address Legacy",
+  "description": "Profile's personal address information.",
+  "type": "object",
+  "properties": {
+    "city": {
+      "description": "City name from the address.",
+      "type": "string",
+      "example": "Berlin"
+    },
+    "country": {
+      "description": "Two letter country code formatted according to [ISO3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2).",
+      "type": "string",
+      "example": "DE"
+    },
+    "line_1": {
+      "description": "First line of the address with details of the street name and number.",
+      "type": "string",
+      "example": "Sample street"
+    },
+    "line_2": {
+      "description": "Second line of the address with details of the building, unit, apartment, and floor numbers.",
+      "type": "string",
+      "example": "ap. 5"
+    },
+    "postal_code": {
+      "description": "Postal code from the address.",
+      "type": "string",
+      "example": "10115"
+    },
+    "state": {
+      "description": "State name or abbreviation from the address.",
+      "type": "string",
+      "example": "Berlin"
+    }
+  }
+}

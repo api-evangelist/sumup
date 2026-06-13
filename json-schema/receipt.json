@@ -1,0 +1,41 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Receipt",
+  "description": "Receipt details for a transaction.",
+  "type": "object",
+  "properties": {
+    "transaction_data": {
+      "$ref": "#/components/schemas/ReceiptTransaction"
+    },
+    "merchant_data": {
+      "$ref": "#/components/schemas/ReceiptMerchantData"
+    },
+    "emv_data": {
+      "description": "EMV-specific metadata returned for card-present payments.",
+      "type": "object",
+      "example": {}
+    },
+    "acquirer_data": {
+      "description": "Acquirer-specific metadata related to the card authorization.",
+      "type": "object",
+      "example": {
+        "authorization_code": "053201",
+        "return_code": "00"
+      },
+      "properties": {
+        "tid": {
+          "type": "string"
+        },
+        "authorization_code": {
+          "type": "string"
+        },
+        "return_code": {
+          "type": "string"
+        },
+        "local_time": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

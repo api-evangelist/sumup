@@ -1,0 +1,222 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Transaction Full",
+  "description": "Full transaction resource with checkout, payout, and event details.",
+  "allOf": [
+    {
+      "$ref": "#/components/schemas/TransactionBase"
+    },
+    {
+      "$ref": "#/components/schemas/TransactionCheckoutInfo"
+    },
+    {
+      "$ref": "#/components/schemas/TransactionMixinHistory"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "foreign_transaction_id": {
+          "description": "External/foreign transaction id (passed by clients).",
+          "type": "string",
+          "example": "J13253253x1"
+        },
+        "client_transaction_id": {
+          "description": "Client transaction id.",
+          "type": "string",
+          "example": "urn:sumup:pos:sale:MNKKNGST:1D4E3B2D-111D-48D7-9AF0-832DAEF63DD7;2"
+        },
+        "username": {
+          "description": "Email address of the registered user (merchant) to whom the payment is made.",
+          "type": "string",
+          "format": "email"
+        },
+        "fee_amount": {
+          "description": "Transaction SumUp total fee amount.",
+          "type": "number",
+          "format": "decimal",
+          "example": 8
+        },
+        "lat": {
+          "$ref": "#/components/schemas/Lat"
+        },
+        "lon": {
+          "$ref": "#/components/schemas/Lon"
+        },
+        "horizontal_accuracy": {
+          "$ref": "#/components/schemas/HorizontalAccuracy"
+        },
+        "merchant_id": {
+          "description": "SumUp merchant internal Id.",
+          "type": "integer",
+          "format": "int64",
+          "example": 136902
+        },
+        "device_info": {
+          "$ref": "#/components/schemas/Device"
+        },
+        "simple_payment_type": {
+          "description": "Simple name of the payment type.",
+          "type": "string",
+          "enum": [
+            "CASH",
+            "CC_SIGNATURE",
+            "ELV",
+            "ELV_WITHOUT_SIGNATURE",
+            "CC_CUSTOMER_ENTERED",
+            "MANUAL_ENTRY",
+            "EMV",
+            "RECURRING",
+            "BALANCE",
+            "MOTO",
+            "BOLETO",
+            "APM",
+            "BITCOIN",
+            "CARD"
+          ]
+        },
+        "verification_method": {
+          "description": "Verification method used for the transaction.",
+          "type": "string",
+          "enum": [
+            "none",
+            "signature",
+            "offline PIN",
+            "online PIN",
+            "offline PIN + signature",
+            "na"
+          ]
+        },
+        "card": {
+          "$ref": "#/components/schemas/CardResponse"
+        },
+        "elv_account": {
+          "$ref": "#/components/schemas/ElvCardAccount"
+        },
+        "local_time": {
+          "description": "Local date and time of the creation of the transaction.",
+          "type": "string",
+          "format": "date-time"
+        },
+        "payout_date": {
+          "description": "The date of the payout.",
+          "type": "string",
+          "format": "date",
+          "example": "2019-08-28"
+        },
+        "payout_type": {
+          "description": "Payout type for the transaction.",
+          "type": "string",
+          "enum": [
+            "BANK_ACCOUNT",
+            "PREPAID_CARD"
+          ]
+        },
+        "process_as": {
+          "description": "Debit/Credit.",
+          "type": "string",
+          "example": "CREDIT",
+          "enum": [
+            "CREDIT",
+            "DEBIT"
+          ]
+        },
+        "products": {
+          "description": "List of products from the merchant's catalogue for which the transaction serves as a payment.",
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/Product"
+          }
+        },
+        "vat_rates": {
+          "description": "List of VAT rates applicable to the transaction.",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "rate": {
+                "description": "VAT rate.",
+                "type": "number",
+                "format": "decimal",
+                "example": 0.045
+              },
+              "net": {
+                "description": "NET amount of products having this VAT rate applied.",
+                "type": "number",
+                "format": "decimal",
+                "example": 1.36
+              },
+              "vat": {
+                "description": "VAT amount of this rate applied.",
+                "type": "number",
+                "format": "decimal",
+                "example": 0.06
+              },
+              "gross": {
+                "description": "Gross amount of products having this VAT rate applied.",
+                "type": "number",
+                "format": "decimal",
+                "example": 1.42
+              }
+            }
+          }
+        },
+        "transaction_events": {
+          "description": "Detailed list of events related to the transaction.",
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/TransactionEvent"
+          }
+        },
+        "simple_status": {
+          "description": "High-level status of the transaction from the merchant's perspective.\n\n- `PENDING`: The payment has been initiated and is still being processed. A final outcome is not available yet.\n- `SUCCESSFUL`: The payment was completed successfully.\n- `PAID_OUT`: The payment was completed successfully and the funds have already been included in a payout to the merchant.\n- `FAILED`: The payment did not complete successfully.\n- `CANCELLED`: The payment was cancelled or reversed and is no longer payable or payable to the merchant.\n- `CANCEL_FAILED`: An attempt to cancel or reverse the payment was not completed successfully.\n- `REFUNDED`: The payment was refunded in full or in part.\n- `REFUND_FAILED`: An attempt to refund the payment was not completed successfully.\n- `CHARGEBACK`: The payment was subject to a chargeback.\n- `NON_COLLECTION`: The amount could not be collected from the merchant after a chargeback or related adjustment.",
+          "type": "string",
+          "enum": [
+            "SUCCESSFUL",
+            "PAID_OUT",
+            "CANCEL_FAILED",
+            "CANCELLED",
+            "CHARGEBACK",
+            "FAILED",
+            "REFUND_FAILED",
+            "REFUNDED",
+            "NON_COLLECTION",
+            "PENDING"
+          ]
+        },
+        "links": {
+          "description": "List of hyperlinks for accessing related resources.",
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/Link"
+          }
+        },
+        "events": {
+          "description": "Compact list of events related to the transaction.",
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/Event"
+          }
+        },
+        "location": {
+          "description": "Details of the payment location as received from the payment terminal.",
+          "type": "object",
+          "properties": {
+            "lat": {
+              "$ref": "#/components/schemas/Lat"
+            },
+            "lon": {
+              "$ref": "#/components/schemas/Lon"
+            },
+            "horizontal_accuracy": {
+              "$ref": "#/components/schemas/HorizontalAccuracy"
+            }
+          }
+        },
+        "tax_enabled": {
+          "description": "Indicates whether tax deduction is enabled for the transaction.",
+          "type": "boolean"
+        }
+      }
+    }
+  ]
+}

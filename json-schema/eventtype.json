@@ -1,0 +1,12 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Event Type",
+  "description": "Type of the transaction event.",
+  "type": "string",
+  "enum": [
+    "PAYOUT",
+    "CHARGE_BACK",
+    "REFUND",
+    "PAYOUT_DEDUCTION"
+  ]
+}

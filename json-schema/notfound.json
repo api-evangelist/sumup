@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "NotFound",
+  "description": "404 Not Found",
+  "type": "object",
+  "properties": {
+    "errors": {
+      "type": "object",
+      "properties": {
+        "detail": {
+          "description": "Fuller message giving context to error",
+          "type": "string"
+        }
+      },
+      "required": [
+        "detail"
+      ]
+    }
+  },
+  "example": {
+    "errors": {
+      "detail": "Not Found"
+    }
+  },
+  "required": [
+    "errors"
+  ]
+}

@@ -1,0 +1,69 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ReaderCheckoutStatusChange",
+  "description": "The callback payload containing the status change of the Reader Checkout.",
+  "type": "object",
+  "properties": {
+    "event_type": {
+      "description": "Type of event.",
+      "type": "string",
+      "example": "solo.transaction.updated"
+    },
+    "id": {
+      "description": "Unique identifier for the event.",
+      "type": "string",
+      "format": "uuid",
+      "example": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+    },
+    "payload": {
+      "description": "The event payload.",
+      "type": "object",
+      "properties": {
+        "client_transaction_id": {
+          "description": "The unique client transaction id. It is the same returned by the Checkout.",
+          "type": "string",
+          "format": "uuid",
+          "example": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+        },
+        "merchant_code": {
+          "description": "The merchant code associated with the transaction.",
+          "type": "string",
+          "example": "M1234567"
+        },
+        "status": {
+          "description": "The current status of the transaction.",
+          "type": "string",
+          "example": "successful",
+          "enum": [
+            "successful",
+            "failed"
+          ]
+        },
+        "transaction_id": {
+          "description": "The transaction id. Deprecated: use `client_transaction_id` instead.",
+          "type": "string",
+          "format": "uuid",
+          "example": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+          "deprecated": true
+        }
+      },
+      "required": [
+        "client_transaction_id",
+        "merchant_code",
+        "status"
+      ]
+    },
+    "timestamp": {
+      "description": "Timestamp of the event.",
+      "type": "string",
+      "format": "date-time",
+      "example": "2023-10-05T14:48:00+00:00"
+    }
+  },
+  "required": [
+    "id",
+    "event_type",
+    "payload",
+    "timestamp"
+  ]
+}

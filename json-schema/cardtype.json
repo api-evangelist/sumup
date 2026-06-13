@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Card Type",
+  "description": "Issuing card network of the payment card used for the transaction.",
+  "type": "string",
+  "enum": [
+    "ALELO",
+    "AMEX",
+    "CONECS",
+    "CUP",
+    "DINERS",
+    "DISCOVER",
+    "EFTPOS",
+    "ELO",
+    "ELV",
+    "GIROCARD",
+    "HIPERCARD",
+    "INTERAC",
+    "JCB",
+    "MAESTRO",
+    "MASTERCARD",
+    "PLUXEE",
+    "SWILE",
+    "TICKET",
+    "VISA",
+    "VISA_ELECTRON",
+    "VISA_VPAY",
+    "VPAY",
+    "VR",
+    "UNKNOWN"
+  ]
+}

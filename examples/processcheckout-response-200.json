@@ -1,0 +1,37 @@
+{
+  "checkout_reference": "f00a8f74-b05d-4605-bd73-2a901bae5802",
+  "amount": 10.1,
+  "currency": "EUR",
+  "merchant_code": "MH4H92C7",
+  "description": "Purchase",
+  "return_url": "http://example.com",
+  "id": "4e425463-3e1b-431d-83fa-1e51c2925e99",
+  "status": "PENDING",
+  "date": "2020-02-29T10:56:56+00:00",
+  "valid_until": "2020-02-29T10:56:56+00:00",
+  "customer_id": "831ff8d4cd5958ab5670",
+  "mandate": {
+    "type": "recurrent",
+    "status": "active",
+    "merchant_code": "MH4H92C7"
+  },
+  "transactions": [
+    {
+      "id": "410fc44a-5956-44e1-b5cc-19c6f8d727a4",
+      "transaction_code": "TEENSK4W2K",
+      "amount": 10.1,
+      "currency": "EUR",
+      "timestamp": "2020-02-29T10:56:56.876000+00:00",
+      "status": "SUCCESSFUL",
+      "payment_type": "ECOM",
+      "installments_count": 1,
+      "merchant_code": "MH4H92C7",
+      "vat_amount": 6,
+      "tip_amount": 3,
+      "entry_mode": "CUSTOMER_ENTRY",
+      "auth_code": "053201"
+    }
+  ],
+  "transaction_code": "TEENSK4W2K",
+  "transaction_id": "410fc44a-5956-44e1-b5cc-19c6f8d727a4"
+}

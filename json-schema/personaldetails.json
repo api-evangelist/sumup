@@ -1,0 +1,43 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Personal Details",
+  "description": "Personal details for the customer.",
+  "type": "object",
+  "properties": {
+    "first_name": {
+      "description": "First name of the customer.",
+      "type": "string",
+      "example": "John"
+    },
+    "last_name": {
+      "description": "Last name of the customer.",
+      "type": "string",
+      "example": "Doe"
+    },
+    "email": {
+      "description": "Email address of the customer.",
+      "type": "string",
+      "example": "user@example.com"
+    },
+    "phone": {
+      "description": "Phone number of the customer.",
+      "type": "string",
+      "example": "+491635559723"
+    },
+    "birth_date": {
+      "description": "Date of birth of the customer.",
+      "type": "string",
+      "format": "date",
+      "example": "1993-12-31"
+    },
+    "tax_id": {
+      "description": "An identification number user for tax purposes (e.g. CPF)",
+      "type": "string",
+      "example": "423.378.593-47",
+      "maxLength": 255
+    },
+    "address": {
+      "$ref": "#/components/schemas/AddressLegacy"
+    }
+  }
+}

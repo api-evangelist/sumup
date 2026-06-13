@@ -1,0 +1,9 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ReaderID",
+  "description": "Unique identifier of the object.\n\nNote that this identifies the instance of the physical devices pairing with your SumUp account. If you [delete](https://developer.sumup.com/api/readers/delete-reader) a reader, and pair the device again, the ID will be different. Do not use this ID to refer to a physical device.",
+  "type": "string",
+  "example": "rdr_3MSAFM23CK82VSTT4BN6RWSQ65",
+  "maxLength": 30,
+  "minLength": 30
+}

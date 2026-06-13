@@ -1,0 +1,59 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MembershipUser",
+  "description": "Information about the user associated with the membership.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "description": "Identifier for the End-User (also called Subject).",
+      "type": "string",
+      "example": "44ca0f5b-813b-46e1-aee7-e6242010662e"
+    },
+    "email": {
+      "description": "End-User's preferred e-mail address. Its value MUST conform to the RFC 5322 [RFC5322] addr-spec syntax. The RP MUST NOT rely upon this value being unique, for unique identification use ID instead.",
+      "type": "string",
+      "example": "example@sumup.com"
+    },
+    "mfa_on_login_enabled": {
+      "description": "True if the user has enabled MFA on login.",
+      "type": "boolean",
+      "example": true
+    },
+    "virtual_user": {
+      "description": "True if the user is a virtual user (operator).",
+      "type": "boolean",
+      "example": false
+    },
+    "service_account_user": {
+      "description": "True if the user is a service account.",
+      "type": "boolean",
+      "example": false
+    },
+    "disabled_at": {
+      "description": "Time when the user has been disabled. Applies only to virtual users (`virtual_user: true`).",
+      "type": "string",
+      "format": "date-time"
+    },
+    "nickname": {
+      "description": "User's preferred name. Used for display purposes only.",
+      "type": "string",
+      "example": "Test User"
+    },
+    "picture": {
+      "description": "URL of the End-User's profile picture. This URL refers to an image file (for example, a PNG, JPEG, or GIF image file), rather than to a Web page containing an image.",
+      "type": "string",
+      "format": "uri",
+      "example": "https://usercontent.sumup.com/44ca0f5b-813b-46e1-aee7-e6242010662e.png"
+    },
+    "classic": {
+      "$ref": "#/components/schemas/MembershipUserClassic"
+    }
+  },
+  "required": [
+    "id",
+    "email",
+    "mfa_on_login_enabled",
+    "virtual_user",
+    "service_account_user"
+  ]
+}

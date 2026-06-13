@@ -1,0 +1,33 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Transaction Checkout Info",
+  "description": "Checkout-specific fields associated with a transaction.",
+  "type": "object",
+  "properties": {
+    "merchant_code": {
+      "description": "Unique code of the registered merchant to whom the payment is made.",
+      "type": "string",
+      "example": "MH4H92C7"
+    },
+    "vat_amount": {
+      "description": "Amount of the applicable VAT (out of the total transaction amount).",
+      "type": "number",
+      "format": "float",
+      "example": 6
+    },
+    "tip_amount": {
+      "description": "Amount of the tip (out of the total transaction amount).",
+      "type": "number",
+      "format": "float",
+      "example": 3
+    },
+    "entry_mode": {
+      "$ref": "#/components/schemas/EntryMode"
+    },
+    "auth_code": {
+      "description": "Authorization code for the transaction sent by the payment card issuer or bank. Applicable only to card payments.",
+      "type": "string",
+      "example": "053201"
+    }
+  }
+}

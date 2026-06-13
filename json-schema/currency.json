@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Currency",
+  "description": "Three-letter [ISO4217](https://en.wikipedia.org/wiki/ISO_4217) code of the currency for the amount. Currently supported currency values are enumerated above.",
+  "type": "string",
+  "example": "EUR",
+  "enum": [
+    "BGN",
+    "BRL",
+    "CHF",
+    "CLP",
+    "COP",
+    "CZK",
+    "DKK",
+    "EUR",
+    "GBP",
+    "HRK",
+    "HUF",
+    "NOK",
+    "PLN",
+    "RON",
+    "SEK",
+    "USD"
+  ]
+}

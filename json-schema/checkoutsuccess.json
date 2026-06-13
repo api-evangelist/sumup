@@ -1,0 +1,48 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Checkout Success",
+  "description": "Checkout resource returned after a synchronous processing attempt. In addition to the base checkout fields, it can include the resulting transaction identifiers and any newly created payment instrument token.",
+  "allOf": [
+    {
+      "$ref": "#/components/schemas/Checkout"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "transaction_code": {
+          "description": "Transaction code of the successful transaction with which the payment for the checkout is completed.",
+          "type": "string",
+          "example": "TEENSK4W2K",
+          "readOnly": true
+        },
+        "transaction_id": {
+          "description": "Transaction ID of the successful transaction with which the payment for the checkout is completed.",
+          "type": "string",
+          "example": "410fc44a-5956-44e1-b5cc-19c6f8d727a4",
+          "readOnly": true
+        },
+        "merchant_name": {
+          "description": "Name of the merchant",
+          "type": "string",
+          "example": "Sample Merchant"
+        },
+        "redirect_url": {
+          "description": "URL where the payer is redirected after a redirect-based payment or SCA flow completes.",
+          "type": "string",
+          "example": "https://mysite.com/completed_purchase"
+        },
+        "payment_instrument": {
+          "description": "Details of the saved payment instrument created or reused during checkout processing.",
+          "type": "object",
+          "properties": {
+            "token": {
+              "description": "Token value",
+              "type": "string",
+              "example": "e76d7e5c-9375-4fac-a7e7-b19dc5302fbc"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

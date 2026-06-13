@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Hosted Checkout",
+  "description": "Hosted Checkout configuration. Enable it to receive a SumUp-hosted payment page URL in the checkout response.",
+  "type": "object",
+  "properties": {
+    "enabled": {
+      "description": "Whether the checkout should include a SumUp-hosted payment page.",
+      "type": "boolean",
+      "example": true
+    }
+  },
+  "required": [
+    "enabled"
+  ]
+}

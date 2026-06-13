@@ -1,0 +1,31 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Link",
+  "description": "Details of a link to a related resource.",
+  "type": "object",
+  "properties": {
+    "rel": {
+      "description": "Specifies the relation to the current resource.",
+      "type": "string"
+    },
+    "href": {
+      "description": "URL for accessing the related resource.",
+      "type": "string",
+      "format": "uri"
+    },
+    "type": {
+      "description": "Specifies the media type of the related resource.",
+      "type": "string"
+    },
+    "min_amount": {
+      "description": "Minimum allowed amount for the refund.",
+      "type": "number",
+      "format": "float"
+    },
+    "max_amount": {
+      "description": "Maximum allowed amount for the refund.",
+      "type": "number",
+      "format": "float"
+    }
+  }
+}

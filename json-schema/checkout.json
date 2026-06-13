@@ -1,0 +1,116 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Checkout",
+  "description": "Core checkout resource returned by the Checkouts API. A checkout is created before payment processing and then updated as payment attempts, redirects, and resulting transactions are attached to it.",
+  "type": "object",
+  "properties": {
+    "checkout_reference": {
+      "description": "Merchant-defined reference for the checkout. Use it to correlate the SumUp checkout with your own order, cart, subscription, or payment attempt in your systems.",
+      "type": "string",
+      "example": "f00a8f74-b05d-4605-bd73-2a901bae5802",
+      "maxLength": 90
+    },
+    "amount": {
+      "description": "Amount to be charged to the payer, expressed in major units.",
+      "type": "number",
+      "format": "float",
+      "example": 10.1
+    },
+    "currency": {
+      "$ref": "#/components/schemas/Currency"
+    },
+    "merchant_code": {
+      "description": "Merchant account that receives the payment.",
+      "type": "string",
+      "example": "MH4H92C7"
+    },
+    "description": {
+      "description": "Short merchant-defined description shown in SumUp tools and reporting. Use it to make the checkout easier to recognize in dashboards, support workflows, and reconciliation.",
+      "type": "string",
+      "example": "Purchase"
+    },
+    "return_url": {
+      "description": "Optional backend callback URL used by SumUp to notify your platform about processing updates for the checkout.",
+      "type": "string",
+      "format": "uri",
+      "example": "http://example.com"
+    },
+    "id": {
+      "description": "Unique SumUp identifier of the checkout resource.",
+      "type": "string",
+      "example": "4e425463-3e1b-431d-83fa-1e51c2925e99",
+      "readOnly": true
+    },
+    "status": {
+      "description": "Current high-level state of the checkout. `PENDING` means the checkout exists but is not yet completed, `PAID` means a payment succeeded, `FAILED` means the latest processing attempt failed, and `EXPIRED` means the checkout can no longer be processed.",
+      "type": "string",
+      "example": "PENDING",
+      "enum": [
+        "PENDING",
+        "FAILED",
+        "PAID",
+        "EXPIRED"
+      ]
+    },
+    "date": {
+      "description": "Date and time of the creation of the payment checkout. Response format expressed according to [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) code.",
+      "type": "string",
+      "format": "date-time",
+      "example": "2020-02-29T10:56:56+00:00"
+    },
+    "valid_until": {
+      "description": "Optional expiration timestamp. The checkout must be processed before this moment, otherwise it becomes unusable. If omitted, the checkout does not have an explicit expiry time.",
+      "type": "string",
+      "format": "date-time",
+      "example": "2020-02-29T10:56:56+00:00",
+      "nullable": true
+    },
+    "customer_id": {
+      "description": "Merchant-scoped identifier of the customer associated with the checkout. Use it when storing payment instruments or reusing saved customer context for recurring and returning-payer flows.",
+      "type": "string",
+      "example": "831ff8d4cd5958ab5670"
+    },
+    "mandate": {
+      "$ref": "#/components/schemas/MandateResponse"
+    },
+    "hosted_checkout_url": {
+      "description": "URL of the SumUp-hosted payment page that handles the payment flow. Returned when Hosted Checkout is enabled for the checkout.",
+      "type": "string",
+      "format": "uri",
+      "example": "https://checkout.sumup.com/pay/8f9316a3-cda9-42a9-9771-54d534315676",
+      "readOnly": true
+    },
+    "transactions": {
+      "description": "Payment attempts and resulting transaction records linked to this checkout. Use the Transactions endpoints when you need the authoritative payment result and event history.",
+      "type": "array",
+      "items": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/TransactionBase"
+          },
+          {
+            "$ref": "#/components/schemas/TransactionCheckoutInfo"
+          }
+        ]
+      },
+      "example": [
+        {
+          "id": "410fc44a-5956-44e1-b5cc-19c6f8d727a4",
+          "transaction_code": "TEENSK4W2K",
+          "amount": 10.1,
+          "currency": "EUR",
+          "timestamp": "2020-02-29T10:56:56.876000+00:00",
+          "status": "SUCCESSFUL",
+          "payment_type": "ECOM",
+          "installments_count": 1,
+          "merchant_code": "MH4H92C7",
+          "vat_amount": 6,
+          "tip_amount": 3,
+          "entry_mode": "CUSTOMER_ENTRY",
+          "auth_code": "012345"
+        }
+      ],
+      "uniqueItems": true
+    }
+  }
+}

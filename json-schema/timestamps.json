@@ -1,0 +1,29 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Timestamps",
+  "type": "object",
+  "properties": {
+    "created_at": {
+      "description": "The date and time when the resource was created. This is a string as defined in [RFC 3339, section 5.6](https://datatracker.ietf.org/doc/html/rfc3339#section-5.6).\n",
+      "type": "string",
+      "format": "date-time",
+      "examples": [
+        "2021-08-31T12:00:00+00:00"
+      ],
+      "readOnly": true
+    },
+    "updated_at": {
+      "description": "The date and time when the resource was last updated. This is a string as defined in [RFC 3339, section 5.6](https://datatracker.ietf.org/doc/html/rfc3339#section-5.6).\n",
+      "type": "string",
+      "format": "date-time",
+      "examples": [
+        "2021-08-31T12:00:00+00:00"
+      ],
+      "readOnly": true
+    }
+  },
+  "required": [
+    "created_at",
+    "updated_at"
+  ]
+}

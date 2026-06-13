@@ -1,0 +1,196 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Receipt Transaction",
+  "description": "Transaction information.",
+  "type": "object",
+  "properties": {
+    "transaction_code": {
+      "description": "Transaction code.",
+      "type": "string"
+    },
+    "transaction_id": {
+      "$ref": "#/components/schemas/TransactionID"
+    },
+    "merchant_code": {
+      "description": "Merchant code.",
+      "type": "string"
+    },
+    "amount": {
+      "description": "Transaction amount.",
+      "type": "string"
+    },
+    "vat_amount": {
+      "description": "Transaction VAT amount.",
+      "type": "string"
+    },
+    "tip_amount": {
+      "description": "Tip amount (included in transaction amount).",
+      "type": "string"
+    },
+    "currency": {
+      "description": "Transaction currency.",
+      "type": "string"
+    },
+    "timestamp": {
+      "description": "Time created at.",
+      "type": "string",
+      "format": "date-time"
+    },
+    "status": {
+      "description": "Transaction processing status.",
+      "type": "string"
+    },
+    "payment_type": {
+      "description": "Transaction type.",
+      "type": "string"
+    },
+    "entry_mode": {
+      "description": "Transaction entry mode.",
+      "type": "string"
+    },
+    "verification_method": {
+      "description": "Cardholder verification method.",
+      "type": "string"
+    },
+    "card_reader": {
+      "$ref": "#/components/schemas/ReceiptReader"
+    },
+    "card": {
+      "$ref": "#/components/schemas/ReceiptCard"
+    },
+    "installments_count": {
+      "description": "Number of installments.",
+      "type": "integer"
+    },
+    "process_as": {
+      "description": "Debit/Credit.",
+      "type": "string",
+      "example": "CREDIT",
+      "enum": [
+        "CREDIT",
+        "DEBIT"
+      ]
+    },
+    "products": {
+      "description": "Products",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "description": "Product name",
+            "type": "string",
+            "example": "Coffee"
+          },
+          "description": {
+            "description": "Product description",
+            "type": "string"
+          },
+          "price": {
+            "description": "Product price",
+            "type": "string",
+            "format": "double",
+            "example": "150.0"
+          },
+          "vat_rate": {
+            "description": "VAT rate",
+            "type": "string",
+            "format": "double",
+            "example": "0.0"
+          },
+          "single_vat_amount": {
+            "description": "VAT amount for a single product",
+            "type": "string",
+            "format": "double",
+            "example": "0.0"
+          },
+          "price_with_vat": {
+            "description": "Product price including VAT",
+            "type": "string",
+            "format": "double",
+            "example": "150.0"
+          },
+          "vat_amount": {
+            "description": "VAT amount",
+            "type": "string",
+            "format": "double",
+            "example": "0.0"
+          },
+          "quantity": {
+            "description": "Product quantity",
+            "type": "integer",
+            "format": "int64",
+            "example": 1
+          },
+          "total_price": {
+            "description": "Quantity x product price",
+            "type": "string",
+            "format": "double",
+            "example": "150.0"
+          },
+          "total_with_vat": {
+            "description": "Total price including VAT",
+            "type": "string",
+            "format": "double",
+            "example": "150.0"
+          }
+        }
+      }
+    },
+    "vat_rates": {
+      "description": "Vat rates.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "gross": {
+            "description": "Gross",
+            "type": "number",
+            "format": "float"
+          },
+          "net": {
+            "description": "Net",
+            "type": "number",
+            "format": "float"
+          },
+          "rate": {
+            "description": "Rate",
+            "type": "number",
+            "format": "float"
+          },
+          "vat": {
+            "description": "Vat",
+            "type": "number",
+            "format": "float"
+          }
+        }
+      }
+    },
+    "events": {
+      "description": "Events",
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/ReceiptEvent"
+      }
+    },
+    "receipt_no": {
+      "description": "Receipt number",
+      "type": "string"
+    }
+  },
+  "example": {
+    "transaction_code": "TEENSK4W2K",
+    "transaction_id": "410fc44a-5956-44e1-b5cc-19c6f8d727a4",
+    "merchant_code": "MH4H92C7",
+    "amount": "10.10",
+    "vat_amount": "6.00",
+    "tip_amount": "3.00",
+    "currency": "EUR",
+    "timestamp": "2020-02-29T10:56:56.876000+00:00",
+    "status": "SUCCESSFUL",
+    "payment_type": "ECOM",
+    "entry_mode": "CUSTOMER_ENTRY",
+    "installments_count": 1,
+    "process_as": "CREDIT"
+  }
+}

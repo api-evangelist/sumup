@@ -1,0 +1,31 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Mandate Response",
+  "description": "Details of the mandate linked to the saved payment instrument.",
+  "type": "object",
+  "properties": {
+    "type": {
+      "description": "Type of mandate stored for the checkout or payment instrument.",
+      "type": "string"
+    },
+    "status": {
+      "description": "Current lifecycle status of the mandate.",
+      "type": "string",
+      "example": "active",
+      "enum": [
+        "active",
+        "inactive"
+      ]
+    },
+    "merchant_code": {
+      "description": "Merchant account for which the mandate is valid.",
+      "type": "string",
+      "example": "MH4H92C7"
+    }
+  },
+  "example": {
+    "type": "recurrent",
+    "status": "active",
+    "merchant_code": "MH4H92C7"
+  }
+}

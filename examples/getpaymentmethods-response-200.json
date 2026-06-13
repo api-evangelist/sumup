@@ -1,0 +1,10 @@
+{
+  "available_payment_methods": [
+    {
+      "id": "apple_pay"
+    },
+    {
+      "id": "blik"
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Latitude",
+  "description": "Latitude value from the coordinates of the payment location (as received from the payment terminal reader).",
+  "type": "number",
+  "format": "float",
+  "maximum": 90,
+  "minimum": 0
+}

@@ -1,0 +1,14 @@
+{
+  "checkout_reference": "f00a8f74-b05d-4605-bd73-2a901bae5802",
+  "id": "817340ce-f1d9-4609-b90a-6152f8ee267j",
+  "amount": 2,
+  "currency": "EUR",
+  "merchant_code": "MH4H92C7",
+  "description": "Deletion example",
+  "purpose": "CHECKOUT",
+  "status": "EXPIRED",
+  "date": "2020-02-29T10:56:56+00:00",
+  "valid_until": "2020-02-29T10:56:56+00:00",
+  "merchant_name": "Sample Merchant",
+  "transactions": []
+}

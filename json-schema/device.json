@@ -1,0 +1,33 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Device",
+  "description": "Details of the device used to create the transaction.",
+  "type": "object",
+  "properties": {
+    "name": {
+      "description": "Device name.",
+      "type": "string",
+      "example": "m0xx"
+    },
+    "system_name": {
+      "description": "Device OS.",
+      "type": "string",
+      "example": "Android"
+    },
+    "model": {
+      "description": "Device model.",
+      "type": "string",
+      "example": "GT-I9300"
+    },
+    "system_version": {
+      "description": "Device OS version.",
+      "type": "string",
+      "example": "4.3"
+    },
+    "uuid": {
+      "description": "Device UUID.",
+      "type": "string",
+      "example": "3ae2a6b7-fb0d-3b50-adbf-cb7e2db30cd2"
+    }
+  }
+}

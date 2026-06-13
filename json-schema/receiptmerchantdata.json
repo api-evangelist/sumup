@@ -1,0 +1,72 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Receipt Merchant Data",
+  "description": "Receipt merchant data",
+  "type": "object",
+  "properties": {
+    "merchant_profile": {
+      "description": "Merchant profile details displayed on the receipt.",
+      "type": "object",
+      "properties": {
+        "merchant_code": {
+          "type": "string",
+          "example": "MH4H92C7"
+        },
+        "business_name": {
+          "type": "string"
+        },
+        "company_registration_number": {
+          "type": "string"
+        },
+        "vat_id": {
+          "type": "string"
+        },
+        "website": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "language": {
+          "type": "string"
+        },
+        "address": {
+          "type": "object",
+          "properties": {
+            "address_line1": {
+              "type": "string"
+            },
+            "address_line2": {
+              "type": "string"
+            },
+            "city": {
+              "type": "string"
+            },
+            "country": {
+              "type": "string"
+            },
+            "country_en_name": {
+              "type": "string"
+            },
+            "country_native_name": {
+              "type": "string"
+            },
+            "region_name": {
+              "type": "string"
+            },
+            "post_code": {
+              "type": "string"
+            },
+            "landline": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "locale": {
+      "description": "Locale used for rendering localized receipt fields.",
+      "type": "string"
+    }
+  }
+}

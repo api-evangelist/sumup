@@ -1,0 +1,68 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Branding",
+  "description": "Settings used to apply the Merchant's branding to email receipts, invoices, checkouts, and other products.",
+  "type": "object",
+  "properties": {
+    "icon": {
+      "description": "An icon for the merchant. Must be square.\n",
+      "type": "string",
+      "format": "uri"
+    },
+    "logo": {
+      "description": "A logo for the merchant that will be used in place of the icon and without the merchant's name next to it if there's sufficient space.\n",
+      "type": "string",
+      "format": "uri"
+    },
+    "hero": {
+      "description": "Data-URL encoded hero image for the merchant business.\n",
+      "type": "string",
+      "format": "uri"
+    },
+    "primary_color": {
+      "description": "A hex color value representing the primary branding color of this merchant (your brand color).\n",
+      "type": "string",
+      "examples": [
+        "#FF4B3A",
+        "#0072C6",
+        "#F68B20"
+      ]
+    },
+    "primary_color_fg": {
+      "description": "A hex color value representing the color of the text displayed on branding color of this merchant.\n",
+      "type": "string",
+      "examples": [
+        "#FF4B3A",
+        "#0072C6",
+        "#F68B20"
+      ]
+    },
+    "secondary_color": {
+      "description": "A hex color value representing the secondary branding color of this merchant (accent color used for buttons).\n",
+      "type": "string",
+      "examples": [
+        "#FF4B3A",
+        "#0072C6",
+        "#F68B20"
+      ]
+    },
+    "secondary_color_fg": {
+      "description": "A hex color value representing the color of the text displayed on secondary branding color of this merchant.\n",
+      "type": "string",
+      "examples": [
+        "#FF4B3A",
+        "#0072C6",
+        "#F68B20"
+      ]
+    },
+    "background_color": {
+      "description": "A hex color value representing the preferred background color of this merchant.\n",
+      "type": "string",
+      "examples": [
+        "#FF4B3A",
+        "#0072C6",
+        "#F68B20"
+      ]
+    }
+  }
+}

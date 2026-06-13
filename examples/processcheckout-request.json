@@ -1,0 +1,18 @@
+{
+  "payment_type": "card",
+  "installments": 1,
+  "mandate": {
+    "type": "recurrent",
+    "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.104 Safari/537.36",
+    "user_ip": "172.217.169.174"
+  },
+  "card": {
+    "type": "VISA",
+    "name": "John Doe",
+    "number": "1234567890123456",
+    "expiry_year": "2023",
+    "expiry_month": "01",
+    "cvv": "123",
+    "zip_code": "12345"
+  }
+}

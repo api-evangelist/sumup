@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "PersonalIdentifier",
+  "type": "object",
+  "properties": {
+    "ref": {
+      "description": "The unique reference for the personal identifier type as defined in the country SDK.\n",
+      "type": "string",
+      "examples": [
+        "br.cpf"
+      ]
+    },
+    "value": {
+      "description": "The company identifier value.\n",
+      "type": "string",
+      "examples": [
+        "847.060.136-90"
+      ],
+      "maxLength": 30
+    }
+  },
+  "examples": [
+    {
+      "ref": "br.cpf",
+      "value": "847.060.136-90"
+    }
+  ],
+  "required": [
+    "ref",
+    "value"
+  ]
+}

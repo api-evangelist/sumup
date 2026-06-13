@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Receipt Card",
+  "description": "Payment card details displayed on the receipt.",
+  "type": "object",
+  "properties": {
+    "last_4_digits": {
+      "description": "Card last 4 digits.",
+      "type": "string"
+    },
+    "type": {
+      "description": "Card Scheme.",
+      "type": "string"
+    }
+  }
+}

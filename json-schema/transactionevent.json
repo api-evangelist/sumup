@@ -1,0 +1,46 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Transaction Event",
+  "description": "Detailed information about a transaction event.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "$ref": "#/components/schemas/EventID"
+    },
+    "event_type": {
+      "$ref": "#/components/schemas/EventType"
+    },
+    "status": {
+      "$ref": "#/components/schemas/EventStatus"
+    },
+    "amount": {
+      "description": "Amount of the event.",
+      "type": "number",
+      "format": "decimal",
+      "example": 58.8
+    },
+    "due_date": {
+      "description": "Date when the transaction event is due to occur.",
+      "type": "string",
+      "format": "date",
+      "example": "2020-05-25"
+    },
+    "date": {
+      "description": "Date when the transaction event occurred.",
+      "type": "string",
+      "format": "date",
+      "example": "2020-05-25"
+    },
+    "installment_number": {
+      "description": "Consecutive number of the installment that is paid. Applicable only payout events, i.e. `event_type = PAYOUT`.",
+      "type": "integer",
+      "example": 1
+    },
+    "timestamp": {
+      "description": "Date and time of the transaction event.",
+      "type": "string",
+      "format": "date-time",
+      "example": "2020-05-25T10:49:42.784000+00:00"
+    }
+  }
+}

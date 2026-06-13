@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Receipt Reader",
+  "description": "Card reader details displayed on the receipt.",
+  "type": "object",
+  "properties": {
+    "code": {
+      "description": "Reader serial number.",
+      "type": "string"
+    },
+    "type": {
+      "description": "Reader type.",
+      "type": "string"
+    }
+  }
+}

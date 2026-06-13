@@ -1,0 +1,8 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Attributes",
+  "description": "Object attributes that are modifiable only by SumUp applications.",
+  "type": "object",
+  "example": {},
+  "additionalProperties": true
+}

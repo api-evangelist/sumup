@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Customer",
+  "description": "Saved customer details.",
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "description": "Unique ID of the customer.",
+      "type": "string",
+      "example": "831ff8d4cd5958ab5670"
+    },
+    "personal_details": {
+      "$ref": "#/components/schemas/PersonalDetails"
+    }
+  },
+  "required": [
+    "customer_id"
+  ]
+}

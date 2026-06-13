@@ -1,0 +1,78 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Financial Payout",
+  "description": "A single payout-related record.\n\nA record can represent either:\n- an actual payout sent to the merchant (`type = PAYOUT`)\n- a deduction applied against merchant funds for a refund, chargeback, direct debit return, or balance adjustment",
+  "type": "object",
+  "properties": {
+    "id": {
+      "description": "Unique identifier of the payout-related record.",
+      "type": "integer",
+      "example": 123456789
+    },
+    "type": {
+      "description": "High-level payout record category.",
+      "type": "string",
+      "example": "PAYOUT",
+      "enum": [
+        "PAYOUT",
+        "CHARGE_BACK_DEDUCTION",
+        "REFUND_DEDUCTION",
+        "DD_RETURN_DEDUCTION",
+        "BALANCE_DEDUCTION"
+      ]
+    },
+    "amount": {
+      "description": "Amount of the payout or deduction in major units.",
+      "type": "number",
+      "format": "float",
+      "example": 132.45
+    },
+    "date": {
+      "description": "Payout date associated with the record, in `YYYY-MM-DD` format.",
+      "type": "string",
+      "format": "date",
+      "example": "2024-02-29"
+    },
+    "currency": {
+      "description": "Three-letter ISO 4217 currency code of the payout.",
+      "type": "string",
+      "example": "EUR"
+    },
+    "fee": {
+      "description": "Fee amount associated with the payout record, in major units.",
+      "type": "number",
+      "format": "float",
+      "example": 3.12
+    },
+    "status": {
+      "description": "Merchant-facing outcome of the payout record.",
+      "type": "string",
+      "example": "SUCCESSFUL",
+      "enum": [
+        "SUCCESSFUL",
+        "FAILED"
+      ]
+    },
+    "reference": {
+      "description": "Processor or payout reference associated with the record.",
+      "type": "string",
+      "example": "payout-2024-02-29"
+    },
+    "transaction_code": {
+      "description": "Transaction code of the original sale associated with the payout or deduction.",
+      "type": "string",
+      "example": "TEENSK4W2K"
+    }
+  },
+  "required": [
+    "id",
+    "type",
+    "amount",
+    "date",
+    "currency",
+    "fee",
+    "status",
+    "reference",
+    "transaction_code"
+  ]
+}

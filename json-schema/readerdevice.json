@@ -1,0 +1,26 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ReaderDevice",
+  "description": "Information about the underlying physical device.",
+  "type": "object",
+  "properties": {
+    "identifier": {
+      "description": "A unique identifier of the physical device (e.g. serial number).",
+      "type": "string",
+      "example": "U1DT3NA00-CN"
+    },
+    "model": {
+      "description": "Identifier of the model of the device.",
+      "type": "string",
+      "example": "solo",
+      "enum": [
+        "solo",
+        "virtual-solo"
+      ]
+    }
+  },
+  "required": [
+    "identifier",
+    "model"
+  ]
+}

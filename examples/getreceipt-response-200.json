@@ -1,0 +1,25 @@
+{
+  "transaction_data": {
+    "transaction_code": "TEENSK4W2K",
+    "transaction_id": "410fc44a-5956-44e1-b5cc-19c6f8d727a4",
+    "merchant_code": "MH4H92C7",
+    "amount": "10.10",
+    "vat_amount": "6.00",
+    "tip_amount": "3.00",
+    "currency": "EUR",
+    "timestamp": "2020-02-29T10:56:56.876000+00:00",
+    "status": "SUCCESSFUL",
+    "payment_type": "ECOM",
+    "entry_mode": "CUSTOMER_ENTRY",
+    "installments_count": 1,
+    "process_as": "CREDIT"
+  },
+  "merchant_data": {
+    "merchant_profile": {
+      "merchant_code": "MH4H92C7"
+    }
+  },
+  "acquirer_data": {
+    "authorization_code": "053201"
+  }
+}

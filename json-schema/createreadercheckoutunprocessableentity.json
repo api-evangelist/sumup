@@ -1,0 +1,67 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CreateReaderCheckoutUnprocessableEntity",
+  "description": "Unprocessable entity",
+  "type": "object",
+  "properties": {
+    "errors": {
+      "type": "object",
+      "additionalProperties": true
+    }
+  },
+  "example": {
+    "DataValidation": {
+      "description": "Validation errors for the informed fields.",
+      "value": {
+        "errors": {
+          "card_type": [
+            "is invalid"
+          ],
+          "installments": [
+            "not allowed"
+          ],
+          "return_url": [
+            "must be a valid URL"
+          ],
+          "tip_rates": [
+            "must be between 0.01 and 0.99"
+          ],
+          "total_amount": [
+            "must be greater than 0"
+          ]
+        }
+      }
+    },
+    "InstallmentsTooLow": {
+      "description": "Error returned when installments is not within the allowed range.",
+      "value": {
+        "errors": {
+          "installments": [
+            "is invalid"
+          ]
+        }
+      }
+    },
+    "ReaderBusy": {
+      "description": "Error returned when a checkout was requested in the last 60 seconds.",
+      "value": {
+        "errors": {
+          "detail": "There is a pending checkout for the device.",
+          "type": "READER_BUSY"
+        }
+      }
+    },
+    "ReaderOffline": {
+      "description": "Error returned when the target device is not online.",
+      "value": {
+        "errors": {
+          "detail": "The device is offline.",
+          "type": "READER_OFFLINE"
+        }
+      }
+    }
+  },
+  "required": [
+    "errors"
+  ]
+}

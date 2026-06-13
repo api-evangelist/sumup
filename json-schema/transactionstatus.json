@@ -1,0 +1,13 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Transaction Status",
+  "description": "Current status of the transaction.\n\n- `PENDING`: The transaction has been created but its final outcome is not known yet.\n- `SUCCESSFUL`: The transaction completed successfully.\n- `CANCELLED`: The transaction was cancelled or otherwise reversed before completion.\n- `FAILED`: The transaction attempt did not complete successfully.\n- `REFUNDED`: The transaction was refunded in full or in part.",
+  "type": "string",
+  "enum": [
+    "SUCCESSFUL",
+    "CANCELLED",
+    "FAILED",
+    "PENDING",
+    "REFUNDED"
+  ]
+}

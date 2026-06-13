@@ -1,0 +1,45 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "BusinessProfile",
+  "description": "Business information about the merchant. This information will be visible to the merchant's customers.\n",
+  "type": "object",
+  "properties": {
+    "name": {
+      "description": "The customer-facing business name.",
+      "type": "string",
+      "example": "Example Coffee",
+      "maxLength": 150,
+      "minLength": 1
+    },
+    "dynamic_descriptor": {
+      "description": "The descriptor is the text that your customer sees on their bank account statement.\nThe more recognisable your descriptor is, the less risk you have of receiving disputes (e.g. chargebacks).\n",
+      "type": "string",
+      "example": "Example Coffee",
+      "maxLength": 30,
+      "minLength": 1,
+      "pattern": "^[a-zA-Z0-9 \\-+\\'_.]{0,30}$"
+    },
+    "website": {
+      "description": "The business's publicly available website.",
+      "type": "string",
+      "format": "uri",
+      "example": "https://example.com",
+      "maxLength": 255
+    },
+    "email": {
+      "description": "A publicly available email address.",
+      "type": "string",
+      "example": "contact@example.com",
+      "maxLength": 255
+    },
+    "phone_number": {
+      "$ref": "#/components/schemas/PhoneNumber"
+    },
+    "address": {
+      "$ref": "#/components/schemas/Address"
+    },
+    "branding": {
+      "$ref": "#/components/schemas/Branding"
+    }
+  }
+}

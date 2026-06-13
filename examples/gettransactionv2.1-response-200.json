@@ -1,0 +1,15 @@
+{
+  "id": "410fc44a-5956-44e1-b5cc-19c6f8d727a4",
+  "transaction_code": "TEENSK4W2K",
+  "amount": 10.1,
+  "currency": "EUR",
+  "timestamp": "2020-02-29T10:56:56.876000+00:00",
+  "status": "SUCCESSFUL",
+  "payment_type": "ECOM",
+  "installments_count": 1,
+  "merchant_code": "MH4H92C7",
+  "vat_amount": 6,
+  "tip_amount": 3,
+  "entry_mode": "CUSTOMER_ENTRY",
+  "auth_code": "053201"
+}

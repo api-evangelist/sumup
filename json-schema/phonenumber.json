@@ -1,0 +1,8 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "PhoneNumber",
+  "description": "A publicly available phone number in [E.164](https://en.wikipedia.org/wiki/E.164) format.\n",
+  "type": "string",
+  "example": "+420123456789",
+  "maxLength": 16
+}

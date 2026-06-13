@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Transactions History Link",
+  "description": "Hypermedia link used for transaction history pagination.",
+  "type": "object",
+  "properties": {
+    "rel": {
+      "description": "Relation.",
+      "type": "string",
+      "example": "next"
+    },
+    "href": {
+      "description": "Location.",
+      "type": "string",
+      "example": "limit=10&oldest_ref=090df9bf-93b7-40f1-8181-fbdb236568a1&order=ascending"
+    }
+  },
+  "required": [
+    "rel",
+    "href"
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Card Response",
+  "description": "Details of the payment card.",
+  "type": "object",
+  "properties": {
+    "last_4_digits": {
+      "description": "Last 4 digits of the payment card number.",
+      "type": "string",
+      "example": "3456",
+      "maxLength": 4,
+      "minLength": 4,
+      "readOnly": true
+    },
+    "type": {
+      "$ref": "#/components/schemas/CardType"
+    }
+  }
+}

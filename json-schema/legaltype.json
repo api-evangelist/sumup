@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "LegalType",
+  "description": "The unique legal type reference as defined in the country SDK. We do not rely on IDs as used by other services. Consumers of this API are expected to use the country SDK to map to any other IDs, translation keys, or descriptions.\n",
+  "type": "string",
+  "examples": [
+    "de.freiberufler",
+    "br.ltda",
+    "gb.partnership",
+    "bg.private_limited_company"
+  ],
+  "externalDocs": {
+    "description": "The country SDK documentation for legal types.",
+    "url": "https://developer.sumup.com/tools/glossary/merchant#legal-types"
+  },
+  "maxLength": 64,
+  "minLength": 4
+}

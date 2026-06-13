@@ -1,0 +1,7 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Horizontal Accuracy",
+  "description": "Indication of the precision of the geographical position received from the payment terminal.",
+  "type": "number",
+  "format": "float"
+}

@@ -1,0 +1,392 @@
+{
+  "title": "SumUp REST API Vocabulary",
+  "description": "Terms, tags, and operations derived from the SumUp REST API OpenAPI specification.",
+  "tags": [
+    "Checkouts",
+    "Customers",
+    "Members",
+    "Memberships",
+    "Merchants",
+    "Payouts",
+    "Readers",
+    "Receipts",
+    "Roles",
+    "Transactions"
+  ],
+  "operations": [
+    {
+      "operationId": "GetPaymentMethods",
+      "method": "GET",
+      "path": "/v0.1/merchants/{merchant_code}/payment-methods",
+      "summary": "Get available payment methods",
+      "description": "Get payment methods available for the given merchant to use with a checkout."
+    },
+    {
+      "operationId": "CreateCheckout",
+      "method": "POST",
+      "path": "/v0.1/checkouts",
+      "summary": "Create a checkout",
+      "description": "Creates a new payment checkout resource. The unique `checkout_reference` created by this request, is used for further manipulation of the checkout.\n\nFor 3DS checkouts, add the `redirect_url` parameter"
+    },
+    {
+      "operationId": "ListCheckouts",
+      "method": "GET",
+      "path": "/v0.1/checkouts",
+      "summary": "List checkouts",
+      "description": "Lists created checkout resources according to the applied `checkout_reference`."
+    },
+    {
+      "operationId": "GetCheckout",
+      "method": "GET",
+      "path": "/v0.1/checkouts/{checkout_id}",
+      "summary": "Retrieve a checkout",
+      "description": "Retrieves an identified checkout resource. Use this request after processing a checkout to confirm its status and inform the end user respectively."
+    },
+    {
+      "operationId": "ProcessCheckout",
+      "method": "PUT",
+      "path": "/v0.1/checkouts/{checkout_id}",
+      "summary": "Process a checkout",
+      "description": "Processing a checkout will attempt to charge the provided payment instrument for the amount of the specified checkout resource initiated in the `Create a checkout` endpoint.\n\nFollow this request with "
+    },
+    {
+      "operationId": "DeactivateCheckout",
+      "method": "DELETE",
+      "path": "/v0.1/checkouts/{checkout_id}",
+      "summary": "Deactivate a checkout",
+      "description": "Deactivates an identified checkout resource. If the checkout has already been processed it can not be deactivated."
+    },
+    {
+      "operationId": "CreateApplePaySession",
+      "method": "PUT",
+      "path": "/v0.2/checkouts/{checkout_id}/apple-pay-session",
+      "summary": "Create an Apple Pay session",
+      "description": "Creates an Apple Pay merchant session for the specified checkout.\n\nUse this endpoint after the customer selects Apple Pay and before calling\n`ApplePaySession.completeMerchantValidation(...)` in the br"
+    },
+    {
+      "operationId": "CreateCustomer",
+      "method": "POST",
+      "path": "/v0.1/customers",
+      "summary": "Create a customer",
+      "description": "Creates a new saved customer resource which you can later manipulate and save payment instruments to."
+    },
+    {
+      "operationId": "GetCustomer",
+      "method": "GET",
+      "path": "/v0.1/customers/{customer_id}",
+      "summary": "Retrieve a customer",
+      "description": "Retrieves an identified saved customer resource through the unique `customer_id` parameter, generated upon customer creation."
+    },
+    {
+      "operationId": "UpdateCustomer",
+      "method": "PUT",
+      "path": "/v0.1/customers/{customer_id}",
+      "summary": "Update a customer",
+      "description": "Updates an identified saved customer resource's personal details.\n\nThe request only overwrites the parameters included in the request, all other parameters will remain with their initially assigned va"
+    },
+    {
+      "operationId": "ListPaymentInstruments",
+      "method": "GET",
+      "path": "/v0.1/customers/{customer_id}/payment-instruments",
+      "summary": "List payment instruments",
+      "description": "Lists all payment instrument resources that are saved for an identified customer."
+    },
+    {
+      "operationId": "DeactivatePaymentInstrument",
+      "method": "DELETE",
+      "path": "/v0.1/customers/{customer_id}/payment-instruments/{token}",
+      "summary": "Deactivate a payment instrument",
+      "description": "Deactivates an identified card payment instrument resource for a customer."
+    },
+    {
+      "operationId": "RefundTransaction",
+      "method": "POST",
+      "path": "/v1.0/merchants/{merchant_code}/payments/{transaction_id}/refunds",
+      "summary": "Refund a transaction",
+      "description": "Refunds an identified transaction either in full or partially."
+    },
+    {
+      "operationId": "GetTransactionV2.1",
+      "method": "GET",
+      "path": "/v2.1/merchants/{merchant_code}/transactions",
+      "summary": "Retrieve a transaction",
+      "description": "Retrieves the full details of an identified transaction. The transaction resource is identified by a query parameter and *one* of following parameters is required:\n- `id`\n- `transaction_code`\n- `forei"
+    },
+    {
+      "operationId": "ListTransactionsV2.1",
+      "method": "GET",
+      "path": "/v2.1/merchants/{merchant_code}/transactions/history",
+      "summary": "List transactions",
+      "description": "Lists detailed history of all transactions associated with the merchant profile."
+    },
+    {
+      "operationId": "ListPayoutsV1",
+      "method": "GET",
+      "path": "/v1.0/merchants/{merchant_code}/payouts",
+      "summary": "List payouts",
+      "description": "Lists payout and payout-deduction records for the specified merchant account within the requested date range.\n\nThe response can include:\n- regular payouts (`type = PAYOUT`)\n- deduction records for ref"
+    },
+    {
+      "operationId": "GetReceipt",
+      "method": "GET",
+      "path": "/v1.1/receipts/{transaction_id}",
+      "summary": "Retrieve receipt details",
+      "description": "Retrieves receipt specific data for a transaction."
+    },
+    {
+      "operationId": "ListMemberships",
+      "method": "GET",
+      "path": "/v0.1/memberships",
+      "summary": "List memberships",
+      "description": "List memberships of the current user."
+    },
+    {
+      "operationId": "ListMerchantMembers",
+      "method": "GET",
+      "path": "/v0.1/merchants/{merchant_code}/members",
+      "summary": "List members",
+      "description": "Lists merchant members."
+    },
+    {
+      "operationId": "CreateMerchantMember",
+      "method": "POST",
+      "path": "/v0.1/merchants/{merchant_code}/members",
+      "summary": "Create a member",
+      "description": "Create a merchant member."
+    },
+    {
+      "operationId": "GetMerchantMember",
+      "method": "GET",
+      "path": "/v0.1/merchants/{merchant_code}/members/{member_id}",
+      "summary": "Retrieve a member",
+      "description": "Retrieve a merchant member."
+    },
+    {
+      "operationId": "UpdateMerchantMember",
+      "method": "PUT",
+      "path": "/v0.1/merchants/{merchant_code}/members/{member_id}",
+      "summary": "Update a member",
+      "description": "Update the merchant member."
+    },
+    {
+      "operationId": "DeleteMerchantMember",
+      "method": "DELETE",
+      "path": "/v0.1/merchants/{merchant_code}/members/{member_id}",
+      "summary": "Delete a member",
+      "description": "Deletes a merchant member."
+    },
+    {
+      "operationId": "ListMerchantRoles",
+      "method": "GET",
+      "path": "/v0.1/merchants/{merchant_code}/roles",
+      "summary": "List roles",
+      "description": "List merchant's custom roles."
+    },
+    {
+      "operationId": "CreateMerchantRole",
+      "method": "POST",
+      "path": "/v0.1/merchants/{merchant_code}/roles",
+      "summary": "Create a role",
+      "description": "Create a custom role for the merchant. Roles are defined by the set of permissions that they grant to the members that they are assigned to."
+    },
+    {
+      "operationId": "GetMerchantRole",
+      "method": "GET",
+      "path": "/v0.1/merchants/{merchant_code}/roles/{role_id}",
+      "summary": "Retrieve a role",
+      "description": "Retrieve a custom role by ID."
+    },
+    {
+      "operationId": "DeleteMerchantRole",
+      "method": "DELETE",
+      "path": "/v0.1/merchants/{merchant_code}/roles/{role_id}",
+      "summary": "Delete a role",
+      "description": "Delete a custom role."
+    },
+    {
+      "operationId": "UpdateMerchantRole",
+      "method": "PATCH",
+      "path": "/v0.1/merchants/{merchant_code}/roles/{role_id}",
+      "summary": "Update a role",
+      "description": "Update a custom role."
+    },
+    {
+      "operationId": "GetMerchant",
+      "method": "GET",
+      "path": "/v1/merchants/{merchant_code}",
+      "summary": "Retrieve a Merchant",
+      "description": "Retrieve a merchant."
+    },
+    {
+      "operationId": "ListPersons",
+      "method": "GET",
+      "path": "/v1/merchants/{merchant_code}/persons",
+      "summary": "List Persons",
+      "description": "Returns a list of persons related to the merchant."
+    },
+    {
+      "operationId": "GetPerson",
+      "method": "GET",
+      "path": "/v1/merchants/{merchant_code}/persons/{person_id}",
+      "summary": "Retrieve a Person",
+      "description": "Returns a single person related to the merchant."
+    },
+    {
+      "operationId": "ListReaders",
+      "method": "GET",
+      "path": "/v0.1/merchants/{merchant_code}/readers",
+      "summary": "List Readers",
+      "description": "List all readers of the merchant."
+    },
+    {
+      "operationId": "CreateReader",
+      "method": "POST",
+      "path": "/v0.1/merchants/{merchant_code}/readers",
+      "summary": "Create a Reader",
+      "description": "Create a new Reader for the merchant account."
+    },
+    {
+      "operationId": "GetReader",
+      "method": "GET",
+      "path": "/v0.1/merchants/{merchant_code}/readers/{reader_id}",
+      "summary": "Retrieve a Reader",
+      "description": "Retrieve a Reader."
+    },
+    {
+      "operationId": "DeleteReader",
+      "method": "DELETE",
+      "path": "/v0.1/merchants/{merchant_code}/readers/{reader_id}",
+      "summary": "Delete a reader",
+      "description": "Delete a reader."
+    },
+    {
+      "operationId": "UpdateReader",
+      "method": "PATCH",
+      "path": "/v0.1/merchants/{merchant_code}/readers/{reader_id}",
+      "summary": "Update a Reader",
+      "description": "Update a Reader."
+    },
+    {
+      "operationId": "CreateReaderCheckout",
+      "method": "POST",
+      "path": "/v0.1/merchants/{merchant_code}/readers/{reader_id}/checkout",
+      "summary": "Create a Reader Checkout",
+      "description": "Creates a Checkout for a Reader.\n\nThis process is asynchronous and the actual transaction may take some time to be started on the device.\n\n\nThere are some caveats when using this endpoint:\n* The targe"
+    },
+    {
+      "operationId": "GetReaderStatus",
+      "method": "GET",
+      "path": "/v0.1/merchants/{merchant_code}/readers/{reader_id}/status",
+      "summary": "Get a Reader Status",
+      "description": "Provides the last known status for a Reader.\n\nThis endpoint allows you to retrieve updates from the connected card reader, including the current screen being displayed during the payment process and t"
+    },
+    {
+      "operationId": "CreateReaderTerminate",
+      "method": "POST",
+      "path": "/v0.1/merchants/{merchant_code}/readers/{reader_id}/terminate",
+      "summary": "Terminate a Reader Checkout",
+      "description": "Terminate a Reader Checkout stops the current transaction on the target device.\n\nThis process is asynchronous and the actual termination may take some time to be performed on the device.\n\n\nThere are s"
+    }
+  ],
+  "schemas": [
+    "AddressLegacy",
+    "Card",
+    "CardResponse",
+    "Device",
+    "ElvCardAccount",
+    "HostedCheckout",
+    "Checkout",
+    "CheckoutCreateRequest",
+    "ProcessCheckout",
+    "CheckoutSuccess",
+    "CheckoutAccepted",
+    "Customer",
+    "Error",
+    "Problem",
+    "ErrorExtended",
+    "ErrorForbidden",
+    "DetailsError",
+    "Event",
+    "FinancialPayouts",
+    "FinancialPayout",
+    "Link",
+    "TransactionsHistoryLink",
+    "MandatePayload",
+    "MandateResponse",
+    "PaymentInstrumentResponse",
+    "PersonalDetails",
+    "Product",
+    "Receipt",
+    "ReceiptEvent",
+    "ReceiptCard",
+    "ReceiptReader",
+    "ReceiptMerchantData",
+    "ReceiptTransaction",
+    "TransactionEvent",
+    "TransactionBase",
+    "TransactionCheckoutInfo",
+    "TransactionMixinHistory",
+    "TransactionHistory",
+    "PaymentType",
+    "EntryMode",
+    "CardType",
+    "TransactionFull",
+    "Currency",
+    "TransactionStatus",
+    "EventType",
+    "EventStatus",
+    "EventID",
+    "HorizontalAccuracy",
+    "Lat",
+    "Lon",
+    "TransactionID",
+    "MembershipStatus",
+    "ResourceType",
+    "Membership",
+    "MembershipResource",
+    "Member",
+    "Invite",
+    "MembershipUser",
+    "MembershipUserClassic",
+    "Role",
+    "Attributes",
+    "Metadata",
+    "ListPersonsResponseBody",
+    "Merchant",
+    "Company",
+    "Meta",
+    "BusinessProfile",
+    "Person",
+    "CountryCode",
+    "PhoneNumber",
+    "Address",
+    "Branding",
+    "LegalType",
+    "CompanyIdentifiers",
+    "CompanyIdentifier",
+    "Ownership",
+    "PersonalIdentifier",
+    "Version",
+    "ChangeStatus",
+    "BasePerson",
+    "ClassicMerchantIdentifiers",
+    "Timestamps",
+    "Reader",
+    "ReaderID",
+    "ReaderName",
+    "ReaderStatus",
+    "ReaderDevice",
+    "ReaderPairingCode",
+    "CreateReaderCheckoutUnprocessableEntity",
+    "CreateReaderCheckoutError",
+    "StatusResponse",
+    "CreateReaderTerminateUnprocessableEntity",
+    "CreateReaderTerminateError",
+    "BadRequest",
+    "CreateReaderCheckoutResponse",
+    "Unauthorized",
+    "CreateReaderCheckoutRequest",
+    "ReaderCheckoutStatusChange",
+    "NotFound"
+  ]
+}

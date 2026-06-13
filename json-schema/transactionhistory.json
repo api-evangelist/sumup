@@ -1,0 +1,63 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Transaction History",
+  "description": "Transaction entry returned in history listing responses.",
+  "allOf": [
+    {
+      "$ref": "#/components/schemas/TransactionBase"
+    },
+    {
+      "$ref": "#/components/schemas/TransactionMixinHistory"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "transaction_id": {
+          "$ref": "#/components/schemas/TransactionID"
+        },
+        "client_transaction_id": {
+          "description": "Client-specific ID of the transaction.",
+          "type": "string"
+        },
+        "user": {
+          "description": "Email address of the registered user (merchant) to whom the payment is made.",
+          "type": "string",
+          "format": "email"
+        },
+        "type": {
+          "description": "Type of the transaction for the registered user specified in the `user` property.",
+          "type": "string",
+          "enum": [
+            "PAYMENT",
+            "REFUND",
+            "CHARGE_BACK"
+          ]
+        },
+        "card_type": {
+          "$ref": "#/components/schemas/CardType"
+        },
+        "payout_date": {
+          "description": "Payout date (if paid out at once).",
+          "type": "string",
+          "format": "date",
+          "example": "2019-08-28"
+        },
+        "payout_type": {
+          "description": "Payout type.",
+          "type": "string",
+          "example": "BANK_ACCOUNT",
+          "enum": [
+            "BANK_ACCOUNT",
+            "PREPAID_CARD"
+          ]
+        },
+        "refunded_amount": {
+          "description": "Total refunded amount.",
+          "type": "number",
+          "format": "decimal",
+          "example": 0
+        }
+      }
+    }
+  ]
+}

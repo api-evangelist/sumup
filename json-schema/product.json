@@ -1,0 +1,59 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Product",
+  "description": "Purchase product.",
+  "type": "object",
+  "properties": {
+    "name": {
+      "description": "Product name.",
+      "type": "string",
+      "example": "Purchase reader for merchant with code ME3FCAVF"
+    },
+    "price_label": {
+      "description": "Product description.",
+      "type": "string"
+    },
+    "price": {
+      "description": "Product price.",
+      "type": "number",
+      "format": "decimal",
+      "example": 100
+    },
+    "vat_rate": {
+      "description": "VAT percentage.",
+      "type": "number",
+      "format": "decimal"
+    },
+    "single_vat_amount": {
+      "description": "VAT amount for a single product.",
+      "type": "number",
+      "format": "decimal"
+    },
+    "price_with_vat": {
+      "description": "Product price incl. VAT.",
+      "type": "number",
+      "format": "decimal"
+    },
+    "vat_amount": {
+      "description": "VAT amount.",
+      "type": "number",
+      "format": "decimal"
+    },
+    "quantity": {
+      "description": "Product quantity.",
+      "type": "integer",
+      "example": 1
+    },
+    "total_price": {
+      "description": "Quantity x product price.",
+      "type": "number",
+      "format": "decimal",
+      "example": 100
+    },
+    "total_with_vat": {
+      "description": "Total price incl. VAT.",
+      "type": "number",
+      "format": "decimal"
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Transaction Mixin History",
+  "description": "Additional transaction fields used by history and detailed views.",
+  "type": "object",
+  "properties": {
+    "product_summary": {
+      "description": "Short description of the payment. The value is taken from the `description` property of the related checkout resource.",
+      "type": "string"
+    },
+    "payouts_total": {
+      "description": "Total number of payouts to the registered user specified in the `user` property.",
+      "type": "integer"
+    },
+    "payouts_received": {
+      "description": "Number of payouts that are made to the registered user specified in the `user` property.",
+      "type": "integer"
+    },
+    "payout_plan": {
+      "description": "Payout plan of the registered user at the time when the transaction was made.",
+      "type": "string",
+      "enum": [
+        "SINGLE_PAYMENT",
+        "TRUE_INSTALLMENT",
+        "ACCELERATED_INSTALLMENT"
+      ]
+    }
+  }
+}

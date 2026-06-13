@@ -1,0 +1,52 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Checkout Accepted",
+  "description": "Response returned when checkout processing requires an additional payer action, such as a 3DS challenge or a redirect to an external payment method page.",
+  "type": "object",
+  "properties": {
+    "next_step": {
+      "description": "Instructions for the next action the payer or client must take.",
+      "type": "object",
+      "properties": {
+        "url": {
+          "description": "URL to open or submit in order to continue processing.",
+          "type": "string",
+          "example": "https://dummy-3ds-gateway.com/cap?RID=1233&VAA=A"
+        },
+        "method": {
+          "description": "HTTP method to use when following the next step.",
+          "type": "string",
+          "example": "POST"
+        },
+        "redirect_url": {
+          "description": "Merchant URL where the payer returns after the external flow finishes.",
+          "type": "string",
+          "example": "https://mysite.com/completed_purchase"
+        },
+        "mechanism": {
+          "description": "Allowed presentation mechanisms for the next step. `iframe` means the flow can be embedded, while `browser` means it can be completed through a full-page redirect.",
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "iframe",
+              "browser"
+            ]
+          }
+        },
+        "payload": {
+          "description": "Parameters required to complete the next step. The exact keys depend on the payment provider and flow type.",
+          "type": "object",
+          "example": {
+            "PaReq": "eJxVUttu2zAM/RXDr4MjyY5dO6BVuE27FZuDZHGG9VGRmMSFb/Wljff1k9KkF0APPCR1eHQouD6WhfWCbZfXVWyzCbUtrGSt8mof25vs3gltq+tFpURRVxjbI3b2NYfs0CLO1yiHFjmk2HVij1auYrsRW1+F0U4qZxfKwJlur4QTYcQcJoIdc+XO2/poc1gmv/GZw3k216MnLpAL1JytPIiq5yDk883Dgk+DwPV9IGcIJbYPc84o1Ye6lHqu5wVA3tJQiRL5eiiHxlqKscSq76xfeZn3qICciiDroerbkYeuvnYBMLQFP/R9MyOkM9cnCoGYJJAPScvBRJ0mOeaKr/6l08XT6jXN7tx0vvHSbOMtsj1dzB9jIKYDlOiRu1omYyy0WDCj0YxFQE55EKWZzj2f6ee9xdCYEcmnwucEaN9bvaeRR1ehFn9BgMdGr0l3aCvfYyAfem9/GENlrz36ufpTBPTv07r8lm3qpPiOo1y/7u+SJImNzacmw5hrX1wt/kRpABBDQ84bJOf16+jLt/gPhUvGGw==",
+            "MD": "b1a536c0-29b9-11eb-adc1-0242ac120002",
+            "TermUrl": "https://api.sumup.com/v0.1/checkouts/e552de3b-1777-4c91-bdb8-756967678572/complete_payment"
+          },
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

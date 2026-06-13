@@ -1,0 +1,89 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Merchant",
+  "allOf": [
+    {
+      "type": "object",
+      "required": [
+        "merchant_code",
+        "country",
+        "default_currency",
+        "default_locale"
+      ],
+      "properties": {
+        "merchant_code": {
+          "description": "Short unique identifier for the merchant.",
+          "type": "string",
+          "example": "MK01A8C2",
+          "readOnly": true
+        },
+        "organization_id": {
+          "description": "ID of the organization the merchant belongs to (if any).",
+          "type": "string",
+          "example": "G0UZPVAX"
+        },
+        "business_type": {
+          "description": "The business type.\n* `sole_trader`: The business is run by an self-employed individual.\n* `company`: The business is run as a company with one or more shareholders\n* `partnership`: The business is run as a company with two or more shareholders that can be also other legal entities\n* `non_profit`: The business is run as a nonprofit organization that operates for public or social benefit\n* `government_entity`: The business is state owned and operated\n",
+          "type": "string"
+        },
+        "company": {
+          "$ref": "#/components/schemas/Company"
+        },
+        "country": {
+          "$ref": "#/components/schemas/CountryCode"
+        },
+        "business_profile": {
+          "$ref": "#/components/schemas/BusinessProfile"
+        },
+        "avatar": {
+          "description": "A user-facing small-format logo for use in dashboards and other user-facing applications. For customer-facing branding see `merchant.business_profile.branding`.\n",
+          "type": "string",
+          "format": "uri"
+        },
+        "alias": {
+          "description": "A user-facing name of the merchant account for use in dashboards and other user-facing applications. For customer-facing business name see `merchant.business_profile`.\n",
+          "type": "string"
+        },
+        "default_currency": {
+          "description": "Three-letter [ISO currency code](https://en.wikipedia.org/wiki/ISO_4217) representing the default currency for the account.\n",
+          "type": "string",
+          "example": "EUR",
+          "maxLength": 3,
+          "minLength": 3,
+          "readOnly": true
+        },
+        "default_locale": {
+          "description": "Merchant's default locale, represented as a BCP47 [RFC5646](https://datatracker.ietf.org/doc/html/rfc5646) language tag. This is typically an ISO 639-1 Alpha-2 [ISO639\u20111](https://www.iso.org/iso-639-language-code) language code in lowercase and an ISO 3166-1 Alpha-2 [ISO3166\u20111](https://www.iso.org/iso-3166-country-codes.html) country code in uppercase, separated by a dash. For example, en-US or fr-CA.\nIn multilingual countries this is the merchant's preferred locale out of those, that are officially spoken in the country. In a countries with a single official language this will match the official language.",
+          "type": "string",
+          "example": "de-DE",
+          "maxLength": 5,
+          "minLength": 2
+        },
+        "sandbox": {
+          "description": "True if the merchant is a sandbox for testing.",
+          "type": "boolean",
+          "example": false
+        },
+        "meta": {
+          "$ref": "#/components/schemas/Meta"
+        },
+        "classic": {
+          "$ref": "#/components/schemas/ClassicMerchantIdentifiers"
+        },
+        "version": {
+          "$ref": "#/components/schemas/Version"
+        },
+        "change_status": {
+          "$ref": "#/components/schemas/ChangeStatus"
+        }
+      }
+    },
+    {
+      "$ref": "#/components/schemas/Timestamps"
+    }
+  ],
+  "externalDocs": {
+    "description": "Merchant documentation",
+    "url": "https://developer.sumup.com/tools/glossary/merchant"
+  }
+}

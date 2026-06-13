@@ -1,0 +1,11 @@
+{
+  "id": "rdr_3MSAFM23CK82VSTT4BN6RWSQ65",
+  "name": "Frontdesk",
+  "status": "processing",
+  "device": {
+    "identifier": "U1DT3NA00-CN",
+    "model": "solo"
+  },
+  "created_at": "2023-05-09T14:50:20.214000+00:00",
+  "updated_at": "2023-05-09T14:52:58.714000+00:00"
+}

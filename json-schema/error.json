@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Error",
+  "description": "Error message structure.",
+  "type": "object",
+  "properties": {
+    "message": {
+      "description": "Short description of the error.",
+      "type": "string",
+      "example": "Resource not found"
+    },
+    "error_code": {
+      "description": "Platform code for the error.",
+      "type": "string",
+      "example": "NOT_FOUND"
+    }
+  }
+}

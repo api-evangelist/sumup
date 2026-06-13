@@ -1,0 +1,9 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Version",
+  "description": "The version of the resource. The version reflects a specific change submitted to the API via one of the `PATCH` endpoints.\n",
+  "type": "string",
+  "examples": [
+    "chng_01HS0KG3MPVEVWW85E3KNXH55J"
+  ]
+}

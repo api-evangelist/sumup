@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ELV Card Account",
+  "description": "Details of the ELV card account associated with the transaction.",
+  "type": "object",
+  "properties": {
+    "sort_code": {
+      "description": "ELV card sort code.",
+      "type": "string",
+      "example": "87096214"
+    },
+    "last_4_digits": {
+      "description": "ELV card account number last 4 digits.",
+      "type": "string",
+      "example": "5674"
+    },
+    "sequence_no": {
+      "description": "ELV card sequence number.",
+      "type": "integer",
+      "example": 1
+    },
+    "iban": {
+      "description": "ELV IBAN.",
+      "type": "string",
+      "example": "DE60870962140012345674"
+    }
+  }
+}

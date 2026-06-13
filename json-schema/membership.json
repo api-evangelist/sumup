@@ -1,0 +1,88 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Membership",
+  "description": "A membership associates a user with a resource, memberships is defined by user, resource, resource type, and associated roles.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "description": "ID of the membership.",
+      "type": "string",
+      "example": "mem_WZsm7QTPhVrompscmPhoGTXXcrd58fr9MOhP"
+    },
+    "resource_id": {
+      "description": "ID of the resource the membership is in.",
+      "type": "string",
+      "example": "M2DDT39A"
+    },
+    "type": {
+      "$ref": "#/components/schemas/ResourceType"
+    },
+    "roles": {
+      "description": "User's roles.",
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "example": [
+        "role_admin"
+      ]
+    },
+    "permissions": {
+      "description": "User's permissions.",
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "example": [
+        "members_read",
+        "members_write",
+        "create_moto_payments",
+        "full_transaction_history_view",
+        "refund_transactions",
+        "create_referral",
+        "developer_settings_edit",
+        "developer_settings_access"
+      ],
+      "deprecated": true,
+      "x-deprecation-notice": "Permissions include only legacy permissions, please use roles instead. Member access is based on their roles within a given resource and the permissions these roles grant."
+    },
+    "created_at": {
+      "description": "The timestamp of when the membership was created.",
+      "type": "string",
+      "format": "date-time",
+      "example": "2023-01-20T15:16:17+00:00"
+    },
+    "updated_at": {
+      "description": "The timestamp of when the membership was last updated.",
+      "type": "string",
+      "format": "date-time",
+      "example": "2023-01-20T15:16:17+00:00"
+    },
+    "invite": {
+      "$ref": "#/components/schemas/Invite"
+    },
+    "status": {
+      "$ref": "#/components/schemas/MembershipStatus"
+    },
+    "metadata": {
+      "$ref": "#/components/schemas/Metadata"
+    },
+    "attributes": {
+      "$ref": "#/components/schemas/Attributes"
+    },
+    "resource": {
+      "$ref": "#/components/schemas/MembershipResource"
+    }
+  },
+  "required": [
+    "id",
+    "resource_id",
+    "type",
+    "roles",
+    "permissions",
+    "created_at",
+    "updated_at",
+    "status",
+    "resource"
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Details Error",
+  "description": "Error message structure.",
+  "type": "object",
+  "properties": {
+    "title": {
+      "description": "Short title of the error.",
+      "type": "string",
+      "example": "Bad Request"
+    },
+    "details": {
+      "description": "Details of the error.",
+      "type": "string",
+      "example": "One or more of the parameters are invalid."
+    },
+    "status": {
+      "description": "The status code.",
+      "type": "number",
+      "example": 400
+    },
+    "failed_constraints": {
+      "description": "List of violated validation constraints.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "reference": {
+            "type": "string"
+          }
+        }
+      },
+      "example": [
+        {
+          "message": "Currency must also be specified when filtering by amount",
+          "reference": "currency"
+        }
+      ]
+    }
+  }
+}

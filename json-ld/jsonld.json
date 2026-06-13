@@ -1,0 +1,36 @@
+{
+  "@context": {
+    "@vocab": "https://schema.org/",
+    "sumup": "https://developer.sumup.com/api#",
+    "openapi": "https://spec.openapis.org/oas/v3.0.1#"
+  },
+  "@type": "WebAPI",
+  "@id": "https://developer.sumup.com/api",
+  "name": "SumUp REST API",
+  "description": "SumUp\u2019s REST API operates with [JSON](https://www.json.org/json-en.html) HTTP requests and responses. The request bodies are sent through resource-oriented URLs and use the standard [HTTP response codes](https://developer.mozilla.org/docs/Web/HTTP/Status).",
+  "version": "1.0.0",
+  "url": "https://api.sumup.com",
+  "documentation": "https://developer.sumup.com/api",
+  "license": "https://www.apache.org/licenses/LICENSE-2.0.html",
+  "provider": {
+    "@type": "Organization",
+    "name": "SumUp",
+    "url": "https://sumup.com",
+    "sameAs": [
+      "https://github.com/sumup",
+      "https://www.linkedin.com/company/sumup",
+      "https://x.com/SumUp"
+    ]
+  },
+  "offers": {
+    "@type": "Offer",
+    "url": "https://sumup.com/pricing/"
+  },
+  "serviceType": [
+    "Payment Processing",
+    "Point of Sale",
+    "Card Reader Management",
+    "Checkout",
+    "Payout"
+  ]
+}

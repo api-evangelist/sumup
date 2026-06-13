@@ -1,0 +1,7 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Event ID",
+  "description": "Unique ID of the transaction event.",
+  "type": "integer",
+  "format": "int64"
+}

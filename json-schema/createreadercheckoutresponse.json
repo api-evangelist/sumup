@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CreateReaderCheckoutResponse",
+  "type": "object",
+  "properties": {
+    "data": {
+      "type": "object",
+      "properties": {
+        "client_transaction_id": {
+          "description": "The client transaction ID is a unique identifier for the transaction that is generated for the client.\n\nIt can be used later to fetch the transaction details via the [Transactions API](https://developer.sumup.com/api/transactions/get).\n",
+          "type": "string",
+          "example": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+        }
+      },
+      "required": [
+        "client_transaction_id"
+      ]
+    }
+  },
+  "example": {
+    "data": {
+      "client_transaction_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+    }
+  },
+  "required": [
+    "data"
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ResourceType",
+  "description": "The type of the membership resource.\nPossible values are:\n* `merchant` - merchant account(s)\n* `organization` - organization(s)",
+  "type": "string",
+  "example": "merchant"
+}

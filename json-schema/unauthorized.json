@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Unauthorized",
+  "description": "401 Unauthorized",
+  "type": "object",
+  "properties": {
+    "errors": {
+      "type": "object",
+      "properties": {
+        "detail": {
+          "description": "Fuller message giving context to error",
+          "type": "string"
+        },
+        "type": {
+          "description": "Key indicating type of error. Present only for typed 401 responses (e.g. invalid token, invalid password). Absent for generic unauthorized responses.",
+          "type": "string",
+          "enum": [
+            "INVALID_ACCESS_TOKEN",
+            "INVALID_PASSWORD"
+          ]
+        }
+      },
+      "required": [
+        "detail"
+      ]
+    }
+  },
+  "example": {
+    "errors": {
+      "detail": "Unauthorized"
+    }
+  },
+  "required": [
+    "errors"
+  ]
+}
