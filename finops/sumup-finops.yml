@@ -1,0 +1,63 @@
+name: SumUp FinOps
+description: Financial operations guidance for teams integrating SumUp APIs. Covers
+  cost drivers, optimization strategies, and budget considerations for payment processing
+  via SumUp's REST API.
+url: https://sumup.com/pricing/
+costDrivers:
+  - name: Transaction Fees
+    description: The primary cost driver. SumUp charges a percentage plus a fixed
+      amount per transaction processed through the API.
+    items:
+      - type: In-person (card reader / Tap to Pay)
+        rate: '2.6% + $0.10 per transaction'
+      - type: Online checkout / API-initiated payment
+        rate: '3.5% + $0.15 per transaction'
+      - type: Invoice link payments
+        rate: '2.9% + $0.15 per transaction'
+  - name: Hardware
+    description: One-time cost for card reader hardware. Not an ongoing API cost
+      but relevant for card-present integrations.
+    notes: Varies by device model (Air, Solo, Solo Lite, 3G, PIN+). Check sumup.com/shop
+      for current prices.
+  - name: Subscription Plans
+    description: Optional monthly fees for POS with Connect Plus ($199/mo) or Connect
+      Pro ($289/mo). These plans bundle POS software and marketing tools alongside
+      payment processing.
+optimization:
+  - strategy: Use test/sandbox keys during development
+    description: All sandbox API calls are free. Avoid using live keys during development
+      to prevent real transaction fees on test payments.
+  - strategy: Choose the right payment flow for your channel
+    description: In-person rates (2.6% + $0.10) are lower than online rates (3.5%
+      + $0.15). Route card-present transactions through card readers to reduce per-transaction
+      cost.
+  - strategy: Evaluate SumUp One for high volume (UK/EU)
+    description: SumUp One membership reduces domestic transaction fees to 0.99%
+      flat in eligible markets. For high-volume merchants this significantly reduces
+      costs versus pay-as-you-go.
+  - strategy: Negotiate custom pricing at scale
+    description: Merchants exceeding $60,000/year in processing volume (or regional
+      equivalent) may qualify for custom rates through SumUp's enterprise sales team.
+  - strategy: Avoid unnecessary API calls
+    description: Implement caching and webhooks (where available) to reduce redundant
+      polling for transaction or payout status, minimizing both rate-limit exposure
+      and integration complexity.
+  - strategy: Implement exponential backoff on 429 responses
+    description: Avoid wasted API calls due to rate limiting. Proper backoff reduces
+      retry storms and keeps integration costs predictable.
+budgetingGuidance:
+  - Estimate monthly transaction volume and average transaction value to project fee
+    spend.
+  - Factor in chargeback and dispute risk; SumUp does not charge additional dispute
+    fees beyond the original transaction fee.
+  - Refunded transactions do not incur additional fees, but the original transaction
+    fee is not returned.
+  - No charges for declined transactions.
+  - API access itself has no per-seat or per-call cost beyond transaction fees.
+noAdditionalCosts:
+  - API key creation and management
+  - Sandbox / test environment access
+  - Fraud protection and anti-fraud tools
+  - OAuth 2.0 authentication
+  - SDK usage (Node.js, Python, Go, Java, PHP, .NET, Rust)
+  - Developer portal and documentation access

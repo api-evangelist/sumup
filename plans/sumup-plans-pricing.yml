@@ -1,0 +1,68 @@
+name: SumUp Plans and Pricing
+description: SumUp offers pay-as-you-go transaction pricing with no monthly fees on
+  the standard plan, plus optional subscription plans for POS with Connect that reduce
+  per-transaction costs. Pricing applies to both hardware readers and online payment
+  processing via the API.
+url: https://sumup.com/pricing/
+plans:
+  - name: Standard (Pay-As-You-Go)
+    description: No monthly fee. Pay only per transaction. Suitable for low-volume
+      merchants and developers testing integrations.
+    monthlyFee: 0
+    currency: USD
+    features:
+      - No setup fees
+      - No monthly minimums
+      - No hidden fees
+      - 30-day money-back guarantee on hardware
+      - Built-in fraud protection at no extra cost
+      - No fees for declined or refunded transactions
+      - Sandbox/test environment access
+    transactionFees:
+      - type: In-person card payments
+        rate: '2.6% + $0.10'
+      - type: Online and manual entry
+        rate: '3.5% + $0.15'
+      - type: Invoicing (paid via online link)
+        rate: '2.9% + $0.15'
+  - name: POS with Connect Plus
+    description: Monthly subscription for merchants needing a full POS solution with
+      customer database, automated marketing, and dedicated onboarding support.
+    monthlyFee: 199
+    currency: USD
+    features:
+      - Cloud-based POS system
+      - Customer database
+      - Dedicated installation and training
+      - Customer rewards program
+      - Automated marketing
+      - Two standard monthly promotions
+  - name: POS with Connect Pro
+    description: Enhanced monthly subscription including everything in Connect Plus
+      with unlimited marketing and AI-enhanced communications.
+    monthlyFee: 289
+    currency: USD
+    features:
+      - All Connect Plus features
+      - Unlimited marketing promotions
+      - Google review boost
+      - AI-enhanced SMS and email campaigns
+  - name: SumUp One (UK/EU)
+    description: Reduced transaction rate subscription available in select markets
+      for high-volume merchants.
+    features:
+      - Flat 0.99% transaction fee for domestic payments
+      - Reduced rates vs standard plan
+      - Available in UK and EU markets
+  - name: Custom / Enterprise
+    description: Volume-based custom pricing for merchants processing over threshold
+      amounts annually. Contact SumUp sales for a custom quote.
+    features:
+      - Custom transaction rates
+      - Dedicated account management
+      - Available for merchants processing over $60,000/year (or regional equivalent)
+notes:
+  - SumUp does not publish separate API-specific pricing tiers; API access is included
+    with merchant account registration at no additional cost.
+  - Test/sandbox API access is free and does not require a paid plan.
+  - OAuth 2.0 and API key authentication are available to all registered developers.

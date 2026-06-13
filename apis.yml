@@ -1,0 +1,76 @@
+aid: sumup
+name: SumUp
+description: European mobile payment and POS platform with REST APIs for creating
+  checkout links, managing card readers, processing payments, tracking transactions,
+  and accessing payout data. SumUp serves over 4 million merchants in 37 markets
+  with built-in fraud protection, sandbox environments for testing, and SDKs for
+  multiple programming languages.
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+url: https://raw.githubusercontent.com/api-evangelist/sumup/refs/heads/main/apis.yml
+created: '2026-06-13'
+modified: '2026-06-13'
+specificationVersion: '0.19'
+tags:
+  - Payments
+  - POS
+  - Point of Sale
+  - Card Readers
+  - Checkout
+  - Fintech
+  - Mobile Payments
+  - Online Payments
+apis:
+  - aid: sumup:sumup-rest-api
+    name: SumUp REST API
+    description: REST API for creating and executing checkouts, managing card readers,
+      processing payments, storing customer cards, issuing refunds, retrieving transactions,
+      and accessing payout data. Base URL is https://api.sumup.com with API key and
+      OAuth 2.0 authentication.
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://developer.sumup.com/api
+    baseURL: https://api.sumup.com
+    tags:
+      - Checkouts
+      - Payments
+      - Transactions
+      - Customers
+      - Card Readers
+      - Payouts
+      - Receipts
+    properties:
+      - type: Documentation
+        url: https://developer.sumup.com/api
+      - type: OpenAPI
+        url: https://raw.githubusercontent.com/sumup/sumup-openapi/main/openapi.yaml
+      - type: Postman Collection
+        url: https://www.postman.com/sumupengineering/sumup-developers/collection/iqa7nry/sumup-rest-api
+common:
+  - type: Website
+    url: https://sumup.com
+  - type: Documentation
+    url: https://developer.sumup.com
+  - type: GitHubOrg
+    url: https://github.com/sumup
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/sumup
+  - type: Blog
+    url: https://medium.com/sumup-engineering
+  - type: Pricing
+    url: https://sumup.com/pricing/
+  - type: StatusPage
+    url: https://status.sumup.com/
+  - type: X
+    url: https://x.com/SumUp
+  - type: Plans
+    url: plans/sumup-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/sumup-rate-limits.yml
+  - type: FinOps
+    url: finops/sumup-finops.yml
+  - type: Changelog
+    url: https://developer.sumup.com/changelog
+  - type: GitHubRepository
+    url: https://github.com/sumup/sumup-openapi
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

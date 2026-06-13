@@ -1,0 +1,39 @@
+name: SumUp API Rate Limits
+description: SumUp enforces rate limits on its REST API to ensure fair usage and
+  platform stability. When limits are exceeded the API returns HTTP 429 Too Many Requests.
+  Developers should implement exponential backoff when handling 429 responses. Specific
+  numeric thresholds are not publicly documented.
+url: https://developer.sumup.com/api
+limits:
+  - scope: Global (all endpoints)
+    statusCodeOnExceed: 429
+    retryStrategy: Exponential backoff
+    notes: >
+      SumUp advises retrying requests with exponential backoff when a 429 status
+      code is received. Specific request-per-second or request-per-minute thresholds
+      are not publicly published in the developer documentation.
+headers:
+  - name: Authorization
+    description: Bearer token (API key or OAuth 2.0 access token) required on all
+      requests
+    example: 'Authorization: Bearer sk_live_xxxxxxxxxxxx'
+authentication:
+  - type: API Key
+    description: API keys issued per merchant account. Test keys prefixed with sk_test_,
+      production keys prefixed with sk_live_.
+    granularity: Restricted API keys with granular permissions are supported.
+  - type: OAuth 2.0
+    description: OAuth 2.0 delegated access for third-party integrations. Used when
+      acting on behalf of a merchant.
+environments:
+  - name: Sandbox / Test
+    baseURL: https://api.sumup.com
+    notes: Use test API keys (sk_test_*) to process simulated transactions without
+      real funds.
+  - name: Production
+    baseURL: https://api.sumup.com
+    notes: Use live API keys (sk_live_*) for real payment processing.
+transport:
+  - HTTPS required for all requests
+  - JSON request and response bodies
+  - CORS supported for browser-based integrations
