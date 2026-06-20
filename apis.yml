@@ -5,7 +5,7 @@ description: European mobile payment and POS platform with REST APIs for creatin
   and accessing payout data. SumUp serves over 4 million merchants in 37 markets
   with built-in fraud protection, sandbox environments for testing, and SDKs for
   multiple programming languages.
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 url: https://raw.githubusercontent.com/api-evangelist/sumup/refs/heads/main/apis.yml
 created: '2026-06-13'
 modified: '2026-06-13'
@@ -26,7 +26,7 @@ apis:
       processing payments, storing customer cards, issuing refunds, retrieving transactions,
       and accessing payout data. Base URL is https://api.sumup.com with API key and
       OAuth 2.0 authentication.
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     humanURL: https://developer.sumup.com/api
     baseURL: https://api.sumup.com
     tags:
