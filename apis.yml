@@ -42,7 +42,7 @@ apis:
         url: https://developer.sumup.com/api
       - type: OpenAPI
         url: https://raw.githubusercontent.com/sumup/sumup-openapi/main/openapi.yaml
-      - type: Postman Collection
+      - type: PostmanCollection
         url: https://www.postman.com/sumupengineering/sumup-developers/collection/iqa7nry/sumup-rest-api
 common:
   - type: Website
@@ -67,7 +67,7 @@ common:
     url: rate-limits/sumup-rate-limits.yml
   - type: FinOps
     url: finops/sumup-finops.yml
-  - type: Changelog
+  - type: ChangeLog
     url: https://developer.sumup.com/changelog
   - type: GitHubRepository
     url: https://github.com/sumup/sumup-openapi
