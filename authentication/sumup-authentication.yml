@@ -1,0 +1,36 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/openapi.yaml
+summary:
+  types:
+  - http
+  - oauth2
+  oauth2_flows:
+  - authorizationCode
+  - clientCredentials
+schemes:
+- name: apiKey
+  type: http
+  scheme: Bearer
+  description: API keys allow you easily interact with SumUp APIs. API keys are static tokens.
+    You can create API keys from the [Dashboard](https://me.sumup.com/settings/api-keys)
+  sources:
+  - openapi/openapi.yaml
+- name: oauth2
+  type: oauth2
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://api.sumup.com/authorize
+    tokenUrl: https://api.sumup.com/token
+    scopes: 8
+  - flow: clientCredentials
+    tokenUrl: https://api.sumup.com/token
+    scopes: 8
+  description: |-
+    SumUp supports [OAuth 2.0](https://tools.ietf.org/html/rfc6749) authentication for platforms that want to offer their services to SumUp users.
+
+    To integrate via OAuth 2.0 you will need a client credentials that you can create in the [SumUp Dashboard](https://me.sumup.com/settings/oauth2-applications).
+
+    To maintain security of our users, we highly recommend that you use one of the [recommended OAut
+  sources:
+  - openapi/openapi.yaml

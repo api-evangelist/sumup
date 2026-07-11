@@ -45,6 +45,10 @@ apis:
       - type: PostmanCollection
         url: https://www.postman.com/sumupengineering/sumup-developers/collection/iqa7nry/sumup-rest-api
 common:
+  - type: VulnerabilityDisclosure
+    url: security/sumup-vulnerability-disclosure.yml
+  - type: DomainSecurity
+    url: security/sumup-domain-security.yml
   - type: Authentication
     url: authentication/sumup-authentication.yml
   - type: OAuthScopes
