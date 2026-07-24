@@ -1,0 +1,708 @@
+openapi: 3.0.1
+info:
+  title: SumUp REST Checkouts Customers API
+  version: 1.0.0
+  description: 'SumUp’s REST API operates with [JSON](https://www.json.org/json-en.html) HTTP requests and responses. The request bodies are sent through resource-oriented URLs and use the standard [HTTP response codes](https://developer.mozilla.org/docs/Web/HTTP/Status).
+
+
+    You can experiment and work on your integration in a sandbox that doesn''t affect your regular data and doesn''t process real transactions. To create a sandbox merchant account visit the [dashboard](https://me.sumup.com/settings/developer). To use the sandbox when interacting with SumUp APIs [create an API](https://me.sumup.com/settings/api-keys) key and use it for [authentication](https://developer.sumup.com/api/authentication).'
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+servers:
+- url: https://api.sumup.com
+  description: Production server
+tags:
+- name: Customers
+  description: 'Allow your regular customers to save their information with the Customers model.
+
+
+    This will prevent re-entering payment instrument information for recurring payments on your platform.
+
+
+    Depending on the needs you can allow, creating, listing or deactivating payment instruments & creating, retrieving and updating customers.'
+  x-core-objects:
+  - $ref: '#/components/schemas/Customer'
+paths:
+  /v0.1/customers:
+    post:
+      operationId: CreateCustomer
+      summary: Create a customer
+      description: Creates a new saved customer resource which you can later manipulate and save payment instruments to.
+      requestBody:
+        description: Details of the customer.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Customer'
+      responses:
+        '201':
+          description: Returns the customer resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+        '400':
+          description: The request body is invalid.
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorExtended'
+                - type: object
+                  required:
+                  - instance
+                  - error_code
+                  - error_message
+                  properties:
+                    instance:
+                      type: string
+                    error_code:
+                      type: string
+                    error_message:
+                      type: string
+              examples:
+                Missing_Customer_ID:
+                  description: The required customer identifier is missing.
+                  value:
+                    error_code: INVALID
+                    message: Validation error
+                    param: customer_id
+        '401':
+          description: The request is not authorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+              examples:
+                Problem_Details:
+                  description: Unauthorized response returned by API gateway.
+                  value:
+                    detail: Unauthorized.
+                    status: 401
+                    title: Unauthorized
+                    trace_id: 3c77294349d3b5647ea2d990f0d8f017
+                    type: https://developer.sumup.com/problem/unauthorized
+        '403':
+          description: The request is authenticated but not permitted for this operation.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorForbidden'
+              examples:
+                Forbidden:
+                  description: You do not have required scopes for making this request.
+                  value:
+                    error_message: request_not_allowed
+                    error_code: FORBIDDEN
+                    status_code: '403'
+        '409':
+          description: A customer with the provided identifier already exists.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Existing_Customer:
+                  description: A resource with the specified identifier already exists on the server.
+                  value:
+                    message: Customer already exists
+                    error_code: CUSTOMER_ALREADY_EXISTS
+      security:
+      - apiKey: []
+      - oauth2:
+        - payment_instruments
+      tags:
+      - Customers
+      x-codegen:
+        method_name: create
+      x-scopes:
+      - payment_instruments
+  /v0.1/customers/{customer_id}:
+    parameters:
+    - name: customer_id
+      in: path
+      description: Unique ID of the saved customer resource.
+      required: true
+      schema:
+        type: string
+    get:
+      operationId: GetCustomer
+      summary: Retrieve a customer
+      description: Retrieves an identified saved customer resource through the unique `customer_id` parameter, generated upon customer creation.
+      responses:
+        '200':
+          description: Returns the customer resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+        '401':
+          description: The request is not authorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+              examples:
+                Problem_Details:
+                  description: Unauthorized response returned by API gateway.
+                  value:
+                    detail: Unauthorized.
+                    status: 401
+                    title: Unauthorized
+                    trace_id: 3c77294349d3b5647ea2d990f0d8f017
+                    type: https://developer.sumup.com/problem/unauthorized
+        '403':
+          description: The request is authenticated but not permitted for this operation.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorForbidden'
+              examples:
+                Forbidden:
+                  description: You do not have required scopes for making this request.
+                  value:
+                    error_message: request_not_allowed
+                    error_code: FORBIDDEN
+                    status_code: '403'
+        '404':
+          description: The requested resource does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Not_Found:
+                  description: The identified resource is not found on the server.
+                  value:
+                    error_code: NOT_FOUND
+                    message: Resource not found
+      security:
+      - apiKey: []
+      - oauth2:
+        - payment_instruments
+      tags:
+      - Customers
+      x-codegen:
+        method_name: get
+      x-scopes:
+      - payment_instruments
+    put:
+      operationId: UpdateCustomer
+      summary: Update a customer
+      description: 'Updates an identified saved customer resource''s personal details.
+
+
+        The request only overwrites the parameters included in the request, all other parameters will remain with their initially assigned values.'
+      requestBody:
+        description: Customer fields to update.
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                personal_details:
+                  $ref: '#/components/schemas/PersonalDetails'
+      responses:
+        '200':
+          description: Returns the customer resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+        '401':
+          description: The request is not authorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+              examples:
+                Problem_Details:
+                  description: Unauthorized response returned by API gateway.
+                  value:
+                    detail: Unauthorized.
+                    status: 401
+                    title: Unauthorized
+                    trace_id: 3c77294349d3b5647ea2d990f0d8f017
+                    type: https://developer.sumup.com/problem/unauthorized
+        '403':
+          description: The request is authenticated but not permitted for this operation.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorForbidden'
+              examples:
+                Forbidden:
+                  description: You do not have required scopes for making this request.
+                  value:
+                    error_message: request_not_allowed
+                    error_code: FORBIDDEN
+                    status_code: '403'
+        '404':
+          description: The requested resource does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Not_Found:
+                  description: The identified resource is not found on the server.
+                  value:
+                    error_code: NOT_FOUND
+                    message: Resource not found
+      security:
+      - apiKey: []
+      - oauth2:
+        - payment_instruments
+      tags:
+      - Customers
+      x-codegen:
+        method_name: update
+      x-scopes:
+      - payment_instruments
+  /v0.1/customers/{customer_id}/payment-instruments:
+    parameters:
+    - name: customer_id
+      in: path
+      description: Unique ID of the saved customer resource.
+      required: true
+      schema:
+        type: string
+    get:
+      operationId: ListPaymentInstruments
+      summary: List payment instruments
+      description: Lists all payment instrument resources that are saved for an identified customer.
+      responses:
+        '200':
+          description: Returns the list of saved payment instruments for the customer.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PaymentInstrumentResponse'
+        '401':
+          description: The request is not authorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+              examples:
+                Problem_Details:
+                  description: Unauthorized response returned by API gateway.
+                  value:
+                    detail: Unauthorized.
+                    status: 401
+                    title: Unauthorized
+                    trace_id: 3c77294349d3b5647ea2d990f0d8f017
+                    type: https://developer.sumup.com/problem/unauthorized
+        '403':
+          description: The request is authenticated but not permitted for this operation.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorForbidden'
+              examples:
+                Forbidden:
+                  description: You do not have required scopes for making this request.
+                  value:
+                    error_message: request_not_allowed
+                    error_code: FORBIDDEN
+                    status_code: '403'
+        '404':
+          description: The requested resource does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Not_Found:
+                  description: The identified resource is not found on the server.
+                  value:
+                    error_code: NOT_FOUND
+                    message: Resource not found
+      security:
+      - apiKey: []
+      - oauth2:
+        - payment_instruments
+      tags:
+      - Customers
+      x-codegen:
+        method_name: list_payment_instruments
+      x-scopes:
+      - payment_instruments
+  /v0.1/customers/{customer_id}/payment-instruments/{token}:
+    parameters:
+    - name: customer_id
+      in: path
+      description: Unique ID of the saved customer resource.
+      required: true
+      schema:
+        type: string
+    - name: token
+      in: path
+      description: Unique token identifying the card saved as a payment instrument resource.
+      required: true
+      schema:
+        type: string
+    delete:
+      operationId: DeactivatePaymentInstrument
+      summary: Deactivate a payment instrument
+      description: Deactivates an identified card payment instrument resource for a customer.
+      responses:
+        '204':
+          description: Returns an empty response body when the operation succeeds.
+        '400':
+          description: The request is invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Invalid_Request:
+                  description: The request cannot be processed.
+                  value:
+                    error_code: INVALID_REQUEST
+                    message: bad request
+        '401':
+          description: The request is not authorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+              examples:
+                Problem_Details:
+                  description: Unauthorized response returned by API gateway.
+                  value:
+                    detail: Unauthorized.
+                    status: 401
+                    title: Unauthorized
+                    trace_id: 3c77294349d3b5647ea2d990f0d8f017
+                    type: https://developer.sumup.com/problem/unauthorized
+        '403':
+          description: The request is authenticated but not permitted for this operation.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorForbidden'
+              examples:
+                Forbidden:
+                  description: You do not have required scopes for making this request.
+                  value:
+                    error_message: request_not_allowed
+                    error_code: FORBIDDEN
+                    status_code: '403'
+        '404':
+          description: The requested resource does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Not_Found:
+                  description: The identified resource is not found on the server.
+                  value:
+                    error_code: NOT_FOUND
+                    message: Resource not found
+      security:
+      - apiKey: []
+      - oauth2:
+        - payment_instruments
+      tags:
+      - Customers
+      x-codegen:
+        method_name: deactivate_payment_instrument
+      x-scopes:
+      - payment_instruments
+components:
+  schemas:
+    ErrorExtended:
+      description: Error payload with the invalid parameter reference.
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        properties:
+          param:
+            description: Parameter name (with relative location) to which the error applies. Parameters from embedded resources are displayed using dot notation. For example, `card.name` refers to the `name` parameter embedded in the `card` object.
+            type: string
+      title: Error Extended
+    CardType:
+      description: Issuing card network of the payment card used for the transaction.
+      type: string
+      enum:
+      - ALELO
+      - AMEX
+      - CONECS
+      - CUP
+      - DINERS
+      - DISCOVER
+      - EFTPOS
+      - ELO
+      - ELV
+      - GIROCARD
+      - HIPERCARD
+      - INTERAC
+      - JCB
+      - MAESTRO
+      - MASTERCARD
+      - PLUXEE
+      - SWILE
+      - TICKET
+      - VISA
+      - VISA_ELECTRON
+      - VISA_VPAY
+      - VPAY
+      - VR
+      - UNKNOWN
+      title: Card Type
+    Customer:
+      description: Saved customer details.
+      type: object
+      properties:
+        customer_id:
+          description: Unique ID of the customer.
+          type: string
+          example: 831ff8d4cd5958ab5670
+        personal_details:
+          $ref: '#/components/schemas/PersonalDetails'
+      required:
+      - customer_id
+      title: Customer
+    AddressLegacy:
+      description: Profile's personal address information.
+      type: object
+      properties:
+        city:
+          description: City name from the address.
+          type: string
+          example: Berlin
+        country:
+          description: Two letter country code formatted according to [ISO3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2).
+          type: string
+          example: DE
+        line_1:
+          description: First line of the address with details of the street name and number.
+          type: string
+          example: Sample street
+        line_2:
+          description: Second line of the address with details of the building, unit, apartment, and floor numbers.
+          type: string
+          example: ap. 5
+        postal_code:
+          description: Postal code from the address.
+          type: string
+          example: '10115'
+        state:
+          description: State name or abbreviation from the address.
+          type: string
+          example: Berlin
+      title: Address Legacy
+    MandateResponse:
+      description: Details of the mandate linked to the saved payment instrument.
+      type: object
+      properties:
+        type:
+          description: Type of mandate stored for the checkout or payment instrument.
+          type: string
+        status:
+          description: Current lifecycle status of the mandate.
+          type: string
+          example: active
+          enum:
+          - active
+          - inactive
+        merchant_code:
+          description: Merchant account for which the mandate is valid.
+          type: string
+          example: MH4H92C7
+      example:
+        type: recurrent
+        status: active
+        merchant_code: MH4H92C7
+      title: Mandate Response
+    ErrorForbidden:
+      description: Error message for forbidden requests.
+      type: object
+      properties:
+        error_message:
+          description: Short description of the error.
+          type: string
+          example: request_not_allowed
+        error_code:
+          description: Platform code for the error.
+          type: string
+          example: FORBIDDEN
+        status_code:
+          description: HTTP status code for the error.
+          type: string
+          example: '403'
+      title: Error Forbidden
+    Problem:
+      description: 'A RFC 9457 problem details object.
+
+
+        Additional properties specific to the problem type may be present.'
+      type: object
+      properties:
+        type:
+          description: A URI reference that identifies the problem type.
+          type: string
+          format: uri
+          example: https://developer.sumup.com/problem/not-found
+        title:
+          description: A short, human-readable summary of the problem type.
+          type: string
+          example: Requested resource couldn't be found.
+        status:
+          description: The HTTP status code generated by the origin server for this occurrence of the problem.
+          type: integer
+          example: 404
+        detail:
+          description: A human-readable explanation specific to this occurrence of the problem.
+          type: string
+          example: The requested resource doesn't exist or does not belong to you.
+        instance:
+          description: A URI reference that identifies the specific occurrence of the problem.
+          type: string
+          format: uri
+      additionalProperties: true
+      required:
+      - type
+      title: Problem
+    Error:
+      description: Error message structure.
+      type: object
+      properties:
+        message:
+          description: Short description of the error.
+          type: string
+          example: Resource not found
+        error_code:
+          description: Platform code for the error.
+          type: string
+          example: NOT_FOUND
+      title: Error
+    PaymentInstrumentResponse:
+      description: Payment Instrument Response
+      type: object
+      properties:
+        token:
+          description: Unique token identifying the saved payment card for a customer.
+          type: string
+          readOnly: true
+        active:
+          description: Indicates whether the payment instrument is active and can be used for payments. To deactivate it, send a `DELETE` request to the resource endpoint.
+          type: boolean
+          default: true
+          readOnly: true
+        type:
+          description: Type of the payment instrument.
+          type: string
+          enum:
+          - card
+        card:
+          description: Details of the payment card.
+          type: object
+          properties:
+            last_4_digits:
+              description: Last 4 digits of the payment card number.
+              type: string
+              example: '3456'
+              maxLength: 4
+              minLength: 4
+              readOnly: true
+            type:
+              $ref: '#/components/schemas/CardType'
+        mandate:
+          $ref: '#/components/schemas/MandateResponse'
+        created_at:
+          description: Creation date of payment instrument. Response format expressed according to [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) code.
+          type: string
+          format: date-time
+      example:
+        token: bcfc8e5f-3b47-4cb9-854b-3b7a4cce7be3
+        active: true
+        type: card
+        mandate:
+          type: recurrent
+          status: active
+          merchant_code: MH4H92C7
+        card:
+          last_4_digits: '0001'
+          type: VISA
+        created_at: 2021-03-30 10:06:07+00:00
+      title: Payment Instrument Response
+    PersonalDetails:
+      description: Personal details for the customer.
+      type: object
+      properties:
+        first_name:
+          description: First name of the customer.
+          type: string
+          example: John
+        last_name:
+          description: Last name of the customer.
+          type: string
+          example: Doe
+        email:
+          description: Email address of the customer.
+          type: string
+          example: user@example.com
+        phone:
+          description: Phone number of the customer.
+          type: string
+          example: '+491635559723'
+        birth_date:
+          description: Date of birth of the customer.
+          type: string
+          format: date
+          example: 1993-12-31
+        tax_id:
+          description: An identification number user for tax purposes (e.g. CPF)
+          type: string
+          example: 423.378.593-47
+          maxLength: 255
+        address:
+          $ref: '#/components/schemas/AddressLegacy'
+      title: Personal Details
+  securitySchemes:
+    apiKey:
+      description: API keys allow you easily interact with SumUp APIs. API keys are static tokens. You can create API keys from the [Dashboard](https://me.sumup.com/settings/api-keys)
+      type: http
+      scheme: Bearer
+    oauth2:
+      type: oauth2
+      description: 'SumUp supports [OAuth 2.0](https://tools.ietf.org/html/rfc6749) authentication for platforms that want to offer their services to SumUp users.
+
+
+        To integrate via OAuth 2.0 you will need a client credentials that you can create in the [SumUp Dashboard](https://me.sumup.com/settings/oauth2-applications).
+
+
+        To maintain security of our users, we highly recommend that you use one of the [recommended OAuth 2.0 libraries](https://oauth.net/code/) for authentication.'
+      flows:
+        authorizationCode:
+          authorizationUrl: https://api.sumup.com/authorize
+          tokenUrl: https://api.sumup.com/token
+          refreshUrl: https://api.sumup.com/token
+          scopes:
+            payments: Make payments by creating and processing checkouts.
+            transactions.history: View transactions and transaction history.
+            user.profile_readonly: View user profile details.
+            user.profile: View and manage your user profile.
+            user.app-settings: View and manage the SumUp mobile application settings.
+            payment_instruments: Manage customers and their payment instruments.
+            user.payout-settings: View and manage your payout settings.
+            user.subaccounts: View and manage the user profile details of your employees.
+        clientCredentials:
+          tokenUrl: https://api.sumup.com/token
+          scopes:
+            payments: Make payments by creating and processing checkouts.
+            transactions.history: View transactions and transaction history.
+            user.profile_readonly: View user profile details.
+            user.profile: View and manage your user profile.
+            user.app-settings: View and manage the SumUp mobile application settings.
+            payment_instruments: Manage customers and their payment instruments.
+            user.payout-settings: View and manage your payout settings.
+            user.subaccounts: View and manage the user profile details of your employee.

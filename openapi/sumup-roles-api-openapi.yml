@@ -1,0 +1,477 @@
+openapi: 3.0.1
+info:
+  title: SumUp REST Checkouts Roles API
+  version: 1.0.0
+  description: 'SumUp’s REST API operates with [JSON](https://www.json.org/json-en.html) HTTP requests and responses. The request bodies are sent through resource-oriented URLs and use the standard [HTTP response codes](https://developer.mozilla.org/docs/Web/HTTP/Status).
+
+
+    You can experiment and work on your integration in a sandbox that doesn''t affect your regular data and doesn''t process real transactions. To create a sandbox merchant account visit the [dashboard](https://me.sumup.com/settings/developer). To use the sandbox when interacting with SumUp APIs [create an API](https://me.sumup.com/settings/api-keys) key and use it for [authentication](https://developer.sumup.com/api/authentication).'
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+servers:
+- url: https://api.sumup.com
+  description: Production server
+tags:
+- name: Roles
+  description: Endpoints to manage custom roles. Custom roles allow you to tailor roles from individual permissions to match your needs. Once created, you can assign your custom roles to your merchant account members using the memberships.
+  x-core-objects:
+  - $ref: '#/components/schemas/Role'
+  x-beta: true
+paths:
+  /v0.1/merchants/{merchant_code}/roles:
+    get:
+      operationId: ListMerchantRoles
+      summary: List roles
+      description: List merchant's custom roles.
+      parameters:
+      - name: merchant_code
+        in: path
+        description: Short unique identifier for the merchant.
+        required: true
+        schema:
+          type: string
+          example: MK10CL2A
+      responses:
+        '200':
+          description: Returns a list of Role objects.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Role'
+                required:
+                - items
+        '404':
+          description: Merchant not found.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+              example:
+                type: https://developer.sumup.com/problem/not-found
+                title: Requested resource couldn't be found.
+                status: 404
+                detail: The requested resource doesn't exist or does not belong to you.
+      security:
+      - apiKey: []
+      - oauth2: []
+      tags:
+      - Roles
+      x-codegen:
+        method_name: list
+      x-permissions:
+      - relation: roles_list
+        object_type: merchant
+        object_id_param: merchant_code
+      x-scopes: []
+    post:
+      operationId: CreateMerchantRole
+      summary: Create a role
+      description: Create a custom role for the merchant. Roles are defined by the set of permissions that they grant to the members that they are assigned to.
+      parameters:
+      - name: merchant_code
+        in: path
+        description: Short unique identifier for the merchant.
+        required: true
+        schema:
+          type: string
+          example: MK10CL2A
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  description: User-defined name of the role.
+                  type: string
+                  example: Senior Shop Manager II
+                permissions:
+                  description: User's permissions.
+                  type: array
+                  items:
+                    type: string
+                  example:
+                  - catalog_access
+                  - taxes_access
+                  - members_access
+                  maxItems: 100
+                metadata:
+                  $ref: '#/components/schemas/Metadata'
+                description:
+                  description: User-defined description of the role.
+                  type: string
+                  example: Manges the shop and the employees.
+              required:
+              - name
+              - permissions
+      responses:
+        '201':
+          description: Returns the Role object after successful custom role creation.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Role'
+        '400':
+          description: Invalid request.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+              example:
+                type: https://developer.sumup.com/problem/bad-request
+                title: Bad Request
+                status: 400
+                detail: Request validation failed.
+        '404':
+          description: Merchant not found.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+              example:
+                type: https://developer.sumup.com/problem/not-found
+                title: Requested resource couldn't be found.
+                status: 404
+                detail: The requested resource doesn't exist or does not belong to you.
+      security:
+      - apiKey: []
+      - oauth2: []
+      tags:
+      - Roles
+      x-codegen:
+        method_name: create
+      x-permissions:
+      - relation: roles_create
+        object_type: merchant
+        object_id_param: merchant_code
+      x-scopes: []
+  /v0.1/merchants/{merchant_code}/roles/{role_id}:
+    get:
+      operationId: GetMerchantRole
+      summary: Retrieve a role
+      description: Retrieve a custom role by ID.
+      parameters:
+      - name: merchant_code
+        in: path
+        description: Short unique identifier for the merchant.
+        required: true
+        schema:
+          type: string
+          example: MK10CL2A
+      - name: role_id
+        in: path
+        description: The ID of the role to retrieve.
+        required: true
+        schema:
+          type: string
+          example: role_WZsm7QTPhVrompscmPhoGTXXcrd58fr9MOhP
+      responses:
+        '200':
+          description: Returns the Role object for a valid identifier.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Role'
+        '404':
+          description: Merchant or role not found.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+              example:
+                type: https://developer.sumup.com/problem/not-found
+                title: Requested resource couldn't be found.
+                status: 404
+                detail: The requested resource doesn't exist or does not belong to you.
+      security:
+      - apiKey: []
+      - oauth2: []
+      tags:
+      - Roles
+      x-codegen:
+        method_name: get
+      x-permissions:
+      - relation: roles_view
+        object_type: merchant
+        object_id_param: merchant_code
+      x-scopes: []
+    delete:
+      operationId: DeleteMerchantRole
+      summary: Delete a role
+      description: Delete a custom role.
+      parameters:
+      - name: merchant_code
+        in: path
+        description: Short unique identifier for the merchant.
+        required: true
+        schema:
+          type: string
+          example: MK10CL2A
+      - name: role_id
+        in: path
+        description: The ID of the role to retrieve.
+        required: true
+        schema:
+          type: string
+          example: role_WZsm7QTPhVrompscmPhoGTXXcrd58fr9MOhP
+      responses:
+        '200':
+          description: Returns an empty response if the role deletion succeeded.
+        '400':
+          description: Invalid request.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+              example:
+                type: https://developer.sumup.com/problem/bad-request
+                title: Bad Request
+                status: 400
+                detail: Request validation failed.
+        '404':
+          description: Merchant not found.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+              example:
+                type: https://developer.sumup.com/problem/not-found
+                title: Requested resource couldn't be found.
+                status: 404
+                detail: The requested resource doesn't exist or does not belong to you.
+      security:
+      - apiKey: []
+      - oauth2: []
+      tags:
+      - Roles
+      x-codegen:
+        method_name: delete
+      x-permissions:
+      - relation: roles_delete
+        object_type: merchant
+        object_id_param: merchant_code
+      x-scopes: []
+    patch:
+      operationId: UpdateMerchantRole
+      summary: Update a role
+      description: Update a custom role.
+      parameters:
+      - name: merchant_code
+        in: path
+        description: Short unique identifier for the merchant.
+        required: true
+        schema:
+          type: string
+          example: MK10CL2A
+      - name: role_id
+        in: path
+        description: The ID of the role to retrieve.
+        required: true
+        schema:
+          type: string
+          example: role_WZsm7QTPhVrompscmPhoGTXXcrd58fr9MOhP
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  description: User-defined name of the role.
+                  type: string
+                  example: Senior Shop Manager II
+                permissions:
+                  description: User's permissions.
+                  type: array
+                  items:
+                    type: string
+                  example:
+                  - catalog_access
+                  - taxes_access
+                  - members_access
+                  maxItems: 100
+                description:
+                  description: User-defined description of the role.
+                  type: string
+                  example: Manges the shop and the employees.
+              example:
+                name: Senior Shop Manager III
+                permissions:
+                - catalog_edit
+                - taxes_access
+                - members_edit
+      responses:
+        '200':
+          description: Returns the updated Role object if the update succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Role'
+        '400':
+          description: Invalid request.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+              example:
+                type: https://developer.sumup.com/problem/bad-request
+                title: Bad Request
+                status: 400
+                detail: Request validation failed.
+        '404':
+          description: Merchant not found.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+              example:
+                type: https://developer.sumup.com/problem/not-found
+                title: Requested resource couldn't be found.
+                status: 404
+                detail: The requested resource doesn't exist or does not belong to you.
+      security:
+      - apiKey: []
+      - oauth2: []
+      tags:
+      - Roles
+      x-codegen:
+        method_name: update
+      x-permissions:
+      - relation: roles_update
+        object_type: merchant
+        object_id_param: merchant_code
+      x-scopes: []
+components:
+  schemas:
+    Problem:
+      description: 'A RFC 9457 problem details object.
+
+
+        Additional properties specific to the problem type may be present.'
+      type: object
+      properties:
+        type:
+          description: A URI reference that identifies the problem type.
+          type: string
+          format: uri
+          example: https://developer.sumup.com/problem/not-found
+        title:
+          description: A short, human-readable summary of the problem type.
+          type: string
+          example: Requested resource couldn't be found.
+        status:
+          description: The HTTP status code generated by the origin server for this occurrence of the problem.
+          type: integer
+          example: 404
+        detail:
+          description: A human-readable explanation specific to this occurrence of the problem.
+          type: string
+          example: The requested resource doesn't exist or does not belong to you.
+        instance:
+          description: A URI reference that identifies the specific occurrence of the problem.
+          type: string
+          format: uri
+      additionalProperties: true
+      required:
+      - type
+      title: Problem
+    Role:
+      description: A custom role that can be used to assign set of permissions to members.
+      type: object
+      properties:
+        id:
+          description: Unique identifier of the role.
+          type: string
+          example: role_WZsm7QTPhVrompscmPhoGTXXcrd58fr9MOhP
+        name:
+          description: User-defined name of the role.
+          type: string
+          example: Senior Shop Manager II
+        description:
+          description: User-defined description of the role.
+          type: string
+          example: Manges the shop and the employees.
+        permissions:
+          description: List of permission granted by this role.
+          type: array
+          items:
+            type: string
+          example: []
+          maxItems: 100
+        is_predefined:
+          description: True if the role is provided by SumUp.
+          type: boolean
+          example: true
+        metadata:
+          $ref: '#/components/schemas/Metadata'
+        created_at:
+          description: The timestamp of when the role was created.
+          type: string
+          format: date-time
+          example: 2023-01-20 15:16:17+00:00
+        updated_at:
+          description: The timestamp of when the role was last updated.
+          type: string
+          format: date-time
+          example: 2023-01-20 15:16:17+00:00
+      required:
+      - id
+      - name
+      - permissions
+      - is_predefined
+      - created_at
+      - updated_at
+      title: Role
+    Metadata:
+      description: Set of user-defined key-value pairs attached to the object. Partial updates are not supported. When updating, always submit whole metadata. Maximum of 64 parameters are allowed in the object.
+      type: object
+      example: {}
+      additionalProperties: true
+      maxProperties: 64
+  securitySchemes:
+    apiKey:
+      description: API keys allow you easily interact with SumUp APIs. API keys are static tokens. You can create API keys from the [Dashboard](https://me.sumup.com/settings/api-keys)
+      type: http
+      scheme: Bearer
+    oauth2:
+      type: oauth2
+      description: 'SumUp supports [OAuth 2.0](https://tools.ietf.org/html/rfc6749) authentication for platforms that want to offer their services to SumUp users.
+
+
+        To integrate via OAuth 2.0 you will need a client credentials that you can create in the [SumUp Dashboard](https://me.sumup.com/settings/oauth2-applications).
+
+
+        To maintain security of our users, we highly recommend that you use one of the [recommended OAuth 2.0 libraries](https://oauth.net/code/) for authentication.'
+      flows:
+        authorizationCode:
+          authorizationUrl: https://api.sumup.com/authorize
+          tokenUrl: https://api.sumup.com/token
+          refreshUrl: https://api.sumup.com/token
+          scopes:
+            payments: Make payments by creating and processing checkouts.
+            transactions.history: View transactions and transaction history.
+            user.profile_readonly: View user profile details.
+            user.profile: View and manage your user profile.
+            user.app-settings: View and manage the SumUp mobile application settings.
+            payment_instruments: Manage customers and their payment instruments.
+            user.payout-settings: View and manage your payout settings.
+            user.subaccounts: View and manage the user profile details of your employees.
+        clientCredentials:
+          tokenUrl: https://api.sumup.com/token
+          scopes:
+            payments: Make payments by creating and processing checkouts.
+            transactions.history: View transactions and transaction history.
+            user.profile_readonly: View user profile details.
+            user.profile: View and manage your user profile.
+            user.app-settings: View and manage the SumUp mobile application settings.
+            payment_instruments: Manage customers and their payment instruments.
+            user.payout-settings: View and manage your payout settings.
+            user.subaccounts: View and manage the user profile details of your employee.

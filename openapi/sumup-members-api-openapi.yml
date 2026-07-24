@@ -1,0 +1,691 @@
+openapi: 3.0.1
+info:
+  title: SumUp REST Checkouts Members API
+  version: 1.0.0
+  description: 'SumUp’s REST API operates with [JSON](https://www.json.org/json-en.html) HTTP requests and responses. The request bodies are sent through resource-oriented URLs and use the standard [HTTP response codes](https://developer.mozilla.org/docs/Web/HTTP/Status).
+
+
+    You can experiment and work on your integration in a sandbox that doesn''t affect your regular data and doesn''t process real transactions. To create a sandbox merchant account visit the [dashboard](https://me.sumup.com/settings/developer). To use the sandbox when interacting with SumUp APIs [create an API](https://me.sumup.com/settings/api-keys) key and use it for [authentication](https://developer.sumup.com/api/authentication).'
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+servers:
+- url: https://api.sumup.com
+  description: Production server
+tags:
+- name: Members
+  description: Endpoints to manage account members. Members are users that have membership within merchant accounts.
+  x-core-objects:
+  - $ref: '#/components/schemas/Member'
+  x-beta: true
+paths:
+  /v0.1/merchants/{merchant_code}/members:
+    get:
+      operationId: ListMerchantMembers
+      summary: List members
+      description: Lists merchant members.
+      parameters:
+      - name: offset
+        in: query
+        description: Offset of the first member to return.
+        schema:
+          type: integer
+          example: 0
+          default: 0
+          minimum: 0
+      - name: limit
+        in: query
+        description: Maximum number of members to return.
+        schema:
+          type: integer
+          example: 10
+          default: 10
+          maximum: 25
+          minimum: 1
+      - name: scroll
+        in: query
+        description: Indicates to skip count query.
+        schema:
+          type: boolean
+          example: true
+          default: false
+        x-document: false
+      - name: email
+        in: query
+        description: Filter the returned members by email address prefix.
+        schema:
+          type: string
+          example: user
+      - name: user.id
+        in: query
+        description: Search for a member by user id.
+        schema:
+          type: string
+          format: uuid
+          example: 245b2ead-85bf-45ff-856f-311a88a5d454
+      - name: status
+        in: query
+        description: Filter the returned members by the membership status.
+        schema:
+          $ref: '#/components/schemas/MembershipStatus'
+      - name: roles
+        in: query
+        description: Filter the returned members by role.
+        schema:
+          type: array
+          items:
+            type: string
+          example:
+          - role_employee
+          - role_accountant
+        explode: true
+        style: form
+      - name: merchant_code
+        in: path
+        description: Short unique identifier for the merchant.
+        required: true
+        schema:
+          type: string
+          example: MK10CL2A
+      responses:
+        '200':
+          description: Returns a list of Member objects.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Member'
+                  total_count:
+                    type: integer
+                    example: 3
+                required:
+                - items
+        '404':
+          description: Merchant not found.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+              example:
+                type: https://developer.sumup.com/problem/not-found
+                title: Requested resource couldn't be found.
+                status: 404
+                detail: The requested resource doesn't exist or does not belong to you.
+      security:
+      - apiKey: []
+      - oauth2: []
+      tags:
+      - Members
+      x-codegen:
+        method_name: list
+      x-permissions:
+      - relation: merchant_read
+        object_type: merchant
+        object_id_param: merchant_code
+      x-scopes: []
+    post:
+      operationId: CreateMerchantMember
+      summary: Create a member
+      description: Create a merchant member.
+      parameters:
+      - name: merchant_code
+        in: path
+        description: Short unique identifier for the merchant.
+        required: true
+        schema:
+          type: string
+          example: MK10CL2A
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                is_managed_user:
+                  description: True if the user is managed by the merchant. In this case, we'll created a virtual user with the provided password and nickname.
+                  type: boolean
+                email:
+                  description: Email address of the member to add.
+                  type: string
+                  format: email
+                password:
+                  description: Password of the member to add. Only used if `is_managed_user` is true. In the case of service accounts, the password is not used and can not be defined by the caller.
+                  type: string
+                  format: password
+                  minLength: 8
+                nickname:
+                  description: Nickname of the member to add. Only used if `is_managed_user` is true. Used for display purposes only.
+                  type: string
+                  example: Test User
+                roles:
+                  description: List of roles to assign to the new member.
+                  type: array
+                  items:
+                    type: string
+                metadata:
+                  $ref: '#/components/schemas/Metadata'
+                attributes:
+                  $ref: '#/components/schemas/Attributes'
+              example:
+                email: karl.berg@example.com
+                roles:
+                - role_employee
+              required:
+              - email
+              - roles
+      responses:
+        '201':
+          description: Returns the Member object if the creation succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Member'
+        '400':
+          description: Invalid request.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+              example:
+                type: https://developer.sumup.com/problem/bad-request
+                title: Bad Request
+                status: 400
+                detail: Request validation failed.
+        '404':
+          description: Merchant not found.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+              example:
+                type: https://developer.sumup.com/problem/not-found
+                title: Requested resource couldn't be found.
+                status: 404
+                detail: The requested resource doesn't exist or does not belong to you.
+        '429':
+          description: Too many invitations were sent to that user and the rate limit was exceeded. The Retry-After header indicates when the client can retry.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+              example:
+                type: https://developer.sumup.com/problem/too-many-requests
+                title: Too Many Requests
+                status: 429
+                detail: Too many requests were sent. Please try again later.
+      security:
+      - apiKey: []
+      - oauth2: []
+      tags:
+      - Members
+      x-codegen:
+        method_name: create
+      x-permissions:
+      - relation: members_create
+        object_type: merchant
+        object_id_param: merchant_code
+      x-scopes: []
+  /v0.1/merchants/{merchant_code}/members/{member_id}:
+    get:
+      operationId: GetMerchantMember
+      summary: Retrieve a member
+      description: Retrieve a merchant member.
+      parameters:
+      - name: merchant_code
+        in: path
+        description: Short unique identifier for the merchant.
+        required: true
+        schema:
+          type: string
+          example: MK10CL2A
+      - name: member_id
+        in: path
+        description: The ID of the member to retrieve.
+        required: true
+        schema:
+          type: string
+          example: mem_WZsm7QTPhVrompscmPhoGTXXcrd58fr9MOhP
+      responses:
+        '200':
+          description: Returns the Member object for a valid identifier.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Member'
+        '404':
+          description: Merchant or member not found.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+              example:
+                type: https://developer.sumup.com/problem/not-found
+                title: Requested resource couldn't be found.
+                status: 404
+                detail: The requested resource doesn't exist or does not belong to you.
+      security:
+      - apiKey: []
+      - oauth2: []
+      tags:
+      - Members
+      x-codegen:
+        method_name: get
+      x-permissions:
+      - relation: members_view
+        object_type: merchant
+        object_id_param: merchant_code
+      x-scopes: []
+    put:
+      operationId: UpdateMerchantMember
+      summary: Update a member
+      description: Update the merchant member.
+      parameters:
+      - name: merchant_code
+        in: path
+        description: Short unique identifier for the merchant.
+        required: true
+        schema:
+          type: string
+          example: MK10CL2A
+      - name: member_id
+        in: path
+        description: The ID of the member to retrieve.
+        required: true
+        schema:
+          type: string
+          example: mem_WZsm7QTPhVrompscmPhoGTXXcrd58fr9MOhP
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                roles:
+                  type: array
+                  items:
+                    type: string
+                metadata:
+                  $ref: '#/components/schemas/Metadata'
+                attributes:
+                  $ref: '#/components/schemas/Attributes'
+                user:
+                  description: Allows you to update user data of managed users.
+                  type: object
+                  properties:
+                    nickname:
+                      description: User's preferred name. Used for display purposes only.
+                      type: string
+                      example: Test User
+                    password:
+                      description: Password of the member to add. Only used if `is_managed_user` is true.
+                      type: string
+                      format: password
+                      minLength: 8
+              example:
+                Update member's role:
+                  roles:
+                  - role_manager
+                Update managed user:
+                  user:
+                    nickname: New Employee Name
+      responses:
+        '200':
+          description: Returns the updated Member object if the update succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Member'
+        '400':
+          description: Cannot set password or nickname for an invited user.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+              example:
+                type: https://developer.sumup.com/problem/bad-request
+                title: Bad Request
+                status: 400
+                detail: Request validation failed.
+        '403':
+          description: Cannot change password for managed user. Password was already used before.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+              example:
+                type: https://developer.sumup.com/problem/forbidden
+                title: Forbidden
+                status: 403
+                detail: You do not have permission to perform this action.
+        '404':
+          description: Merchant or member not found.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+              example:
+                type: https://developer.sumup.com/problem/not-found
+                title: Requested resource couldn't be found.
+                status: 404
+                detail: The requested resource doesn't exist or does not belong to you.
+        '409':
+          description: Cannot update member as some data conflict with existing members.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+              example:
+                type: https://developer.sumup.com/problem/conflict
+                title: Conflict
+                status: 409
+                detail: The request conflicts with the current state of the resource.
+      security:
+      - apiKey: []
+      - oauth2: []
+      tags:
+      - Members
+      x-codegen:
+        method_name: update
+      x-permissions:
+      - relation: members_update
+        object_type: merchant
+        object_id_param: merchant_code
+      x-scopes: []
+    delete:
+      operationId: DeleteMerchantMember
+      summary: Delete a member
+      description: Deletes a merchant member.
+      parameters:
+      - name: merchant_code
+        in: path
+        description: Short unique identifier for the merchant.
+        required: true
+        schema:
+          type: string
+          example: MK10CL2A
+      - name: member_id
+        in: path
+        description: The ID of the member to retrieve.
+        required: true
+        schema:
+          type: string
+          example: mem_WZsm7QTPhVrompscmPhoGTXXcrd58fr9MOhP
+      responses:
+        '200':
+          description: Returns an empty response if the deletion succeeded.
+        '404':
+          description: Merchant or member not found.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+              example:
+                type: https://developer.sumup.com/problem/not-found
+                title: Requested resource couldn't be found.
+                status: 404
+                detail: The requested resource doesn't exist or does not belong to you.
+      security:
+      - apiKey: []
+      - oauth2: []
+      tags:
+      - Members
+      x-codegen:
+        method_name: delete
+      x-permissions:
+      - relation: members_delete
+        object_type: merchant
+        object_id_param: merchant_code
+      x-scopes: []
+components:
+  schemas:
+    MembershipUser:
+      description: Information about the user associated with the membership.
+      type: object
+      properties:
+        id:
+          description: Identifier for the End-User (also called Subject).
+          type: string
+          example: 44ca0f5b-813b-46e1-aee7-e6242010662e
+        email:
+          description: End-User's preferred e-mail address. Its value MUST conform to the RFC 5322 [RFC5322] addr-spec syntax. The RP MUST NOT rely upon this value being unique, for unique identification use ID instead.
+          type: string
+          example: example@sumup.com
+        mfa_on_login_enabled:
+          description: True if the user has enabled MFA on login.
+          type: boolean
+          example: true
+        virtual_user:
+          description: True if the user is a virtual user (operator).
+          type: boolean
+          example: false
+        service_account_user:
+          description: True if the user is a service account.
+          type: boolean
+          example: false
+        disabled_at:
+          description: 'Time when the user has been disabled. Applies only to virtual users (`virtual_user: true`).'
+          type: string
+          format: date-time
+        nickname:
+          description: User's preferred name. Used for display purposes only.
+          type: string
+          example: Test User
+        picture:
+          description: URL of the End-User's profile picture. This URL refers to an image file (for example, a PNG, JPEG, or GIF image file), rather than to a Web page containing an image.
+          type: string
+          format: uri
+          example: https://usercontent.sumup.com/44ca0f5b-813b-46e1-aee7-e6242010662e.png
+        classic:
+          $ref: '#/components/schemas/MembershipUserClassic'
+      required:
+      - id
+      - email
+      - mfa_on_login_enabled
+      - virtual_user
+      - service_account_user
+    Member:
+      description: A member is user within specific resource identified by resource id, resource type, and associated roles.
+      type: object
+      properties:
+        id:
+          description: ID of the member.
+          type: string
+          example: mem_WZsm7QTPhVrompscmPhoGTXXcrd58fr9MOhP
+        roles:
+          description: User's roles.
+          type: array
+          items:
+            type: string
+          example:
+          - role_admin
+        permissions:
+          description: User's permissions.
+          type: array
+          items:
+            type: string
+          example:
+          - members_read
+          - members_write
+          - create_moto_payments
+          - full_transaction_history_view
+          - refund_transactions
+          - create_referral
+          - developer_settings_edit
+          - developer_settings_access
+          deprecated: true
+          x-deprecation-notice: Permissions include only legacy permissions, please use roles instead. Member access is based on roles within a given resource and the permissions these roles grant.
+        created_at:
+          description: The timestamp of when the member was created.
+          type: string
+          format: date-time
+          example: 2023-01-20 15:16:17+00:00
+        updated_at:
+          description: The timestamp of when the member was last updated.
+          type: string
+          format: date-time
+          example: 2023-01-20 15:16:17+00:00
+        user:
+          $ref: '#/components/schemas/MembershipUser'
+        invite:
+          $ref: '#/components/schemas/Invite'
+        status:
+          $ref: '#/components/schemas/MembershipStatus'
+        metadata:
+          $ref: '#/components/schemas/Metadata'
+        attributes:
+          $ref: '#/components/schemas/Attributes'
+      example:
+        id: mem_WZsm7QTPhVrompscmPhoGTXXcrd58fr9MOhP
+        roles:
+        - role_admin
+        - role_owner
+        permissions:
+        - members_read
+        - members_write
+        - create_moto_payments
+        - full_transaction_history_view
+        - refund_transactions
+        - create_referral
+        - developer_settings_edit
+        - developer_settings_access
+        created_at: 2023-01-20 15:16:17+00:00
+        updated_at: 2023-02-20 15:16:17+00:00
+        user:
+          id: 44ca0f5b-813b-46e1-aee7-e6242010662e
+          email: example@sumup.com
+          mfa_on_login_enabled: true
+          virtual_user: false
+          service_account_user: false
+        status: accepted
+      required:
+      - id
+      - roles
+      - permissions
+      - created_at
+      - updated_at
+      - status
+      title: Member
+    Invite:
+      description: Pending invitation for membership.
+      type: object
+      properties:
+        email:
+          description: Email address of the invited user.
+          type: string
+          format: email
+          example: boaty.mcboatface@sumup.com
+        expires_at:
+          type: string
+          format: date-time
+          example: 2023-01-20 15:16:17+00:00
+      required:
+      - email
+      - expires_at
+      title: Invite
+    Attributes:
+      description: Object attributes that are modifiable only by SumUp applications.
+      type: object
+      example: {}
+      additionalProperties: true
+    MembershipStatus:
+      description: The status of the membership.
+      type: string
+      enum:
+      - accepted
+      - pending
+      - expired
+      - disabled
+      - unknown
+    Metadata:
+      description: Set of user-defined key-value pairs attached to the object. Partial updates are not supported. When updating, always submit whole metadata. Maximum of 64 parameters are allowed in the object.
+      type: object
+      example: {}
+      additionalProperties: true
+      maxProperties: 64
+    Problem:
+      description: 'A RFC 9457 problem details object.
+
+
+        Additional properties specific to the problem type may be present.'
+      type: object
+      properties:
+        type:
+          description: A URI reference that identifies the problem type.
+          type: string
+          format: uri
+          example: https://developer.sumup.com/problem/not-found
+        title:
+          description: A short, human-readable summary of the problem type.
+          type: string
+          example: Requested resource couldn't be found.
+        status:
+          description: The HTTP status code generated by the origin server for this occurrence of the problem.
+          type: integer
+          example: 404
+        detail:
+          description: A human-readable explanation specific to this occurrence of the problem.
+          type: string
+          example: The requested resource doesn't exist or does not belong to you.
+        instance:
+          description: A URI reference that identifies the specific occurrence of the problem.
+          type: string
+          format: uri
+      additionalProperties: true
+      required:
+      - type
+      title: Problem
+    MembershipUserClassic:
+      description: Classic identifiers of the user.
+      type: object
+      properties:
+        user_id:
+          type: integer
+          format: int32
+      deprecated: true
+      required:
+      - user_id
+  securitySchemes:
+    apiKey:
+      description: API keys allow you easily interact with SumUp APIs. API keys are static tokens. You can create API keys from the [Dashboard](https://me.sumup.com/settings/api-keys)
+      type: http
+      scheme: Bearer
+    oauth2:
+      type: oauth2
+      description: 'SumUp supports [OAuth 2.0](https://tools.ietf.org/html/rfc6749) authentication for platforms that want to offer their services to SumUp users.
+
+
+        To integrate via OAuth 2.0 you will need a client credentials that you can create in the [SumUp Dashboard](https://me.sumup.com/settings/oauth2-applications).
+
+
+        To maintain security of our users, we highly recommend that you use one of the [recommended OAuth 2.0 libraries](https://oauth.net/code/) for authentication.'
+      flows:
+        authorizationCode:
+          authorizationUrl: https://api.sumup.com/authorize
+          tokenUrl: https://api.sumup.com/token
+          refreshUrl: https://api.sumup.com/token
+          scopes:
+            payments: Make payments by creating and processing checkouts.
+            transactions.history: View transactions and transaction history.
+            user.profile_readonly: View user profile details.
+            user.profile: View and manage your user profile.
+            user.app-settings: View and manage the SumUp mobile application settings.
+            payment_instruments: Manage customers and their payment instruments.
+            user.payout-settings: View and manage your payout settings.
+            user.subaccounts: View and manage the user profile details of your employees.
+        clientCredentials:
+          tokenUrl: https://api.sumup.com/token
+          scopes:
+            payments: Make payments by creating and processing checkouts.
+            transactions.history: View transactions and transaction history.
+            user.profile_readonly: View user profile details.
+            user.profile: View and manage your user profile.
+            user.app-settings: View and manage the SumUp mobile application settings.
+            payment_instruments: Manage customers and their payment instruments.
+            user.payout-settings: View and manage your payout settings.
+            user.subaccounts: View and manage the user profile details of your employee.

@@ -1,0 +1,1741 @@
+openapi: 3.0.1
+info:
+  title: SumUp REST Checkouts API
+  version: 1.0.0
+  description: 'SumUp’s REST API operates with [JSON](https://www.json.org/json-en.html) HTTP requests and responses. The request bodies are sent through resource-oriented URLs and use the standard [HTTP response codes](https://developer.mozilla.org/docs/Web/HTTP/Status).
+
+
+    You can experiment and work on your integration in a sandbox that doesn''t affect your regular data and doesn''t process real transactions. To create a sandbox merchant account visit the [dashboard](https://me.sumup.com/settings/developer). To use the sandbox when interacting with SumUp APIs [create an API](https://me.sumup.com/settings/api-keys) key and use it for [authentication](https://developer.sumup.com/api/authentication).'
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+servers:
+- url: https://api.sumup.com
+  description: Production server
+tags:
+- name: Checkouts
+  description: 'Checkouts represent online payment sessions that you create before attempting to charge a payer. A checkout captures the payment intent, such as the amount, currency, merchant, and optional customer or redirect settings, and then moves through its lifecycle as you process it.
+
+
+    Use this tag to:
+
+    - create a checkout before collecting or confirming payment details
+
+    - process the checkout with a card, saved card, wallet, or supported alternative payment method
+
+    - retrieve or list checkouts to inspect their current state and associated payment attempts
+
+    - deactivate a checkout that should no longer be used
+
+
+    Typical workflow:
+
+    - create a checkout with the order amount, currency, and merchant information
+
+    - process the checkout through SumUp client tools such as the [Payment Widget and Swift Checkout SDK](https://developer.sumup.com/online-payments/checkouts)
+
+    - retrieve the checkout or use the Transactions endpoints to inspect the resulting payment record
+
+
+    Checkouts are used to initiate and orchestrate online payments. Transactions remain the authoritative record of the resulting payment outcome.'
+  x-core-objects:
+  - $ref: '#/components/schemas/Checkout'
+paths:
+  /v0.1/merchants/{merchant_code}/payment-methods:
+    get:
+      operationId: GetPaymentMethods
+      summary: Get available payment methods
+      description: Get payment methods available for the given merchant to use with a checkout.
+      parameters:
+      - name: merchant_code
+        in: path
+        description: The SumUp merchant code.
+        required: true
+        schema:
+          type: string
+          example: MH4H92C7
+      - name: amount
+        in: query
+        description: The amount for which the payment methods should be eligible, in major units.
+        required: false
+        schema:
+          type: number
+          example: 9.99
+      - name: currency
+        in: query
+        description: The currency for which the payment methods should be eligible.
+        required: false
+        schema:
+          type: string
+          example: EUR
+      responses:
+        '200':
+          description: Available payment methods
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  available_payment_methods:
+                    type: array
+                    items:
+                      type: object
+                      required:
+                      - id
+                      properties:
+                        id:
+                          description: The ID of the payment method.
+                          type: string
+                          example: qr_code_pix
+                    example:
+                    - id: apple_pay
+                    - id: blik
+              examples:
+                success:
+                  description: Available payment methods
+                  value:
+                    available_payment_methods:
+                    - id: apple_pay
+                    - id: blik
+        '400':
+          description: The request is invalid for the submitted query parameters.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DetailsError'
+              examples:
+                Invalid_Parameter:
+                  description: One or more of the parameters are invalid.
+                  value:
+                    failed_constraints:
+                    - message: Currency must also be specified when filtering by amount
+                      reference: currency
+                    status: 400
+                    title: Bad Request
+      security:
+      - apiKey: []
+      - oauth2: []
+      tags:
+      - Checkouts
+      x-codegen:
+        method_name: list_available_payment_methods
+      x-scopes: []
+  /v0.1/checkouts:
+    post:
+      operationId: CreateCheckout
+      summary: Create a checkout
+      description: 'Creates a new payment checkout resource. The unique `checkout_reference` created by this request, is used for further manipulation of the checkout.
+
+
+        For 3DS checkouts, add the `redirect_url` parameter to your request body schema.
+
+        To use the [Hosted Checkout](https://developer.sumup.com/online-payments/checkouts/hosted-checkout/) page, set the `hosted_checkout.enabled` to `true`.
+
+
+        Follow by processing a checkout to charge the provided payment instrument.'
+      requestBody:
+        description: Details for creating a checkout resource.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CheckoutCreateRequest'
+            examples:
+              Checkout:
+                description: Standard request body for creating a checkout
+                value:
+                  checkout_reference: f00a8f74-b05d-4605-bd73-2a901bae5802
+                  amount: 10.1
+                  currency: EUR
+                  merchant_code: MH4H92C7
+                  description: Purchase
+                  valid_until: 2020-02-29 10:56:56+00:00
+                  redirect_url: https://sumup.com
+              Checkout3DS:
+                description: Create a 3DS checkout
+                value:
+                  checkout_reference: f00a8f74-b05d-4605-bd73-2a901bae5802
+                  amount: 10.1
+                  currency: EUR
+                  merchant_code: MH4H92C7
+                  description: Purchase
+                  return_url: http://example.com/
+                  customer_id: 831ff8d4cd5958ab5670
+                  redirect_url: https://mysite.com/completed_purchase
+              CheckoutAPM:
+                description: Create an Alternative Payment Method checkout
+                value:
+                  checkout_reference: f00a8f74-b05d-4605-bd73-2a901bae5802
+                  amount: 10.1
+                  currency: EUR
+                  merchant_code: MH4H92C7
+                  redirect_url: https://mysite.com/completed_purchase
+              HostedCheckout:
+                description: Create a checkout with a SumUp-hosted payment page
+                x-beta: true
+                value:
+                  checkout_reference: b50pr914-6k0e-3091-a592-890010285b3d
+                  amount: 12
+                  currency: EUR
+                  merchant_code: MCXXXXXX
+                  description: A sample checkout
+                  hosted_checkout:
+                    enabled: true
+      responses:
+        '201':
+          description: Returns the created checkout resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Checkout'
+              examples:
+                Checkout:
+                  description: Standard response body for a successfully created checkout
+                  value:
+                    checkout_reference: 8ea25ec3-3293-40e9-a165-6d7f3b3073c5
+                    amount: 10.1
+                    currency: EUR
+                    merchant_code: MH4H92C7
+                    merchant_country: DE
+                    description: My Checkout
+                    return_url: http://example.com
+                    id: 88fcf8de-304d-4820-8f1c-ec880290eb92
+                    status: PENDING
+                    date: 2020-02-29 10:56:56+00:00
+                    valid_until: 2020-02-29 10:56:56+00:00
+                    customer_id: 831ff8d4cd5958ab5670
+                    mandate:
+                      type: recurrent
+                      status: active
+                      merchant_code: MH4H92C7
+                    transactions:
+                    - id: 410fc44a-5956-44e1-b5cc-19c6f8d727a4
+                      transaction_code: TEENSK4W2K
+                      amount: 10.1
+                      currency: EUR
+                      timestamp: 2020-02-29 10:56:56.876000+00:00
+                      status: SUCCESSFUL
+                      payment_type: ECOM
+                      installments_count: 1
+                      merchant_code: MH4H92C7
+                      vat_amount: 6
+                      tip_amount: 3
+                      entry_mode: CUSTOMER_ENTRY
+                      auth_code: '012345'
+                Checkout3DS:
+                  description: Response body for a successfully created 3DS checkout
+                  value:
+                    checkout_reference: 8ea25ec3-3293-40e9-a165-6d7f3b3073c5
+                    amount: 10.1
+                    currency: EUR
+                    description: My Checkout
+                    return_url: http://example.com
+                    id: 88fcf8de-304d-4820-8f1c-ec880290eb92
+                    status: PENDING
+                    date: 2020-02-29 10:56:56+00:00
+                    valid_until: 2020-02-29 10:56:56+00:00
+                    customer_id: 831ff8d4cd5958ab5670
+                    redirect_url: https://mysite.com/completed_purchase
+                    transactions:
+                    - id: 410fc44a-5956-44e1-b5cc-19c6f8d727a4
+                      transaction_code: TEENSK4W2K
+                      amount: 10.1
+                      currency: EUR
+                      timestamp: 2020-02-29 10:56:56.876000+00:00
+                      status: SUCCESSFUL
+                      payment_type: ECOM
+                      installments_count: 1
+                      merchant_code: MH4H92C7
+                      vat_amount: 6
+                      tip_amount: 3
+                      entry_mode: CUSTOMER_ENTRY
+                      auth_code: '012345'
+                CheckoutAPM:
+                  description: Response body for APMs, including Blik, iDeal, ...
+                  value:
+                    checkout_reference: 8ea25ec3-3293-40e9-a165-6d7f3b3073c5
+                    amount: 10.1
+                    currency: EUR
+                    merchant_code: MH4H92C7
+                    description: My Checkout
+                    return_url: http://example.com
+                    id: 88fcf8de-304d-4820-8f1c-ec880290eb92
+                    status: PENDING
+                    date: 2021-06-29 11:08:36+00:00
+                    merchant_name: My company
+                    merchant_country: DE
+                    redirect_url: https://sumup.com
+                    purpose: CHECKOUT
+                    transactions:
+                    - id: 410fc44a-5956-44e1-b5cc-19c6f8d727a4
+                      transaction_code: TEENSK4W2K
+                      amount: 10.1
+                      currency: EUR
+                      timestamp: 2020-02-29 10:56:56.876000+00:00
+                      status: SUCCESSFUL
+                      payment_type: ECOM
+                      installments_count: 1
+                      merchant_code: MH4H92C7
+                      vat_amount: 6
+                      tip_amount: 3
+                      entry_mode: CUSTOMER_ENTRY
+                      auth_code: '012345'
+                HostedCheckout:
+                  description: Response body for a checkout with a SumUp-hosted payment page
+                  value:
+                    checkout_reference: b50pr914-6k0e-3091-a592-890010285b3d
+                    amount: 12
+                    currency: EUR
+                    merchant_code: MCXXXXXX
+                    merchant_country: DE
+                    merchant_name: Sample Shop
+                    description: A sample checkout
+                    id: 64553e20-3f0e-49e4-8af3-fd0eca86ce91
+                    status: PENDING
+                    date: 2000-01-01 12:49:24.899000+00:00
+                    purpose: CHECKOUT
+                    hosted_checkout:
+                      enabled: true
+                    hosted_checkout_url: https://checkout.sumup.com/pay/8f9316a3-cda9-42a9-9771-54d534315676
+                    transactions: []
+        '400':
+          description: The request body is invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorExtended'
+              examples:
+                Missing_Parameter:
+                  description: A required parameter is missing.
+                  value:
+                    message: Validation error
+                    error_code: MISSING
+                    param: merchant_code
+        '401':
+          description: The request is not authorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+              examples:
+                Problem_Details:
+                  description: Unauthorized response returned by API gateway.
+                  value:
+                    detail: Unauthorized.
+                    status: 401
+                    title: Unauthorized
+                    trace_id: 3c77294349d3b5647ea2d990f0d8f017
+                    type: https://developer.sumup.com/problem/unauthorized
+        '403':
+          description: The request isn't sufficiently authorized to create a checkout.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorForbidden'
+              examples:
+                Forbidden:
+                  description: You do not have the required permission for making this request.
+                  value:
+                    error_message: checkout_payments_not_allowed
+                    error_code: FORBIDDEN
+                    status_code: '403'
+        '409':
+          description: A checkout already exists for the provided unique parameters.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Existing_Checkout:
+                  description: A resource with the specified parameters already exists on the server.
+                  value:
+                    error_code: DUPLICATED_CHECKOUT
+                    message: Checkout with this checkout reference and pay to email already exists
+      security:
+      - apiKey: []
+      - oauth2:
+        - payments
+      tags:
+      - Checkouts
+      x-codegen:
+        method_name: create
+      x-scopes:
+      - payments
+    get:
+      operationId: ListCheckouts
+      summary: List checkouts
+      description: Lists created checkout resources according to the applied `checkout_reference`.
+      parameters:
+      - name: checkout_reference
+        in: query
+        description: Filters the list of checkout resources by the unique ID of the checkout.
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Returns a list of checkout resources.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CheckoutSuccess'
+              example:
+              - checkout_reference: f00a8f74-b05d-4605-bd73-2a901bae5802
+                amount: 10.1
+                currency: EUR
+                merchant_code: MH4H92C7
+                description: Purchase
+                id: 4e425463-3e1b-431d-83fa-1e51c2925e99
+                status: PENDING
+                date: 2020-02-29 10:56:56+00:00
+        '401':
+          description: The request is not authorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+              examples:
+                Problem_Details:
+                  description: Unauthorized response returned by API gateway.
+                  value:
+                    detail: Unauthorized.
+                    status: 401
+                    title: Unauthorized
+                    trace_id: 3c77294349d3b5647ea2d990f0d8f017
+                    type: https://developer.sumup.com/problem/unauthorized
+      security:
+      - apiKey: []
+      - oauth2:
+        - payments
+      tags:
+      - Checkouts
+      x-codegen:
+        method_name: list
+      x-scopes:
+      - payments
+  /v0.1/checkouts/{checkout_id}:
+    parameters:
+    - name: checkout_id
+      in: path
+      description: Unique ID of the checkout resource.
+      required: true
+      schema:
+        type: string
+    get:
+      operationId: GetCheckout
+      summary: Retrieve a checkout
+      description: Retrieves an identified checkout resource. Use this request after processing a checkout to confirm its status and inform the end user respectively.
+      responses:
+        '200':
+          description: Returns the requested checkout resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CheckoutSuccess'
+              example:
+                checkout_reference: f00a8f74-b05d-4605-bd73-2a901bae5802
+                amount: 10.1
+                currency: EUR
+                merchant_code: MH4H92C7
+                description: Purchase
+                id: 4e425463-3e1b-431d-83fa-1e51c2925e99
+                status: PENDING
+                date: 2020-02-29 10:56:56+00:00
+                transaction_code: TEENSK4W2K
+                transaction_id: 410fc44a-5956-44e1-b5cc-19c6f8d727a4
+        '401':
+          description: The request is not authorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+              examples:
+                Problem_Details:
+                  description: Unauthorized response returned by API gateway.
+                  value:
+                    detail: Unauthorized.
+                    status: 401
+                    title: Unauthorized
+                    trace_id: 3c77294349d3b5647ea2d990f0d8f017
+                    type: https://developer.sumup.com/problem/unauthorized
+        '404':
+          description: The requested resource does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Not_Found:
+                  description: The identified resource is not found on the server.
+                  value:
+                    error_code: NOT_FOUND
+                    message: Resource not found
+      security:
+      - apiKey: []
+      - oauth2:
+        - payments
+      tags:
+      - Checkouts
+      x-codegen:
+        method_name: get
+      x-scopes:
+      - payments
+    put:
+      operationId: ProcessCheckout
+      summary: Process a checkout
+      description: 'Processing a checkout will attempt to charge the provided payment instrument for the amount of the specified checkout resource initiated in the `Create a checkout` endpoint.
+
+
+        Follow this request with `Retrieve a checkout` to confirm its status.'
+      requestBody:
+        description: Details of the payment instrument for processing the checkout.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProcessCheckout'
+            examples:
+              ProcessCard:
+                description: Process a checkout with a card
+                value:
+                  payment_type: card
+                  installments: 1
+                  mandate:
+                    type: recurrent
+                    user_agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.104 Safari/537.36
+                    user_ip: 172.217.169.174
+                  card:
+                    type: VISA
+                    name: John Doe
+                    number: '1234567890123456'
+                    expiry_year: '2023'
+                    expiry_month: '01'
+                    cvv: '123'
+                    zip_code: '12345'
+              ProcessToken:
+                description: Process a checkout with a token
+                value:
+                  payment_type: card
+                  installments: 1
+                  token: ba85dfee-c3cf-48a6-84f5-d7d761fbba50
+                  customer_id: MEDKHDTI
+              ProcessBoleto:
+                description: Process a checkout with Boleto
+                value:
+                  payment_type: boleto
+                  personal_details:
+                    email: user@example.com
+                    first_name: John
+                    last_name: Doe
+                    tax_id: 423.378.593-47
+                    address:
+                      country: BR
+                      city: São Paulo
+                      line1: Rua Gilberto Sabino, 215
+                      state: SP
+                      postal_code: 05425-020
+              ProcessiDeal:
+                description: Process a checkout with iDeal
+                value:
+                  payment_type: ideal
+                  personal_details:
+                    email: user@example.com
+                    first_name: John
+                    last_name: Doe
+                    address:
+                      country: NL
+              ProcessBancontact:
+                description: Process a checkout with Bancontact
+                value:
+                  payment_type: bancontact
+                  personal_details:
+                    email: user@example.com
+                    first_name: John
+                    last_name: Doe
+                    address:
+                      country: BE
+      responses:
+        '200':
+          description: Returns the checkout resource after a processing attempt.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CheckoutSuccess'
+              examples:
+                CheckoutSuccessCard:
+                  description: Successfully processed checkout with a card
+                  value:
+                    checkout_reference: f00a8f74-b05d-4605-bd73-2a901bae5802
+                    amount: 10.1
+                    currency: EUR
+                    merchant_code: MH4H92C7
+                    description: Purchase
+                    return_url: http://example.com
+                    id: 4e425463-3e1b-431d-83fa-1e51c2925e99
+                    status: PENDING
+                    date: 2020-02-29 10:56:56+00:00
+                    valid_until: 2020-02-29 10:56:56+00:00
+                    customer_id: 831ff8d4cd5958ab5670
+                    mandate:
+                      type: recurrent
+                      status: active
+                      merchant_code: MH4H92C7
+                    transactions:
+                    - id: 410fc44a-5956-44e1-b5cc-19c6f8d727a4
+                      transaction_code: TEENSK4W2K
+                      amount: 10.1
+                      currency: EUR
+                      timestamp: 2020-02-29 10:56:56.876000+00:00
+                      status: SUCCESSFUL
+                      payment_type: ECOM
+                      installments_count: 1
+                      merchant_code: MH4H92C7
+                      vat_amount: 6
+                      tip_amount: 3
+                      entry_mode: CUSTOMER_ENTRY
+                      auth_code: '053201'
+                    transaction_code: TEENSK4W2K
+                    transaction_id: 410fc44a-5956-44e1-b5cc-19c6f8d727a4
+                CheckoutSuccessToken:
+                  description: Successfully processed checkout with a token
+                  value:
+                    checkout_reference: f00a8f74-b05d-4605-bd73-2a901bae5802
+                    amount: 10.1
+                    currency: EUR
+                    merchant_code: MH4H92C7
+                    description: Purchase with token
+                    id: 4e425463-3e1b-431d-83fa-1e51c2925e99
+                    status: PENDING
+                    date: 2020-02-29 10:56:56+00:00
+                    transaction_code: TEENSK4W2K
+                    transaction_id: 410fc44a-5956-44e1-b5cc-19c6f8d727a4
+                    merchant_name: Sample Merchant
+                    redirect_url: https://mysite.com/completed_purchase
+                    customer_id: 831ff8d4cd5958ab5670
+                    payment_instrument:
+                      token: e76d7e5c-9375-4fac-a7e7-b19dc5302fbc
+                    transactions:
+                    - id: 410fc44a-5956-44e1-b5cc-19c6f8d727a4
+                      transaction_code: TEENSK4W2K
+                      amount: 10.1
+                      currency: EUR
+                      timestamp: 2020-02-29 10:56:56.876000+00:00
+                      status: SUCCESSFUL
+                      payment_type: ECOM
+                      installments_count: 1
+                      merchant_code: MH4H92C7
+                      vat_amount: 6
+                      tip_amount: 3
+                      entry_mode: CUSTOMER_ENTRY
+                      auth_code: '053201'
+                CheckoutSuccessBoleto:
+                  description: Successfully processed checkout with Boleto
+                  value:
+                    checkout_reference: f00a8f74-b05d-4605-bd73-2a901bae5802
+                    amount: 10.1
+                    currency: BRL
+                    merchant_code: MH4H92C7
+                    description: Boleto checkout
+                    id: 4e425463-3e1b-431d-83fa-1e51c2925e99
+                    status: PENDING
+                    date: 2021-07-06 12:34:02+00:00
+                    merchant_name: Sample shop
+                    boleto:
+                      barcode: '34191090081790614310603072340007886840000000200'
+                      url: https://checkouts.sample.com/v0.1/checkouts/2e7a36cc-7897-446b-a966-952ab5f049ea/boleto
+                    redirect_url: https://website.com
+                    purpose: CHECKOUT
+                    transactions:
+                    - id: debd2986-9852-4e86-8a8e-7ea9c87dd679
+                      transaction_code: TEN3E696NP
+                      merchant_code: MH4H92C9
+                      amount: 10.1
+                      vat_amount: 6
+                      tip_amount: 3
+                      currency: BRL
+                      timestamp: 2021-07-06 12:34:16.460000+00:00
+                      status: PENDING
+                      payment_type: BOLETO
+                      entry_mode: BOLETO
+                      installments_count: 1
+                CheckoutSuccessiDeal:
+                  description: Successfully processed checkout with iDeal
+                  value:
+                    next_step:
+                      url: https://r3.girogate.de/ti/simideal
+                      method: GET
+                      payload:
+                        tx: '961473700'
+                        rs: ILnaUeQTKJ184fVrjGILrLjePX9E4rmz
+                        cs: c8bc0ea231f8372431ca22d6f8319f8de0263d0b1705759ed27155f245f193c5
+                      full: https://r3.girogate.de/ti/simideal?tx=961473700&rs=ILnaUeQTKJ184fVrjGILrLjePX9E4rmz&cs=c8bc0ea231f8372431ca22d6f8319f8de0263d0b1705759ed27155f245f193c5
+                      mechanism:
+                      - browser
+                CheckoutSuccessBancontact:
+                  description: Successfully processed checkout with Bancontact
+                  value:
+                    next_step:
+                      url: https://r3.girogate.de/ti/simbcmc
+                      method: GET
+                      payload:
+                        tx: '624788471'
+                        rs: 5MioXoKt2Gwj9dLgqAX1bMRBuT5xTSdB
+                        cs: 697edacdd9175f3f99542500fa0ff08280b66aaff3c2641a2e212e4b039473cc
+                      full: https://r3.girogate.de/ti/simbcmc?tx=624788471&rs=5MioXoKt2Gwj9dLgqAX1bMRBuT5xTSdB&cs=697edacdd9175f3f99542500fa0ff08280b66aaff3c2641a2e212e4b039473cc
+                      mechanism:
+                      - browser
+        '202':
+          description: Returns the next required action for asynchronous checkout processing.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CheckoutAccepted'
+        '400':
+          description: The request body is invalid for processing the checkout.
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorExtended'
+                - type: array
+                  description: List of error messages.
+                  items:
+                    $ref: '#/components/schemas/ErrorExtended'
+              examples:
+                Invalid_Parameter:
+                  description: A required parameter has an invalid value.
+                  value:
+                    message: Validation error
+                    error_code: INVALID
+                    param: card.expiry_year
+                Multiple_Invalid_Parameters:
+                  description: Multiple required parameters have invalid values.
+                  value:
+                  - error_code: INVALID
+                    message: Validation error
+                    param: card.name
+                  - error_code: INVALID
+                    message: Validation error
+                    param: card.number
+                  - error_code: INVALID
+                    message: Validation error
+                    param: card.expiry_year
+        '401':
+          description: The request is not authorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+              examples:
+                Problem_Details:
+                  description: Unauthorized response returned by API gateway.
+                  value:
+                    detail: Unauthorized.
+                    status: 401
+                    title: Unauthorized
+                    trace_id: 3c77294349d3b5647ea2d990f0d8f017
+                    type: https://developer.sumup.com/problem/unauthorized
+        '404':
+          description: The requested resource does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Not_Found:
+                  description: The identified resource is not found on the server.
+                  value:
+                    error_code: NOT_FOUND
+                    message: Resource not found
+        '409':
+          description: The request conflicts with the current state of the resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Checkout_Processed:
+                  description: The identified checkout resource is already processed.
+                  value:
+                    error_code: CHECKOUT_PROCESSED
+                    message: Checkout is already processed
+      security:
+      - apiKey: []
+      - oauth2: []
+      tags:
+      - Checkouts
+      x-codegen:
+        method_name: process
+      x-scopes: []
+    delete:
+      operationId: DeactivateCheckout
+      summary: Deactivate a checkout
+      description: Deactivates an identified checkout resource. If the checkout has already been processed it can not be deactivated.
+      responses:
+        '200':
+          description: Returns the checkout object after successful deactivation.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Checkout'
+              example:
+                checkout_reference: f00a8f74-b05d-4605-bd73-2a901bae5802
+                id: 817340ce-f1d9-4609-b90a-6152f8ee267j
+                amount: 2
+                currency: EUR
+                merchant_code: MH4H92C7
+                description: Deletion example
+                purpose: CHECKOUT
+                status: EXPIRED
+                date: 2020-02-29 10:56:56+00:00
+                valid_until: 2020-02-29 10:56:56+00:00
+                merchant_name: Sample Merchant
+                transactions: []
+        '401':
+          description: The request is not authorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+              examples:
+                Problem_Details:
+                  description: Unauthorized response returned by API gateway.
+                  value:
+                    detail: Unauthorized.
+                    status: 401
+                    title: Unauthorized
+                    trace_id: 3c77294349d3b5647ea2d990f0d8f017
+                    type: https://developer.sumup.com/problem/unauthorized
+        '404':
+          description: The requested resource does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Not_Found:
+                  description: The identified resource is not found on the server.
+                  value:
+                    error_code: NOT_FOUND
+                    message: Resource not found
+        '409':
+          description: The request conflicts with the current state of the resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Checkout_Processed:
+                  description: The identified checkout resource is already processed.
+                  value:
+                    error_code: CHECKOUT_PROCESSED
+                    message: Checkout is already processed
+      security:
+      - apiKey: []
+      - oauth2:
+        - payments
+      tags:
+      - Checkouts
+      x-codegen:
+        method_name: deactivate
+      x-scopes:
+      - payments
+  /v0.2/checkouts/{checkout_id}/apple-pay-session:
+    put:
+      operationId: CreateApplePaySession
+      summary: Create an Apple Pay session
+      description: 'Creates an Apple Pay merchant session for the specified checkout.
+
+
+        Use this endpoint after the customer selects Apple Pay and before calling
+
+        `ApplePaySession.completeMerchantValidation(...)` in the browser.
+
+        SumUp validates the merchant session request and returns the Apple Pay
+
+        session object that your frontend should pass to Apple''s JavaScript API.
+
+        '
+      parameters:
+      - name: checkout_id
+        in: path
+        description: Unique ID of the checkout resource.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: The data needed to create an apple pay session for a checkout.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                context:
+                  description: the context to create this apple pay session.
+                  type: string
+                  format: hostname
+                  example: example.com
+                target:
+                  description: The target url to create this apple pay session.
+                  type: string
+                  format: uri
+                  example: https://apple-pay-gateway-cert.apple.com/paymentservices/startSession
+              required:
+              - context
+              - target
+      responses:
+        '200':
+          description: 'Successful request. Returns the Apple Pay merchant session object
+
+            that should be forwarded to the Apple Pay JS SDK to complete merchant
+
+            validation and continue the payment flow.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                displayName: Test Account
+                domainName: pay.sumup.com
+                epochTimestamp: 1775323532665
+                expiresAt: 1775327132665
+                merchantIdentifier: 7801D328E6637EFC1ADE6CE01C671D2CD318E32CA4ED1F9FC390D170D827D9AB
+                merchantSessionIdentifier: SSH92CC412E5FCF4FAB88684914C953C0D4_916523AAED1343F5BC5815E12BEE9250AFFDC1A17C46B0DE5A943F0F94927C24
+                nonce: a968a2bf
+                operationalAnalyticsIdentifier: Test Account:7801D328E6637EFC1ADE6CE01C671D2CD318E32CA4ED1F9FC390D170D827D9AB
+                pspId: 7801D328E6637EFC1ADE6CE01C671D2CD318E32CA4ED1F9FC390D170D827D9AB
+                retries: 0
+                signature: <apple-pay-signature>
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/Error'
+                - type: array
+                  description: List of error messages.
+                  items:
+                    $ref: '#/components/schemas/Error'
+              example:
+                error_code: INVALID
+                message: Bad Request
+        '404':
+          description: The requested resource does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Not_Found:
+                  description: The identified resource is not found on the server.
+                  value:
+                    error_code: NOT_FOUND
+                    message: Resource not found
+      security:
+      - apiKey: []
+      - oauth2: []
+      tags:
+      - Checkouts
+      x-codegen:
+        method_name: create_apple_pay_session
+      x-scopes: []
+components:
+  schemas:
+    HostedCheckout:
+      description: Hosted Checkout configuration. Enable it to receive a SumUp-hosted payment page URL in the checkout response.
+      type: object
+      properties:
+        enabled:
+          description: Whether the checkout should include a SumUp-hosted payment page.
+          type: boolean
+          example: true
+      required:
+      - enabled
+      title: Hosted Checkout
+    Card:
+      description: __Required when payment type is `card`.__ Details of the payment card.
+      type: object
+      properties:
+        name:
+          description: Name of the cardholder as it appears on the payment card.
+          type: string
+          example: FIRSTNAME LASTNAME
+          writeOnly: true
+        number:
+          description: Number of the payment card (without spaces).
+          type: string
+          example: '1234567890123456'
+          writeOnly: true
+        expiry_year:
+          description: Year from the expiration time of the payment card. Accepted formats are `YY` and `YYYY`.
+          type: string
+          example: '2023'
+          maxLength: 4
+          minLength: 2
+          writeOnly: true
+        expiry_month:
+          description: Month from the expiration time of the payment card. Accepted format is `MM`.
+          type: string
+          enum:
+          - '01'
+          - '02'
+          - '03'
+          - '04'
+          - '05'
+          - '06'
+          - '07'
+          - 08
+          - 09
+          - '10'
+          - '11'
+          - '12'
+          writeOnly: true
+        cvv:
+          description: Three or four-digit card verification value (security code) of the payment card.
+          type: string
+          example: '123'
+          maxLength: 4
+          minLength: 3
+          writeOnly: true
+        zip_code:
+          description: Required five-digit ZIP code. Applicable only to merchant users in the USA.
+          type: string
+          example: '12345'
+          maxLength: 5
+          minLength: 5
+          writeOnly: true
+        type:
+          $ref: '#/components/schemas/CardType'
+      required:
+      - name
+      - number
+      - expiry_month
+      - expiry_year
+      - cvv
+      - type
+      title: Card
+    EntryMode:
+      description: Entry mode of the payment details.
+      type: string
+      enum:
+      - BOLETO
+      - SOFORT
+      - IDEAL
+      - BANCONTACT
+      - EPS
+      - MYBANK
+      - SATISPAY
+      - BLIK
+      - P24
+      - GIROPAY
+      - PIX
+      - QR_CODE_PIX
+      - APPLE_PAY
+      - GOOGLE_PAY
+      - PAYPAL
+      - TWINT
+      - NONE
+      - CHIP
+      - MANUAL_ENTRY
+      - CUSTOMER_ENTRY
+      - MAGSTRIPE_FALLBACK
+      - MAGSTRIPE
+      - DIRECT_DEBIT
+      - CONTACTLESS
+      - MOTO
+      - CONTACTLESS_MAGSTRIPE
+      - N/A
+      title: Entry Mode
+    TransactionStatus:
+      description: 'Current status of the transaction.
+
+
+        - `PENDING`: The transaction has been created but its final outcome is not known yet.
+
+        - `SUCCESSFUL`: The transaction completed successfully.
+
+        - `CANCELLED`: The transaction was cancelled or otherwise reversed before completion.
+
+        - `FAILED`: The transaction attempt did not complete successfully.
+
+        - `REFUNDED`: The transaction was refunded in full or in part.'
+      type: string
+      enum:
+      - SUCCESSFUL
+      - CANCELLED
+      - FAILED
+      - PENDING
+      - REFUNDED
+      title: Transaction Status
+    ErrorForbidden:
+      description: Error message for forbidden requests.
+      type: object
+      properties:
+        error_message:
+          description: Short description of the error.
+          type: string
+          example: request_not_allowed
+        error_code:
+          description: Platform code for the error.
+          type: string
+          example: FORBIDDEN
+        status_code:
+          description: HTTP status code for the error.
+          type: string
+          example: '403'
+      title: Error Forbidden
+    Currency:
+      description: Three-letter [ISO4217](https://en.wikipedia.org/wiki/ISO_4217) code of the currency for the amount. Currently supported currency values are enumerated above.
+      type: string
+      example: EUR
+      enum:
+      - BGN
+      - BRL
+      - CHF
+      - CLP
+      - COP
+      - CZK
+      - DKK
+      - EUR
+      - GBP
+      - HRK
+      - HUF
+      - NOK
+      - PLN
+      - RON
+      - SEK
+      - USD
+      title: Currency
+    Error:
+      description: Error message structure.
+      type: object
+      properties:
+        message:
+          description: Short description of the error.
+          type: string
+          example: Resource not found
+        error_code:
+          description: Platform code for the error.
+          type: string
+          example: NOT_FOUND
+      title: Error
+    ErrorExtended:
+      description: Error payload with the invalid parameter reference.
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        properties:
+          param:
+            description: Parameter name (with relative location) to which the error applies. Parameters from embedded resources are displayed using dot notation. For example, `card.name` refers to the `name` parameter embedded in the `card` object.
+            type: string
+      title: Error Extended
+    CheckoutCreateRequest:
+      description: Request body for creating a checkout before processing payment. Define the payment amount, currency, merchant, and optional customer or redirect behavior here.
+      type: object
+      properties:
+        checkout_reference:
+          description: Merchant-defined reference for the new checkout. It should be unique enough for you to identify the payment attempt in your own systems.
+          type: string
+          example: f00a8f74-b05d-4605-bd73-2a901bae5802
+          maxLength: 90
+        amount:
+          description: Amount to be charged to the payer, expressed in major units.
+          type: number
+          format: float
+          example: 10.1
+        currency:
+          $ref: '#/components/schemas/Currency'
+        merchant_code:
+          description: Merchant account that should receive the payment.
+          type: string
+          example: MH4H92C7
+        description:
+          description: Short merchant-defined description shown in SumUp tools and reporting for easier identification of the checkout.
+          type: string
+          example: Purchase
+        return_url:
+          description: Optional backend callback URL used by SumUp to notify your platform about processing updates for the checkout.
+          type: string
+          format: uri
+          example: http://example.com/
+        customer_id:
+          description: Merchant-scoped customer identifier. Required when setting up recurring payments and useful when the checkout should be linked to a returning payer.
+          type: string
+          example: 831ff8d4cd5958ab5670
+        purpose:
+          description: Business purpose of the checkout. Use `CHECKOUT` for a standard payment and `SETUP_RECURRING_PAYMENT` when collecting consent and payment details for future recurring charges.
+          type: string
+          default: CHECKOUT
+          enum:
+          - CHECKOUT
+          - SETUP_RECURRING_PAYMENT
+        valid_until:
+          description: Optional expiration timestamp. The checkout must be processed before this moment, otherwise it becomes unusable. If omitted, the checkout does not have an explicit expiry time.
+          type: string
+          format: date-time
+          example: 2020-02-29 10:56:56+00:00
+          nullable: true
+        redirect_url:
+          description: URL where the payer should be sent after a redirect-based payment or SCA flow completes. This is required for [APMs](https://developer.sumup.com/online-payments/apm/introduction) and recommended for card checkouts that may require [3DS](https://developer.sumup.com/online-payments/features/3ds). If it is omitted, the [Payment Widget](https://developer.sumup.com/online-payments/checkouts) can render the challenge in an iframe instead of using a full-page redirect.
+          type: string
+          example: https://mysite.com/completed_purchase
+        hosted_checkout:
+          $ref: '#/components/schemas/HostedCheckout'
+      required:
+      - checkout_reference
+      - amount
+      - currency
+      - merchant_code
+      title: Checkout Create Request
+    TransactionBase:
+      description: Details of the transaction.
+      type: object
+      properties:
+        id:
+          description: Unique ID of the transaction.
+          type: string
+          example: 6b425463-3e1b-431d-83fa-1e51c2925e99
+        transaction_code:
+          description: Transaction code returned by the acquirer/processing entity after processing the transaction.
+          type: string
+          example: TEENSK4W2K
+        amount:
+          description: Total amount of the transaction.
+          type: number
+          format: float
+          example: 10.1
+        currency:
+          $ref: '#/components/schemas/Currency'
+        timestamp:
+          description: Date and time of the creation of the transaction. Response format expressed according to [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) code.
+          type: string
+          format: date-time
+          example: 2020-02-29 10:56:56.876000+00:00
+        status:
+          $ref: '#/components/schemas/TransactionStatus'
+        payment_type:
+          $ref: '#/components/schemas/PaymentType'
+        installments_count:
+          description: Current number of the installment for deferred payments.
+          type: integer
+          minimum: 1
+      title: Transaction Base
+    MandatePayload:
+      description: Mandate details used when a checkout should create a reusable card token for future recurring or merchant-initiated payments.
+      type: object
+      properties:
+        type:
+          description: Type of mandate to create for the saved payment instrument.
+          type: string
+          example: recurrent
+          enum:
+          - recurrent
+        user_agent:
+          description: Browser or client user agent observed when consent was collected.
+          type: string
+          example: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.104 Safari/537.36
+        user_ip:
+          description: IP address of the payer when the mandate was accepted.
+          type: string
+          example: 172.217.169.174
+      example:
+        type: recurrent
+        user_agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.104 Safari/537.36
+        user_ip: 172.217.169.174
+      required:
+      - type
+      - user_agent
+      title: Mandate Payload
+    PaymentType:
+      description: Payment type used for the transaction.
+      type: string
+      enum:
+      - CASH
+      - POS
+      - ECOM
+      - RECURRING
+      - BITCOIN
+      - BALANCE
+      - MOTO
+      - BOLETO
+      - DIRECT_DEBIT
+      - APM
+      - UNKNOWN
+      title: Payment Type
+    CardType:
+      description: Issuing card network of the payment card used for the transaction.
+      type: string
+      enum:
+      - ALELO
+      - AMEX
+      - CONECS
+      - CUP
+      - DINERS
+      - DISCOVER
+      - EFTPOS
+      - ELO
+      - ELV
+      - GIROCARD
+      - HIPERCARD
+      - INTERAC
+      - JCB
+      - MAESTRO
+      - MASTERCARD
+      - PLUXEE
+      - SWILE
+      - TICKET
+      - VISA
+      - VISA_ELECTRON
+      - VISA_VPAY
+      - VPAY
+      - VR
+      - UNKNOWN
+      title: Card Type
+    DetailsError:
+      description: Error message structure.
+      type: object
+      properties:
+        title:
+          description: Short title of the error.
+          type: string
+          example: Bad Request
+        details:
+          description: Details of the error.
+          type: string
+          example: One or more of the parameters are invalid.
+        status:
+          description: The status code.
+          type: number
+          example: 400
+        failed_constraints:
+          description: List of violated validation constraints.
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+              reference:
+                type: string
+          example:
+          - message: Currency must also be specified when filtering by amount
+            reference: currency
+      title: Details Error
+    AddressLegacy:
+      description: Profile's personal address information.
+      type: object
+      properties:
+        city:
+          description: City name from the address.
+          type: string
+          example: Berlin
+        country:
+          description: Two letter country code formatted according to [ISO3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2).
+          type: string
+          example: DE
+        line_1:
+          description: First line of the address with details of the street name and number.
+          type: string
+          example: Sample street
+        line_2:
+          description: Second line of the address with details of the building, unit, apartment, and floor numbers.
+          type: string
+          example: ap. 5
+        postal_code:
+          description: Postal code from the address.
+          type: string
+          example: '10115'
+        state:
+          description: State name or abbreviation from the address.
+          type: string
+          example: Berlin
+      title: Address Legacy
+    ProcessCheckout:
+      description: Request body for attempting payment on an existing checkout. The required companion fields depend on the selected `payment_type`, for example card details, saved-card data, or payer information required by a specific payment method.
+      type: object
+      properties:
+        payment_type:
+          description: Payment method used for this processing attempt. It determines which additional request fields are required.
+          type: string
+          example: card
+          enum:
+          - card
+          - boleto
+          - ideal
+          - blik
+          - bancontact
+          - google_pay
+          - apple_pay
+        installments:
+          description: Number of installments for deferred payments. Available only to merchant users in Brazil.
+          type: integer
+          example: 1
+          maximum: 12
+          minimum: 1
+        mandate:
+          $ref: '#/components/schemas/MandatePayload'
+        card:
+          $ref: '#/components/schemas/Card'
+        google_pay:
+          description: Raw `PaymentData` object received from Google Pay. Send the Google Pay response payload as-is.
+          type: object
+          example:
+            apiVersionMinor: 0
+            apiVersion: 2
+            paymentMethodData:
+              description: Visa •••• 1111
+              tokenizationData:
+                type: PAYMENT_GATEWAY
+                token: token-data
+              type: CARD
+              info:
+                cardNetwork: VISA
+                cardDetails: '1111'
+        apple_pay:
+          description: Raw payment token object received from Apple Pay. Send the Apple Pay response payload as-is.
+          type: object
+          example:
+            token:
+              paymentData:
+                data: si2xuT2ArQo689SfE-long-token
+                signature: MIAGCSqGSIb3DQEHA-long-signature
+                header:
+                  publicKeyHash: PWfjDi3TSwgZ20TY/A7f3V6J/1rhHyRDCspbeljM0io=
+                  ephemeralPublicKey: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEaBtz7UN2MNV0qInJVEEhXy10PU0KfO6KxFjXm93oKWL6lCsxZZGDl/EKioUHVSlKgpsKGin0xvgldfxeJVgy0g==
+                  transactionId: 62e0568bc9258e9d0e059d745650fc8211d05ef7a7a1589a6411bf9b12cdfd04
+                version: EC_v1
+              paymentMethod:
+                displayName: MasterCard 8837
+                network: MasterCard
+                type: debit
+              transactionIdentifier: 62E0568BC9258E9D0E059D745650FC8211D05EF7A7A1589A6411BF9B12CDFD04
+        token:
+          description: Saved-card token to use instead of raw card details when processing with a previously stored payment instrument.
+          type: string
+          example: ba85dfee-c3cf-48a6-84f5-d7d761fbba50
+        customer_id:
+          description: Customer identifier associated with the saved payment instrument. Required when `token` is provided.
+          type: string
+          example: MEDKHDTI
+        personal_details:
+          $ref: '#/components/schemas/PersonalDetails'
+      required:
+      - payment_type
+      title: Process Checkout
+    Problem:
+      description: 'A RFC 9457 problem details object.
+
+
+        Additional properties specific to the problem type may be present.'
+      type: object
+      properties:
+        type:
+          description: A URI reference that identifies the problem type.
+          type: string
+          format: uri
+          example: https://developer.sumup.com/problem/not-found
+        title:
+          description: A short, human-readable summary of the problem type.
+          type: string
+          example: Requested resource couldn't be found.
+        status:
+          description: The HTTP status code generated by the origin server for this occurrence of the problem.
+          type: integer
+          example: 404
+        detail:
+          description: A human-readable explanation specific to this occurrence of the problem.
+          type: string
+          example: The requested resource doesn't exist or does not belong to you.
+        instance:
+          description: A URI reference that identifies the specific occurrence of the problem.
+          type: string
+          format: uri
+      additionalProperties: true
+      required:
+      - type
+      title: Problem
+    PersonalDetails:
+      description: Personal details for the customer.
+      type: object
+      properties:
+        first_name:
+          description: First name of the customer.
+          type: string
+          example: John
+        last_name:
+          description: Last name of the customer.
+          type: string
+          example: Doe
+        email:
+          description: Email address of the customer.
+          type: string
+          example: user@example.com
+        phone:
+          description: Phone number of the customer.
+          type: string
+          example: '+491635559723'
+        birth_date:
+          description: Date of birth of the customer.
+          type: string
+          format: date
+          example: 1993-12-31
+        tax_id:
+          description: An identification number user for tax purposes (e.g. CPF)
+          type: string
+          example: 423.378.593-47
+          maxLength: 255
+        address:
+          $ref: '#/components/schemas/AddressLegacy'
+      title: Personal Details
+    CheckoutSuccess:
+      description: Checkout resource returned after a synchronous processing attempt. In addition to the base checkout fields, it can include the resulting transaction identifiers and any newly created payment instrument token.
+      allOf:
+      - $ref: '#/components/schemas/Checkout'
+      - type: object
+        properties:
+          transaction_code:
+            description: Transaction code of the successful transaction with which the payment for the checkout is completed.
+            type: string
+            example: TEENSK4W2K
+            readOnly: true
+          transaction_id:
+            description: Transaction ID of the successful transaction with which the payment for the checkout is completed.
+            type: string
+            example: 410fc44a-5956-44e1-b5cc-19c6f8d727a4
+            readOnly: true
+          merchant_name:
+            description: Name of the merchant
+            type: string
+            example: Sample Merchant
+          redirect_url:
+            description: URL where the payer is redirected after a redirect-based payment or SCA flow completes.
+            type: string
+            example: https://mysite.com/completed_purchase
+          payment_instrument:
+            description: Details of the saved payment instrument created or reused during checkout processing.
+            type: object
+            properties:
+              token:
+                description: Token value
+                type: string
+                example: e76d7e5c-9375-4fac-a7e7-b19dc5302fbc
+      title: Checkout Success
+    TransactionCheckoutInfo:
+      description: Checkout-specific fields associated with a transaction.
+      type: object
+      properties:
+        merchant_code:
+          description: Unique code of the registered merchant to whom the payment is made.
+          type: string
+          example: MH4H92C7
+        vat_amount:
+          description: Amount of the applicable VAT (out of the total transaction amount).
+          type: number
+          format: float
+          example: 6
+        tip_amount:
+          description: Amount of the tip (out of the total transaction amount).
+          type: number
+          format: float
+          example: 3
+        entry_mode:
+          $ref: '#/components/schemas/EntryMode'
+        auth_code:
+          description: Authorization code for the transaction sent by the payment card issuer or bank. Applicable only to card payments.
+          type: string
+          example: '053201'
+      title: Transaction Checkout Info
+    CheckoutAccepted:
+      description: Response returned when checkout processing requires an additional payer action, such as a 3DS challenge or a redirect to an external payment method page.
+      type: object
+      properties:
+        next_step:
+          description: Instructions for the next action the payer or client must take.
+          type: object
+          properties:
+            url:
+              description: URL to open or submit in order to continue processing.
+              type: string
+              example: https://dummy-3ds-gateway.com/cap?RID=1233&VAA=A
+            method:
+              description: HTTP method to use when following the next step.
+              type: string
+              example: POST
+            redirect_url:
+              description: Merchant URL where the payer returns after the external flow finishes.
+              type: string
+              example: https://mysite.com/completed_purchase
+            mechanism:
+              description: Allowed presentation mechanisms for the next step. `iframe` means the flow can be embedded, while `browser` means it can be completed through a full-page redirect.
+              type: array
+              items:
+                type: string
+                enum:
+                - iframe
+                - browser
+            payload:
+              description: Parameters required to complete the next step. The exact keys depend on the payment provider and flow type.
+              type: object
+              example:
+                PaReq: eJxVUttu2zAM/RXDr4MjyY5dO6BVuE27FZuDZHGG9VGRmMSFb/Wljff1k9KkF0APPCR1eHQouD6WhfWCbZfXVWyzCbUtrGSt8mof25vs3gltq+tFpURRVxjbI3b2NYfs0CLO1yiHFjmk2HVij1auYrsRW1+F0U4qZxfKwJlur4QTYcQcJoIdc+XO2/poc1gmv/GZw3k216MnLpAL1JytPIiq5yDk883Dgk+DwPV9IGcIJbYPc84o1Ye6lHqu5wVA3tJQiRL5eiiHxlqKscSq76xfeZn3qICciiDroerbkYeuvnYBMLQFP/R9MyOkM9cnCoGYJJAPScvBRJ0mOeaKr/6l08XT6jXN7tx0vvHSbOMtsj1dzB9jIKYDlOiRu1omYyy0WDCj0YxFQE55EKWZzj2f6ee9xdCYEcmnwucEaN9bvaeRR1ehFn9BgMdGr0l3aCvfYyAfem9/GENlrz36ufpTBPTv07r8lm3qpPiOo1y/7u+SJImNzacmw5hrX1wt/kRpABBDQ84bJOf16+jLt/gPhUvGGw==
+                MD: b1a536c0-29b9-11eb-adc1-0242ac120002
+                TermUrl: https://api.sumup.com/v0.1/checkouts/e552de3b-1777-4c91-bdb8-756967678572/complete_payment
+              additionalProperties:
+                type: string
+      title: Checkout Accepted
+    MandateResponse:
+      description: Details of the mandate linked to the saved payment instrument.
+      type: object
+      properties:
+        type:
+          description: Type of mandate stored for the checkout or payment instrument.
+          type: string
+        status:
+          description: Current lifecycle status of the mandate.
+          type: string
+          example: active
+          enum:
+          - active
+          - inactive
+        merchant_code:
+          description: Merchant account for which the mandate is valid.
+          type: string
+          example: MH4H92C7
+      example:
+        type: recurrent
+        status: active
+        merchant_code: MH4H92C7
+      title: Mandate Response
+    Checkout:
+      description: Core checkout resource returned by the Checkouts API. A checkout is created before payment processing and then updated as payment attempts, redirects, and resulting transactions are attached to it.
+      type: object
+      properties:
+        checkout_reference:
+          description: Merchant-defined reference for the checkout. Use it to correlate the SumUp checkout with your own order, cart, subscription, or payment attempt in your systems.
+          type: string
+          example: f00a8f74-b05d-4605-bd73-2a901bae5802
+          maxLength: 90
+        amount:
+          description: Amount to be charged to the payer, expressed in major units.
+          type: number
+          format: float
+          example: 10.1
+        currency:
+          $ref: '#/components/schemas/Currency'
+        merchant_code:
+          description: Merchant account that receives the payment.
+          type: string
+          example: MH4H92C7
+        description:
+          description: Short merchant-defined description shown in SumUp tools and reporting. Use it to make the checkout easier to recognize in dashboards, support workflows, and reconciliation.
+          type: string
+          example: Purchase
+        return_url:
+          description: Optional backend callback URL used by SumUp to notify your platform about processing updates for the checkout.
+          type: string
+          format: uri
+          example: http://example.com
+        id:
+          description: Unique SumUp identifier of the checkout resource.
+          type: string
+          example: 4e425463-3e1b-431d-83fa-1e51c2925e99
+          readOnly: true
+        status:
+          description: Current high-level state of the checkout. `PENDING` means the checkout exists but is not yet completed, `PAID` means a payment succeeded, `FAILED` means the latest processing attempt failed, and `EXPIRED` means the checkout can no longer be processed.
+          type: string
+          example: PENDING
+          enum:
+          - PENDING
+          - FAILED
+          - PAID
+          - EXPIRED
+        date:
+          description: Date and time of the creation of the payment checkout. Response format expressed according to [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) code.
+          type: string
+          format: date-time
+          example: 2020-02-29 10:56:56+00:00
+        valid_until:
+          description: Optional expiration timestamp. The checkout must be processed before this moment, otherwise it becomes unusable. If omitted, the checkout does not have an explicit expiry time.
+          type: string
+          format: date-time
+          example: 2020-02-29 10:56:56+00:00
+          nullable: true
+        customer_id:
+          description: Merchant-scoped identifier of the customer associated with the checkout. Use it when storing payment instruments or reusing saved customer context for recurring and returning-payer flows.
+          type: string
+          example: 831ff8d4cd5958ab5670
+        mandate:
+          $ref: '#/components/schemas/MandateResponse'
+        hosted_checkout_url:
+          description: URL of the SumUp-hosted payment page that handles the payment flow. Returned when Hosted Checkout is enabled for the checkout.
+          type: string
+          format: uri
+          example: https://checkout.sumup.com/pay/8f9316a3-cda9-42a9-9771-54d534315676
+          readOnly: true
+        transactions:
+          description: Payment attempts and resulting transaction records linked to this checkout. Use the Transactions endpoints when you need the authoritative payment result and event history.
+          type: array
+          items:
+            allOf:
+            - $ref: '#/components/schemas/TransactionBase'
+            - $ref: '#/components/schemas/TransactionCheckoutInfo'
+          example:
+          - id: 410fc44a-5956-44e1-b5cc-19c6f8d727a4
+            transaction_code: TEENSK4W2K
+            amount: 10.1
+            currency: EUR
+            timestamp: 2020-02-29 10:56:56.876000+00:00
+            status: SUCCESSFUL
+            payment_type: ECOM
+            installments_count: 1
+            merchant_code: MH4H92C7
+            vat_amount: 6
+            tip_amount: 3
+            entry_mode: CUSTOMER_ENTRY
+            auth_code: '012345'
+          uniqueItems: true
+      title: Checkout
+  securitySchemes:
+    apiKey:
+      description: API keys allow you easily interact with SumUp APIs. API keys are static tokens. You can create API keys from the [Dashboard](https://me.sumup.com/settings/api-keys)
+      type: http
+      scheme: Bearer
+    oauth2:
+      type: oauth2
+      description: 'SumUp supports [OAuth 2.0](https://tools.ietf.org/html/rfc6749) authentication for platforms that want to offer their services to SumUp users.
+
+
+        To integrate via OAuth 2.0 you will need a client credentials that you can create in the [SumUp Dashboard](https://me.sumup.com/settings/oauth2-applications).
+
+
+        To maintain security of our users, we highly recommend that you use one of the [recommended OAuth 2.0 libraries](https://oauth.net/code/) for authentication.'
+      flows:
+        authorizationCode:
+          authorizationUrl: https://api.sumup.com/authorize
+          tokenUrl: https://api.sumup.com/token
+          refreshUrl: https://api.sumup.com/token
+          scopes:
+            payments: Make payments by creating and processing checkouts.
+            transactions.history: View transactions and transaction history.
+            user.profile_readonly: View user profile details.
+            user.profile: View and manage your user profile.
+            user.app-settings: View and manage the SumUp mobile application settings.
+            payment_instruments: Manage customers and their payment instruments.
+            user.payout-settings: View and manage your payout settings.
+            user.subaccounts: View and manage the user profile details of your employees.
+        clientCredentials:
+          tokenUrl: https://api.sumup.com/token
+          scopes:
+            payments: Make payments by creating and processing checkouts.
+            transactions.history: View transactions and transaction history.
+            user.profile_readonly: View user profile details.
+            user.profile: View and manage your user profile.
+            user.app-settings: View and manage the SumUp mobile application settings.
+            payment_instruments: Manage customers and their payment instruments.
+            user.payout-settings: View and manage your payout settings.
+            user.subaccounts: View and manage the user profile details of your employee.

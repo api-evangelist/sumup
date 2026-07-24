@@ -1,0 +1,526 @@
+openapi: 3.0.1
+info:
+  title: SumUp REST Checkouts Receipts API
+  version: 1.0.0
+  description: 'SumUp’s REST API operates with [JSON](https://www.json.org/json-en.html) HTTP requests and responses. The request bodies are sent through resource-oriented URLs and use the standard [HTTP response codes](https://developer.mozilla.org/docs/Web/HTTP/Status).
+
+
+    You can experiment and work on your integration in a sandbox that doesn''t affect your regular data and doesn''t process real transactions. To create a sandbox merchant account visit the [dashboard](https://me.sumup.com/settings/developer). To use the sandbox when interacting with SumUp APIs [create an API](https://me.sumup.com/settings/api-keys) key and use it for [authentication](https://developer.sumup.com/api/authentication).'
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+servers:
+- url: https://api.sumup.com
+  description: Production server
+tags:
+- name: Receipts
+  description: The Receipts model obtains receipt-like details for specific transactions.
+  x-core-objects:
+  - $ref: '#/components/schemas/Receipt'
+paths:
+  /v1.1/receipts/{transaction_id}:
+    get:
+      operationId: GetReceipt
+      summary: Retrieve receipt details
+      description: Retrieves receipt specific data for a transaction.
+      parameters:
+      - name: transaction_id
+        in: path
+        description: SumUp unique transaction ID or transaction code, e.g. TS7HDYLSKD.
+        required: true
+        schema:
+          type: string
+      - name: mid
+        in: query
+        description: Merchant code.
+        required: true
+        schema:
+          type: string
+      - name: tx_event_id
+        in: query
+        description: The ID of the transaction event (refund).
+        required: false
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Returns receipt details for the requested transaction.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Receipt'
+              example:
+                transaction_data:
+                  transaction_code: TEENSK4W2K
+                  transaction_id: 410fc44a-5956-44e1-b5cc-19c6f8d727a4
+                  merchant_code: MH4H92C7
+                  amount: '10.10'
+                  vat_amount: '6.00'
+                  tip_amount: '3.00'
+                  currency: EUR
+                  timestamp: 2020-02-29 10:56:56.876000+00:00
+                  status: SUCCESSFUL
+                  payment_type: ECOM
+                  entry_mode: CUSTOMER_ENTRY
+                  installments_count: 1
+                  process_as: CREDIT
+                merchant_data:
+                  merchant_profile:
+                    merchant_code: MH4H92C7
+                acquirer_data:
+                  authorization_code: '053201'
+        '400':
+          description: The request is invalid for the submitted parameters.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Invalid_Merchant_Code:
+                  description: The provided merchant code is invalid.
+                  value:
+                    message: is not a valid merchant code
+                    error_code: INVALID
+        '401':
+          description: The request is not authorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+              examples:
+                Problem_Details:
+                  description: Unauthorized response returned by API gateway.
+                  value:
+                    detail: Unauthorized.
+                    status: 401
+                    title: Unauthorized
+                    trace_id: 3c77294349d3b5647ea2d990f0d8f017
+                    type: https://developer.sumup.com/problem/unauthorized
+        '404':
+          description: The requested transaction event does not exist for the provided transaction.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Event_Not_Found:
+                  description: The provided transaction event ID cannot be found for this transaction.
+                  value:
+                    message: No such tx event (ID=9567461191) for transaction 4ffb8dfc-7f2b-413d-a497-2ad00766585e
+                    error_code: NOT_FOUND
+      security:
+      - apiKey: []
+      - oauth2: []
+      tags:
+      - Receipts
+      x-codegen:
+        method_name: get
+      x-scopes: []
+components:
+  schemas:
+    Receipt:
+      description: Receipt details for a transaction.
+      type: object
+      properties:
+        transaction_data:
+          $ref: '#/components/schemas/ReceiptTransaction'
+        merchant_data:
+          $ref: '#/components/schemas/ReceiptMerchantData'
+        emv_data:
+          description: EMV-specific metadata returned for card-present payments.
+          type: object
+          example: {}
+        acquirer_data:
+          description: Acquirer-specific metadata related to the card authorization.
+          type: object
+          example:
+            authorization_code: '053201'
+            return_code: '00'
+          properties:
+            tid:
+              type: string
+            authorization_code:
+              type: string
+            return_code:
+              type: string
+            local_time:
+              type: string
+      title: Receipt
+    ReceiptMerchantData:
+      description: Receipt merchant data
+      type: object
+      properties:
+        merchant_profile:
+          description: Merchant profile details displayed on the receipt.
+          type: object
+          properties:
+            merchant_code:
+              type: string
+              example: MH4H92C7
+            business_name:
+              type: string
+            company_registration_number:
+              type: string
+            vat_id:
+              type: string
+            website:
+              type: string
+            email:
+              type: string
+            language:
+              type: string
+            address:
+              type: object
+              properties:
+                address_line1:
+                  type: string
+                address_line2:
+                  type: string
+                city:
+                  type: string
+                country:
+                  type: string
+                country_en_name:
+                  type: string
+                country_native_name:
+                  type: string
+                region_name:
+                  type: string
+                post_code:
+                  type: string
+                landline:
+                  type: string
+        locale:
+          description: Locale used for rendering localized receipt fields.
+          type: string
+      title: Receipt Merchant Data
+    ReceiptTransaction:
+      description: Transaction information.
+      type: object
+      properties:
+        transaction_code:
+          description: Transaction code.
+          type: string
+        transaction_id:
+          $ref: '#/components/schemas/TransactionID'
+        merchant_code:
+          description: Merchant code.
+          type: string
+        amount:
+          description: Transaction amount.
+          type: string
+        vat_amount:
+          description: Transaction VAT amount.
+          type: string
+        tip_amount:
+          description: Tip amount (included in transaction amount).
+          type: string
+        currency:
+          description: Transaction currency.
+          type: string
+        timestamp:
+          description: Time created at.
+          type: string
+          format: date-time
+        status:
+          description: Transaction processing status.
+          type: string
+        payment_type:
+          description: Transaction type.
+          type: string
+        entry_mode:
+          description: Transaction entry mode.
+          type: string
+        verification_method:
+          description: Cardholder verification method.
+          type: string
+        card_reader:
+          $ref: '#/components/schemas/ReceiptReader'
+        card:
+          $ref: '#/components/schemas/ReceiptCard'
+        installments_count:
+          description: Number of installments.
+          type: integer
+        process_as:
+          description: Debit/Credit.
+          type: string
+          example: CREDIT
+          enum:
+          - CREDIT
+          - DEBIT
+        products:
+          description: Products
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                description: Product name
+                type: string
+                example: Coffee
+              description:
+                description: Product description
+                type: string
+              price:
+                description: Product price
+                type: string
+                format: double
+                example: '150.0'
+              vat_rate:
+                description: VAT rate
+                type: string
+                format: double
+                example: '0.0'
+              single_vat_amount:
+                description: VAT amount for a single product
+                type: string
+                format: double
+                example: '0.0'
+              price_with_vat:
+                description: Product price including VAT
+                type: string
+                format: double
+                example: '150.0'
+              vat_amount:
+                description: VAT amount
+                type: string
+                format: double
+                example: '0.0'
+              quantity:
+                description: Product quantity
+                type: integer
+                format: int64
+                example: 1
+              total_price:
+                description: Quantity x product price
+                type: string
+                format: double
+                example: '150.0'
+              total_with_vat:
+                description: Total price including VAT
+                type: string
+                format: double
+                example: '150.0'
+        vat_rates:
+          description: Vat rates.
+          type: array
+          items:
+            type: object
+            properties:
+              gross:
+                description: Gross
+                type: number
+                format: float
+              net:
+                description: Net
+                type: number
+                format: float
+              rate:
+                description: Rate
+                type: number
+                format: float
+              vat:
+                description: Vat
+                type: number
+                format: float
+        events:
+          description: Events
+          type: array
+          items:
+            $ref: '#/components/schemas/ReceiptEvent'
+        receipt_no:
+          description: Receipt number
+          type: string
+      example:
+        transaction_code: TEENSK4W2K
+        transaction_id: 410fc44a-5956-44e1-b5cc-19c6f8d727a4
+        merchant_code: MH4H92C7
+        amount: '10.10'
+        vat_amount: '6.00'
+        tip_amount: '3.00'
+        currency: EUR
+        timestamp: 2020-02-29 10:56:56.876000+00:00
+        status: SUCCESSFUL
+        payment_type: ECOM
+        entry_mode: CUSTOMER_ENTRY
+        installments_count: 1
+        process_as: CREDIT
+      title: Receipt Transaction
+    ReceiptEvent:
+      description: Transaction event details as rendered on the receipt.
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/EventID'
+        transaction_id:
+          $ref: '#/components/schemas/TransactionID'
+        type:
+          $ref: '#/components/schemas/EventType'
+        status:
+          $ref: '#/components/schemas/EventStatus'
+        amount:
+          description: Amount of the event.
+          type: string
+          format: double
+        timestamp:
+          description: Date and time of the transaction event.
+          type: string
+          format: date-time
+        receipt_no:
+          description: Receipt number associated with the event.
+          type: string
+      title: Receipt Event
+    EventID:
+      description: Unique ID of the transaction event.
+      type: integer
+      format: int64
+      title: Event ID
+    EventStatus:
+      description: 'Status of the transaction event.
+
+
+        Not every value is used for every event type.
+
+
+        - `PENDING`: The event has been created but is not final yet. Used for events that are still being processed and whose final outcome is not known yet.
+
+        - `SCHEDULED`: The event is planned for a future payout cycle but has not been executed yet. This applies to payout events before money is actually sent out.
+
+        - `RECONCILED`: The underlying payment has been matched with settlement data and is ready to continue through payout processing, but the funds have not been paid out yet. This applies to payout events.
+
+        - `PAID_OUT`: The payout event has been completed and the funds were included in a merchant payout.
+
+        - `REFUNDED`: A refund event has been accepted and recorded in the refund flow. This is the status returned for refund events once the transaction amount is being or has been returned to the payer.
+
+        - `SUCCESSFUL`: The event completed successfully. Use this as the generic terminal success status for event types that do not expose a more specific business outcome such as `PAID_OUT` or `REFUNDED`.
+
+        - `FAILED`: The event could not be completed. Typical examples are a payout that could not be executed or an event that was rejected during processing.'
+      type: string
+      enum:
+      - FAILED
+      - PAID_OUT
+      - PENDING
+      - RECONCILED
+      - REFUNDED
+      - SCHEDULED
+      - SUCCESSFUL
+      title: Event Status
+    TransactionID:
+      description: Unique ID of the transaction.
+      type: string
+      title: Transaction ID
+    ReceiptReader:
+      description: Card reader details displayed on the receipt.
+      type: object
+      properties:
+        code:
+          description: Reader serial number.
+          type: string
+        type:
+          description: Reader type.
+          type: string
+      title: Receipt Reader
+    EventType:
+      description: Type of the transaction event.
+      type: string
+      enum:
+      - PAYOUT
+      - CHARGE_BACK
+      - REFUND
+      - PAYOUT_DEDUCTION
+      title: Event Type
+    ReceiptCard:
+      description: Payment card details displayed on the receipt.
+      type: object
+      properties:
+        last_4_digits:
+          description: Card last 4 digits.
+          type: string
+        type:
+          description: Card Scheme.
+          type: string
+      title: Receipt Card
+    Problem:
+      description: 'A RFC 9457 problem details object.
+
+
+        Additional properties specific to the problem type may be present.'
+      type: object
+      properties:
+        type:
+          description: A URI reference that identifies the problem type.
+          type: string
+          format: uri
+          example: https://developer.sumup.com/problem/not-found
+        title:
+          description: A short, human-readable summary of the problem type.
+          type: string
+          example: Requested resource couldn't be found.
+        status:
+          description: The HTTP status code generated by the origin server for this occurrence of the problem.
+          type: integer
+          example: 404
+        detail:
+          description: A human-readable explanation specific to this occurrence of the problem.
+          type: string
+          example: The requested resource doesn't exist or does not belong to you.
+        instance:
+          description: A URI reference that identifies the specific occurrence of the problem.
+          type: string
+          format: uri
+      additionalProperties: true
+      required:
+      - type
+      title: Problem
+    Error:
+      description: Error message structure.
+      type: object
+      properties:
+        message:
+          description: Short description of the error.
+          type: string
+          example: Resource not found
+        error_code:
+          description: Platform code for the error.
+          type: string
+          example: NOT_FOUND
+      title: Error
+  securitySchemes:
+    apiKey:
+      description: API keys allow you easily interact with SumUp APIs. API keys are static tokens. You can create API keys from the [Dashboard](https://me.sumup.com/settings/api-keys)
+      type: http
+      scheme: Bearer
+    oauth2:
+      type: oauth2
+      description: 'SumUp supports [OAuth 2.0](https://tools.ietf.org/html/rfc6749) authentication for platforms that want to offer their services to SumUp users.
+
+
+        To integrate via OAuth 2.0 you will need a client credentials that you can create in the [SumUp Dashboard](https://me.sumup.com/settings/oauth2-applications).
+
+
+        To maintain security of our users, we highly recommend that you use one of the [recommended OAuth 2.0 libraries](https://oauth.net/code/) for authentication.'
+      flows:
+        authorizationCode:
+          authorizationUrl: https://api.sumup.com/authorize
+          tokenUrl: https://api.sumup.com/token
+          refreshUrl: https://api.sumup.com/token
+          scopes:
+            payments: Make payments by creating and processing checkouts.
+            transactions.history: View transactions and transaction history.
+            user.profile_readonly: View user profile details.
+            user.profile: View and manage your user profile.
+            user.app-settings: View and manage the SumUp mobile application settings.
+            payment_instruments: Manage customers and their payment instruments.
+            user.payout-settings: View and manage your payout settings.
+            user.subaccounts: View and manage the user profile details of your employees.
+        clientCredentials:
+          tokenUrl: https://api.sumup.com/token
+          scopes:
+            payments: Make payments by creating and processing checkouts.
+            transactions.history: View transactions and transaction history.
+            user.profile_readonly: View user profile details.
+            user.profile: View and manage your user profile.
+            user.app-settings: View and manage the SumUp mobile application settings.
+            payment_instruments: Manage customers and their payment instruments.
+            user.payout-settings: View and manage your payout settings.
+            user.subaccounts: View and manage the user profile details of your employee.

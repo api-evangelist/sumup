@@ -1,0 +1,339 @@
+openapi: 3.0.1
+info:
+  title: SumUp REST Checkouts Payouts API
+  version: 1.0.0
+  description: 'SumUp’s REST API operates with [JSON](https://www.json.org/json-en.html) HTTP requests and responses. The request bodies are sent through resource-oriented URLs and use the standard [HTTP response codes](https://developer.mozilla.org/docs/Web/HTTP/Status).
+
+
+    You can experiment and work on your integration in a sandbox that doesn''t affect your regular data and doesn''t process real transactions. To create a sandbox merchant account visit the [dashboard](https://me.sumup.com/settings/developer). To use the sandbox when interacting with SumUp APIs [create an API](https://me.sumup.com/settings/api-keys) key and use it for [authentication](https://developer.sumup.com/api/authentication).'
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+servers:
+- url: https://api.sumup.com
+  description: Production server
+tags:
+- name: Payouts
+  description: 'The Payouts model will allow you to track funds you’ve received from SumUp.
+
+
+    You can receive a detailed payouts list with information like dates, fees, references and statuses, using the `List payouts` endpoint.'
+  x-core-objects:
+  - $ref: '#/components/schemas/FinancialPayouts'
+paths:
+  /v1.0/merchants/{merchant_code}/payouts:
+    get:
+      operationId: ListPayoutsV1
+      summary: List payouts
+      description: 'Lists payout and payout-deduction records for the specified merchant account within the requested date range.
+
+
+        The response can include:
+
+        - regular payouts (`type = PAYOUT`)
+
+        - deduction records for refunds, chargebacks, direct debit returns, or balance adjustments
+
+
+        Results are sorted by payout date in the requested `order`.'
+      parameters:
+      - name: merchant_code
+        in: path
+        description: Merchant code of the account whose payouts should be listed.
+        required: true
+        schema:
+          type: string
+          example: MH4H92C7
+      - name: start_date
+        in: query
+        description: Start date of the payout period filter, inclusive, in [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) `date` format (`YYYY-MM-DD`).
+        required: true
+        schema:
+          type: string
+          format: date
+          example: 2024-02-01
+      - name: end_date
+        in: query
+        description: End date of the payout period filter, inclusive, in [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) `date` format (`YYYY-MM-DD`). Must be greater than or equal to `start_date`.
+        required: true
+        schema:
+          type: string
+          format: date
+          example: 2024-02-29
+      - name: format
+        in: query
+        description: Response format for the payout list.
+        required: false
+        schema:
+          type: string
+          example: json
+          default: json
+          enum:
+          - json
+          - csv
+      - name: limit
+        in: query
+        description: Maximum number of payout records to return.
+        required: false
+        schema:
+          type: integer
+          example: 10
+          maximum: 9999
+          minimum: 1
+      - name: order
+        in: query
+        description: Sort direction for the returned payouts.
+        required: false
+        schema:
+          type: string
+          example: desc
+          default: asc
+          enum:
+          - asc
+          - desc
+      responses:
+        '200':
+          description: Returns the list of payout and deduction records for the requested period.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FinancialPayouts'
+              example:
+              - amount: 132.45
+                currency: EUR
+                date: 2024-02-29
+                fee: 3.12
+                id: 123456789
+                reference: payout-2024-02-29
+                status: SUCCESSFUL
+                transaction_code: TEENSK4W2K
+                type: PAYOUT
+            text/plain:
+              schema:
+                description: CSV-formatted payout export returned when `format=csv`.
+                type: string
+              example: 'id,type,amount,date,currency,fee,status,reference,transaction_code
+
+                123456789,PAYOUT,132.45,2024-02-29,EUR,3.12,SUCCESSFUL,payout-2024-02-29,TEENSK4W2K'
+        '400':
+          description: The request is invalid for the submitted query parameters.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ErrorExtended'
+              examples:
+                Missing required dates:
+                  description: Required date filters are missing.
+                  value:
+                  - error_code: MISSING
+                    message: 'Validation error: required'
+                    param: start_date
+                  - error_code: MISSING
+                    message: 'Validation error: required'
+                    param: end_date
+                Invalid date range:
+                  description: '`start_date` cannot be later than `end_date`.'
+                  value:
+                  - error_code: INVALID
+                    message: negative date range
+        '401':
+          description: The request is not authorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+              examples:
+                Problem_Details:
+                  description: Unauthorized response returned by API gateway.
+                  value:
+                    detail: Unauthorized.
+                    status: 401
+                    title: Unauthorized
+                    trace_id: 3c77294349d3b5647ea2d990f0d8f017
+                    type: https://developer.sumup.com/problem/unauthorized
+      security:
+      - apiKey: []
+      - oauth2:
+        - user.profile
+        - user.profile_readonly
+      tags:
+      - Payouts
+      x-codegen:
+        method_name: list
+      x-scopes:
+      - user.profile
+      - user.profile_readonly
+components:
+  schemas:
+    ErrorExtended:
+      description: Error payload with the invalid parameter reference.
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        properties:
+          param:
+            description: Parameter name (with relative location) to which the error applies. Parameters from embedded resources are displayed using dot notation. For example, `card.name` refers to the `name` parameter embedded in the `card` object.
+            type: string
+      title: Error Extended
+    FinancialPayout:
+      description: 'A single payout-related record.
+
+
+        A record can represent either:
+
+        - an actual payout sent to the merchant (`type = PAYOUT`)
+
+        - a deduction applied against merchant funds for a refund, chargeback, direct debit return, or balance adjustment'
+      type: object
+      properties:
+        id:
+          description: Unique identifier of the payout-related record.
+          type: integer
+          example: 123456789
+        type:
+          description: High-level payout record category.
+          type: string
+          example: PAYOUT
+          enum:
+          - PAYOUT
+          - CHARGE_BACK_DEDUCTION
+          - REFUND_DEDUCTION
+          - DD_RETURN_DEDUCTION
+          - BALANCE_DEDUCTION
+        amount:
+          description: Amount of the payout or deduction in major units.
+          type: number
+          format: float
+          example: 132.45
+        date:
+          description: Payout date associated with the record, in `YYYY-MM-DD` format.
+          type: string
+          format: date
+          example: 2024-02-29
+        currency:
+          description: Three-letter ISO 4217 currency code of the payout.
+          type: string
+          example: EUR
+        fee:
+          description: Fee amount associated with the payout record, in major units.
+          type: number
+          format: float
+          example: 3.12
+        status:
+          description: Merchant-facing outcome of the payout record.
+          type: string
+          example: SUCCESSFUL
+          enum:
+          - SUCCESSFUL
+          - FAILED
+        reference:
+          description: Processor or payout reference associated with the record.
+          type: string
+          example: payout-2024-02-29
+        transaction_code:
+          description: Transaction code of the original sale associated with the payout or deduction.
+          type: string
+          example: TEENSK4W2K
+      required:
+      - id
+      - type
+      - amount
+      - date
+      - currency
+      - fee
+      - status
+      - reference
+      - transaction_code
+      title: Financial Payout
+    FinancialPayouts:
+      description: Ordered list of payout and payout-deduction records.
+      type: array
+      items:
+        $ref: '#/components/schemas/FinancialPayout'
+      title: Financial Payouts
+    Problem:
+      description: 'A RFC 9457 problem details object.
+
+
+        Additional properties specific to the problem type may be present.'
+      type: object
+      properties:
+        type:
+          description: A URI reference that identifies the problem type.
+          type: string
+          format: uri
+          example: https://developer.sumup.com/problem/not-found
+        title:
+          description: A short, human-readable summary of the problem type.
+          type: string
+          example: Requested resource couldn't be found.
+        status:
+          description: The HTTP status code generated by the origin server for this occurrence of the problem.
+          type: integer
+          example: 404
+        detail:
+          description: A human-readable explanation specific to this occurrence of the problem.
+          type: string
+          example: The requested resource doesn't exist or does not belong to you.
+        instance:
+          description: A URI reference that identifies the specific occurrence of the problem.
+          type: string
+          format: uri
+      additionalProperties: true
+      required:
+      - type
+      title: Problem
+    Error:
+      description: Error message structure.
+      type: object
+      properties:
+        message:
+          description: Short description of the error.
+          type: string
+          example: Resource not found
+        error_code:
+          description: Platform code for the error.
+          type: string
+          example: NOT_FOUND
+      title: Error
+  securitySchemes:
+    apiKey:
+      description: API keys allow you easily interact with SumUp APIs. API keys are static tokens. You can create API keys from the [Dashboard](https://me.sumup.com/settings/api-keys)
+      type: http
+      scheme: Bearer
+    oauth2:
+      type: oauth2
+      description: 'SumUp supports [OAuth 2.0](https://tools.ietf.org/html/rfc6749) authentication for platforms that want to offer their services to SumUp users.
+
+
+        To integrate via OAuth 2.0 you will need a client credentials that you can create in the [SumUp Dashboard](https://me.sumup.com/settings/oauth2-applications).
+
+
+        To maintain security of our users, we highly recommend that you use one of the [recommended OAuth 2.0 libraries](https://oauth.net/code/) for authentication.'
+      flows:
+        authorizationCode:
+          authorizationUrl: https://api.sumup.com/authorize
+          tokenUrl: https://api.sumup.com/token
+          refreshUrl: https://api.sumup.com/token
+          scopes:
+            payments: Make payments by creating and processing checkouts.
+            transactions.history: View transactions and transaction history.
+            user.profile_readonly: View user profile details.
+            user.profile: View and manage your user profile.
+            user.app-settings: View and manage the SumUp mobile application settings.
+            payment_instruments: Manage customers and their payment instruments.
+            user.payout-settings: View and manage your payout settings.
+            user.subaccounts: View and manage the user profile details of your employees.
+        clientCredentials:
+          tokenUrl: https://api.sumup.com/token
+          scopes:
+            payments: Make payments by creating and processing checkouts.
+            transactions.history: View transactions and transaction history.
+            user.profile_readonly: View user profile details.
+            user.profile: View and manage your user profile.
+            user.app-settings: View and manage the SumUp mobile application settings.
+            payment_instruments: Manage customers and their payment instruments.
+            user.payout-settings: View and manage your payout settings.
+            user.subaccounts: View and manage the user profile details of your employee.
