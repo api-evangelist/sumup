@@ -5,7 +5,20 @@ description: European mobile payment and POS platform with REST APIs for creatin
   and accessing payout data. SumUp serves over 4 million merchants in 37 markets
   with built-in fraud protection, sandbox environments for testing, and SDKs for
   multiple programming languages.
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: paid
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Paid · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/sumup.png
 url: https://raw.githubusercontent.com/api-evangelist/sumup/refs/heads/main/apis.yml
 created: '2026-06-13'
 modified: '2026-06-13'
@@ -20,30 +33,241 @@ tags:
   - Mobile Payments
   - Online Payments
 apis:
-  - aid: sumup:sumup-rest-api
-    name: SumUp REST API
-    description: REST API for creating and executing checkouts, managing card readers,
-      processing payments, storing customer cards, issuing refunds, retrieving transactions,
-      and accessing payout data. Base URL is https://api.sumup.com with API key and
-      OAuth 2.0 authentication.
-    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-    humanURL: https://developer.sumup.com/api
-    baseURL: https://api.sumup.com
-    tags:
-      - Checkouts
-      - Payments
-      - Transactions
-      - Customers
-      - Card Readers
-      - Payouts
-      - Receipts
-    properties:
-      - type: Documentation
-        url: https://developer.sumup.com/api
-      - type: OpenAPI
-        url: https://raw.githubusercontent.com/sumup/sumup-openapi/main/openapi.yaml
-      - type: PostmanCollection
-        url: https://www.postman.com/sumupengineering/sumup-developers/collection/iqa7nry/sumup-rest-api
+- aid: sumup:sumup-checkouts-api
+  name: SumUp Checkouts API
+  description: >-
+    Checkouts represent online payment sessions that you create before attempting to charge a payer. A
+    checkout captures the payment intent, such as the amount, currency, merchant, and optional customer
+    or redirect settings, and then moves through its lifecycle as you process it.
+
+
+    Use this tag to:
+
+    - create a checkout before collecting or confirming payment details
+
+    - process the checkout with a card, saved card, wallet, or supported alternative payment method
+
+    - retrieve or list checkouts to inspect their current state and associated payment attempts
+
+    - deactivate a checkout that should no longer be used
+
+
+    Typical workflow:
+
+    - create a checkout with the order amount, currency, and merchant information
+
+    - process the checkout through SumUp client tools such as the [Payment Widget and Swift Checkout SDK](https://developer.sumup.com/online-payments/checkouts)
+
+    - retrieve the checkout or use the Transactions endpoints to inspect the resulting payment record
+
+
+    Checkouts are used to initiate and orchestrate online payments. Transactions remain the authoritative
+    record of the resulting payment outcome.
+  humanURL: https://developer.sumup.com/api
+  baseURL: https://api.sumup.com
+  tags:
+  - Checkouts
+  properties:
+  - type: OpenAPI
+    url: openapi/sumup-checkouts-api-openapi.yml
+  - type: Documentation
+    url: https://developer.sumup.com/api
+  - type: PostmanCollection
+    url: >-
+      https://www.postman.com/sumupengineering/sumup-developers/collection/iqa7nry/sumup-rest-api
+- aid: sumup:sumup-customers-api
+  name: SumUp Customers API
+  description: >-
+    Allow your regular customers to save their information with the Customers model.
+
+
+    This will prevent re-entering payment instrument information for recurring payments on your platform.
+
+
+    Depending on the needs you can allow, creating, listing or deactivating payment instruments & creating,
+    retrieving and updating customers.
+  humanURL: https://developer.sumup.com/api
+  baseURL: https://api.sumup.com
+  tags:
+  - Customers
+  properties:
+  - type: OpenAPI
+    url: openapi/sumup-customers-api-openapi.yml
+  - type: Documentation
+    url: https://developer.sumup.com/api
+  - type: PostmanCollection
+    url: >-
+      https://www.postman.com/sumupengineering/sumup-developers/collection/iqa7nry/sumup-rest-api
+- aid: sumup:sumup-members-api
+  name: SumUp Members API
+  description: >-
+    Endpoints to manage account members. Members are users that have membership within merchant accounts.
+  humanURL: https://developer.sumup.com/api
+  baseURL: https://api.sumup.com
+  tags:
+  - Members
+  properties:
+  - type: OpenAPI
+    url: openapi/sumup-members-api-openapi.yml
+  - type: Documentation
+    url: https://developer.sumup.com/api
+  - type: PostmanCollection
+    url: >-
+      https://www.postman.com/sumupengineering/sumup-developers/collection/iqa7nry/sumup-rest-api
+- aid: sumup:sumup-memberships-api
+  name: SumUp Memberships API
+  description: >-
+    Endpoints to manage user's memberships. Memberships are used to connect the user to merchant accounts
+    and to grant them access to the merchant's resources via roles.
+  humanURL: https://developer.sumup.com/api
+  baseURL: https://api.sumup.com
+  tags:
+  - Memberships
+  properties:
+  - type: OpenAPI
+    url: openapi/sumup-memberships-api-openapi.yml
+  - type: Documentation
+    url: https://developer.sumup.com/api
+  - type: PostmanCollection
+    url: >-
+      https://www.postman.com/sumupengineering/sumup-developers/collection/iqa7nry/sumup-rest-api
+- aid: sumup:sumup-merchants-api
+  name: SumUp Merchants API
+  description: Merchant account represents a single business entity at SumUp.
+  humanURL: https://developer.sumup.com/api
+  baseURL: https://api.sumup.com
+  tags:
+  - Merchants
+  properties:
+  - type: OpenAPI
+    url: openapi/sumup-merchants-api-openapi.yml
+  - type: Documentation
+    url: https://developer.sumup.com/api
+  - type: PostmanCollection
+    url: >-
+      https://www.postman.com/sumupengineering/sumup-developers/collection/iqa7nry/sumup-rest-api
+- aid: sumup:sumup-payouts-api
+  name: SumUp Payouts API
+  description: >-
+    The Payouts model will allow you to track funds you’ve received from SumUp.
+
+
+    You can receive a detailed payouts list with information like dates, fees, references and statuses,
+    using the `List payouts` endpoint.
+  humanURL: https://developer.sumup.com/api
+  baseURL: https://api.sumup.com
+  tags:
+  - Payouts
+  properties:
+  - type: OpenAPI
+    url: openapi/sumup-payouts-api-openapi.yml
+  - type: Documentation
+    url: https://developer.sumup.com/api
+  - type: PostmanCollection
+    url: >-
+      https://www.postman.com/sumupengineering/sumup-developers/collection/iqa7nry/sumup-rest-api
+- aid: sumup:sumup-readers-api
+  name: SumUp Readers API
+  description: >-
+    A reader represents a device that accepts payments. You can use the SumUp Solo to accept in-person
+    payments.
+  humanURL: https://developer.sumup.com/api
+  baseURL: https://api.sumup.com
+  tags:
+  - Readers
+  properties:
+  - type: OpenAPI
+    url: openapi/sumup-readers-api-openapi.yml
+  - type: Documentation
+    url: https://developer.sumup.com/api
+  - type: PostmanCollection
+    url: >-
+      https://www.postman.com/sumupengineering/sumup-developers/collection/iqa7nry/sumup-rest-api
+- aid: sumup:sumup-receipts-api
+  name: SumUp Receipts API
+  description: The Receipts model obtains receipt-like details for specific transactions.
+  humanURL: https://developer.sumup.com/api
+  baseURL: https://api.sumup.com
+  tags:
+  - Receipts
+  properties:
+  - type: OpenAPI
+    url: openapi/sumup-receipts-api-openapi.yml
+  - type: Documentation
+    url: https://developer.sumup.com/api
+  - type: PostmanCollection
+    url: >-
+      https://www.postman.com/sumupengineering/sumup-developers/collection/iqa7nry/sumup-rest-api
+- aid: sumup:sumup-roles-api
+  name: SumUp Roles API
+  description: >-
+    Endpoints to manage custom roles. Custom roles allow you to tailor roles from individual permissions
+    to match your needs. Once created, you can assign your custom roles to your merchant account members
+    using the memberships.
+  humanURL: https://developer.sumup.com/api
+  baseURL: https://api.sumup.com
+  tags:
+  - Roles
+  properties:
+  - type: OpenAPI
+    url: openapi/sumup-roles-api-openapi.yml
+  - type: Documentation
+    url: https://developer.sumup.com/api
+  - type: PostmanCollection
+    url: >-
+      https://www.postman.com/sumupengineering/sumup-developers/collection/iqa7nry/sumup-rest-api
+- aid: sumup:sumup-transactions-api
+  name: SumUp Transactions API
+  description: >-
+    Transactions represent completed or attempted payment operations processed for a merchant account.
+    A transaction contains the core payment result, such as the amount, currency, payment method, creation
+    time, and current high-level status.
+
+
+    In addition to the main payment outcome, a transaction can contain related events that describe what
+    happened after the original payment attempt. These events provide visibility into the financial lifecycle
+    of the transaction, for example:
+
+    - `PAYOUT`: the payment being prepared for payout or included in a payout to the merchant
+
+    - `REFUND`: money returned to the payer
+
+    - `CHARGE_BACK`: money reversed after the original payment
+
+    - `PAYOUT_DEDUCTION`: an amount deducted from a payout to cover a refund or chargeback
+
+
+    From an integrator's perspective, transactions are the authoritative record of payment outcomes. Use
+    this tag to:
+
+    - list transactions for reporting, reconciliation, and customer support workflows
+
+    - retrieve a single transaction when you need the latest payment details
+
+    - inspect `simple_status` for the current merchant-facing outcome of the payment
+
+    - inspect `events` or `transaction_events` when you need refund, payout, or chargeback history
+
+
+    Typical workflow:
+
+    - create and process payments through the Checkouts endpoints
+
+    - use the Transactions endpoints to read the resulting payment records
+
+    - use the returned statuses and events to update your own order, accounting, or support systems
+  humanURL: https://developer.sumup.com/api
+  baseURL: https://api.sumup.com
+  tags:
+  - Transactions
+  properties:
+  - type: OpenAPI
+    url: openapi/sumup-transactions-api-openapi.yml
+  - type: Documentation
+    url: https://developer.sumup.com/api
+  - type: PostmanCollection
+    url: >-
+      https://www.postman.com/sumupengineering/sumup-developers/collection/iqa7nry/sumup-rest-api
 common:
   - type: AgenticAccess
     url: agentic-access/sumup-agentic-access.yml
