@@ -1,0 +1,32 @@
+{
+  "provider": "sumup",
+  "sources": [
+    "sumup-checkouts-api-openapi.yml",
+    "sumup-customers-api-openapi.yml",
+    "sumup-members-api-openapi.yml",
+    "sumup-memberships-api-openapi.yml",
+    "sumup-merchants-api-openapi.yml",
+    "sumup-payouts-api-openapi.yml",
+    "sumup-readers-api-openapi.yml",
+    "sumup-receipts-api-openapi.yml",
+    "sumup-roles-api-openapi.yml",
+    "sumup-transactions-api-openapi.yml"
+  ],
+  "outputs": [
+    "sumup-checkouts-api-openapi.yml",
+    "sumup-customers-api-openapi.yml",
+    "sumup-members-api-openapi.yml",
+    "sumup-memberships-api-openapi.yml",
+    "sumup-merchants-api-openapi.yml",
+    "sumup-payouts-api-openapi.yml",
+    "sumup-readers-api-openapi.yml",
+    "sumup-receipts-api-openapi.yml",
+    "sumup-roles-api-openapi.yml",
+    "sumup-transactions-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
