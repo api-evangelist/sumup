@@ -1,0 +1,181 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "SumUp REST Checkouts Members API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Members",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List members",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sumup.com/v0.1/merchants/:merchant_code/members",
+            "params": [
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset of the first member to return."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of members to return."
+              },
+              {
+                "name": "scroll",
+                "value": "",
+                "type": "query",
+                "description": "Indicates to skip count query."
+              },
+              {
+                "name": "email",
+                "value": "",
+                "type": "query",
+                "description": "Filter the returned members by email address prefix."
+              },
+              {
+                "name": "user.id",
+                "value": "",
+                "type": "query",
+                "description": "Search for a member by user id."
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter the returned members by the membership status."
+              },
+              {
+                "name": "roles",
+                "value": "",
+                "type": "query",
+                "description": "Filter the returned members by role."
+              },
+              {
+                "name": "merchant_code",
+                "value": "",
+                "type": "path",
+                "description": "Short unique identifier for the merchant."
+              }
+            ]
+          },
+          "docs": "Lists merchant members."
+        },
+        {
+          "info": {
+            "name": "Create a member",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sumup.com/v0.1/merchants/:merchant_code/members",
+            "params": [
+              {
+                "name": "merchant_code",
+                "value": "",
+                "type": "path",
+                "description": "Short unique identifier for the merchant."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a merchant member."
+        },
+        {
+          "info": {
+            "name": "Retrieve a member",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sumup.com/v0.1/merchants/:merchant_code/members/:member_id",
+            "params": [
+              {
+                "name": "merchant_code",
+                "value": "",
+                "type": "path",
+                "description": "Short unique identifier for the merchant."
+              },
+              {
+                "name": "member_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the member to retrieve."
+              }
+            ]
+          },
+          "docs": "Retrieve a merchant member."
+        },
+        {
+          "info": {
+            "name": "Update a member",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.sumup.com/v0.1/merchants/:merchant_code/members/:member_id",
+            "params": [
+              {
+                "name": "merchant_code",
+                "value": "",
+                "type": "path",
+                "description": "Short unique identifier for the merchant."
+              },
+              {
+                "name": "member_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the member to retrieve."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update the merchant member."
+        },
+        {
+          "info": {
+            "name": "Delete a member",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.sumup.com/v0.1/merchants/:merchant_code/members/:member_id",
+            "params": [
+              {
+                "name": "merchant_code",
+                "value": "",
+                "type": "path",
+                "description": "Short unique identifier for the merchant."
+              },
+              {
+                "name": "member_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the member to retrieve."
+              }
+            ]
+          },
+          "docs": "Deletes a merchant member."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

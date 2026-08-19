@@ -1,0 +1,99 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "SumUp REST Checkouts Merchants API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Merchants",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve a Merchant",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sumup.com/v1/merchants/:merchant_code",
+            "params": [
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "The version of the resource. At the moment, the only supported value is `latest`. When provided and the requested resource's `change_status` is pending, the resource will be returned with all pending changes applied. When no changes are pending the resource is returned as is. The `change_status` in the response body will reflect the current state of the resource.\n"
+              },
+              {
+                "name": "merchant_code",
+                "value": "",
+                "type": "path",
+                "description": "Short unique identifier for the merchant."
+              }
+            ]
+          },
+          "docs": "Retrieve a merchant."
+        },
+        {
+          "info": {
+            "name": "List Persons",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sumup.com/v1/merchants/:merchant_code/persons",
+            "params": [
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "The version of the resource. At the moment, the only supported value is `latest`. When provided and the requested resource's `change_status` is pending, the resource will be returned with all pending changes applied. When no changes are pending the resource is returned as is. The `change_status` in the response body will reflect the current state of the resource.\n"
+              },
+              {
+                "name": "merchant_code",
+                "value": "",
+                "type": "path",
+                "description": "Short unique identifier for the merchant."
+              }
+            ]
+          },
+          "docs": "Returns a list of persons related to the merchant."
+        },
+        {
+          "info": {
+            "name": "Retrieve a Person",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sumup.com/v1/merchants/:merchant_code/persons/:person_id",
+            "params": [
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "The version of the resource. At the moment, the only supported value is `latest`. When provided and the requested resource's `change_status` is pending, the resource will be returned with all pending changes applied. When no changes are pending the resource is returned as is. The `change_status` in the response body will reflect the current state of the resource.\n"
+              },
+              {
+                "name": "merchant_code",
+                "value": "",
+                "type": "path",
+                "description": "Short unique identifier for the merchant."
+              },
+              {
+                "name": "person_id",
+                "value": "",
+                "type": "path",
+                "description": "Person ID"
+              }
+            ]
+          },
+          "docs": "Returns a single person related to the merchant."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

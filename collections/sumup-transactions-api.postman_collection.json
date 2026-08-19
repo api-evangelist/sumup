@@ -1,0 +1,1145 @@
+{
+  "item": [
+    {
+      "id": "e0f1098d-8dd5-478c-a700-2fc333c30395",
+      "name": "Transactions",
+      "description": {
+        "content": "Transactions represent completed or attempted payment operations processed for a merchant account. A transaction contains the core payment result, such as the amount, currency, payment method, creation time, and current high-level status.\n\nIn addition to the main payment outcome, a transaction can contain related events that describe what happened after the original payment attempt. These events provide visibility into the financial lifecycle of the transaction, for example:\n- `PAYOUT`: the payment being prepared for payout or included in a payout to the merchant\n- `REFUND`: money returned to the payer\n- `CHARGE_BACK`: money reversed after the original payment\n- `PAYOUT_DEDUCTION`: an amount deducted from a payout to cover a refund or chargeback\n\nFrom an integrator's perspective, transactions are the authoritative record of payment outcomes. Use this tag to:\n- list transactions for reporting, reconciliation, and customer support workflows\n- retrieve a single transaction when you need the latest payment details\n- inspect `simple_status` for the current merchant-facing outcome of the payment\n- inspect `events` or `transaction_events` when you need refund, payout, or chargeback history\n\nTypical workflow:\n- create and process payments through the Checkouts endpoints\n- use the Transactions endpoints to read the resulting payment records\n- use the returned statuses and events to update your own order, accounting, or support systems",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "57c623a9-b938-47d9-bc1d-9a2e8d8a863d",
+          "name": "Refund a transaction",
+          "request": {
+            "name": "Refund a transaction",
+            "description": {
+              "content": "Refunds an identified transaction either in full or partially.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1.0",
+                "merchants",
+                ":merchant_code",
+                "payments",
+                ":transaction_id",
+                "refunds"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "merchant_code",
+                  "description": "(Required) Merchant code of the account that owns the payment to refund."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "transaction_id",
+                  "description": "(Required) Unique ID of the transaction."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": \"<float>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "2beebfde-fb01-4eb6-a28b-19f813c2316c",
+              "name": "Returns an empty response body when the operation succeeds.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1.0",
+                    "merchants",
+                    ":merchant_code",
+                    "payments",
+                    ":transaction_id",
+                    "refunds"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_code",
+                      "description": "(Required) Merchant code of the account that owns the payment to refund."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "transaction_id",
+                      "description": "(Required) Unique ID of the transaction."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": 5\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "9e46c69f-63c3-41ff-ae3f-4feff00ad0f4",
+              "name": "The requested resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1.0",
+                    "merchants",
+                    ":merchant_code",
+                    "payments",
+                    ":transaction_id",
+                    "refunds"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_code",
+                      "description": "(Required) Merchant code of the account that owns the payment to refund."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "transaction_id",
+                      "description": "(Required) Unique ID of the transaction."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": 5\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"NOT_FOUND\",\n  \"message\": \"Resource not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8c898bdb-6d89-4c39-9245-a81354f66588",
+              "name": "The transaction cannot be refunded due to business constraints.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1.0",
+                    "merchants",
+                    ":merchant_code",
+                    "payments",
+                    ":transaction_id",
+                    "refunds"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_code",
+                      "description": "(Required) Merchant code of the account that owns the payment to refund."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "transaction_id",
+                      "description": "(Required) Unique ID of the transaction."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": 5\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"CONFLICT\",\n  \"message\": \"The transaction is not refundable in its current state\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "76726ef0-1d7e-4e45-a125-9353cbf9204e",
+          "name": "Retrieve a transaction",
+          "request": {
+            "name": "Retrieve a transaction",
+            "description": {
+              "content": "Retrieves the full details of an identified transaction. The transaction resource is identified by a query parameter and *one* of following parameters is required:\n- `id`\n- `transaction_code`\n- `foreign_transaction_id`\n- `client_transaction_id`",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2.1",
+                "merchants",
+                ":merchant_code",
+                "transactions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "id",
+                  "value": "<string>",
+                  "description": "Retrieves the transaction resource with the specified transaction ID (the `id` parameter in the transaction resource)."
+                },
+                {
+                  "disabled": false,
+                  "key": "transaction_code",
+                  "value": "<string>",
+                  "description": "Retrieves the transaction resource with the specified transaction code."
+                },
+                {
+                  "disabled": false,
+                  "key": "foreign_transaction_id",
+                  "value": "<string>",
+                  "description": "External/foreign transaction id (passed by clients)."
+                },
+                {
+                  "disabled": false,
+                  "key": "client_transaction_id",
+                  "value": "<string>",
+                  "description": "Client transaction id."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "merchant_code",
+                  "description": "(Required) Merchant code of the account whose transaction should be retrieved."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "f0de47f9-f545-4e0f-825a-3d7cc2b776a0",
+              "name": "Returns the requested transaction resource.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2.1",
+                    "merchants",
+                    ":merchant_code",
+                    "transactions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "transaction_code",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "foreign_transaction_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "client_transaction_id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_code",
+                      "description": "(Required) Merchant code of the account whose transaction should be retrieved."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"410fc44a-5956-44e1-b5cc-19c6f8d727a4\",\n  \"transaction_code\": \"TEENSK4W2K\",\n  \"amount\": 10.1,\n  \"currency\": \"EUR\",\n  \"timestamp\": \"2020-02-29 10:56:56.876000+00:00\",\n  \"status\": \"SUCCESSFUL\",\n  \"payment_type\": \"ECOM\",\n  \"installments_count\": 1,\n  \"merchant_code\": \"MH4H92C7\",\n  \"vat_amount\": 6,\n  \"tip_amount\": 3,\n  \"entry_mode\": \"CUSTOMER_ENTRY\",\n  \"auth_code\": \"053201\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b6dbb1fd-0cc1-474d-9d6d-5772611861dd",
+              "name": "The request is not authorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2.1",
+                    "merchants",
+                    ":merchant_code",
+                    "transactions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "transaction_code",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "foreign_transaction_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "client_transaction_id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_code",
+                      "description": "(Required) Merchant code of the account whose transaction should be retrieved."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"Unauthorized.\",\n  \"status\": 401,\n  \"title\": \"Unauthorized\",\n  \"trace_id\": \"3c77294349d3b5647ea2d990f0d8f017\",\n  \"type\": \"https://developer.sumup.com/problem/unauthorized\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6d23844d-c66b-4ec4-9077-2f06233d7630",
+              "name": "The requested resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2.1",
+                    "merchants",
+                    ":merchant_code",
+                    "transactions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "transaction_code",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "foreign_transaction_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "client_transaction_id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_code",
+                      "description": "(Required) Merchant code of the account whose transaction should be retrieved."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"NOT_FOUND\",\n  \"message\": \"Resource not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "dc88ca9a-845b-415d-a007-de4840fd4c5a",
+          "name": "List transactions",
+          "request": {
+            "name": "List transactions",
+            "description": {
+              "content": "Lists detailed history of all transactions associated with the merchant profile.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2.1",
+                "merchants",
+                ":merchant_code",
+                "transactions",
+                "history"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "transaction_code",
+                  "value": "<string>",
+                  "description": "Retrieves the transaction resource with the specified transaction code."
+                },
+                {
+                  "disabled": false,
+                  "key": "order",
+                  "value": "ascending",
+                  "description": "Specifies the order in which the returned results are displayed."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Specifies the maximum number of results per page. Value must be a positive integer and if not specified, will return 10 results."
+                },
+                {
+                  "disabled": false,
+                  "key": "users",
+                  "value": "<email>",
+                  "description": "Filters the returned results by user email."
+                },
+                {
+                  "disabled": false,
+                  "key": "users",
+                  "value": "<email>",
+                  "description": "Filters the returned results by user email."
+                },
+                {
+                  "disabled": false,
+                  "key": "statuses[]",
+                  "value": "<string>",
+                  "description": "Filters the returned results by the specified list of final statuses of the transactions."
+                },
+                {
+                  "disabled": false,
+                  "key": "statuses[]",
+                  "value": "<string>",
+                  "description": "Filters the returned results by the specified list of final statuses of the transactions."
+                },
+                {
+                  "disabled": false,
+                  "key": "payment_types",
+                  "value": "<string>",
+                  "description": "Filters the returned results by the specified list of payment types used for the transactions."
+                },
+                {
+                  "disabled": false,
+                  "key": "payment_types",
+                  "value": "<string>",
+                  "description": "Filters the returned results by the specified list of payment types used for the transactions."
+                },
+                {
+                  "disabled": false,
+                  "key": "entry_modes[]",
+                  "value": "<string>",
+                  "description": "Filters the returned results by the specified list of entry modes."
+                },
+                {
+                  "disabled": false,
+                  "key": "entry_modes[]",
+                  "value": "<string>",
+                  "description": "Filters the returned results by the specified list of entry modes."
+                },
+                {
+                  "disabled": false,
+                  "key": "types",
+                  "value": "<string>",
+                  "description": "Filters the returned results by the specified list of transaction types."
+                },
+                {
+                  "disabled": false,
+                  "key": "types",
+                  "value": "<string>",
+                  "description": "Filters the returned results by the specified list of transaction types."
+                },
+                {
+                  "disabled": false,
+                  "key": "changes_since",
+                  "value": "<dateTime>",
+                  "description": "Filters the results by the latest modification time of resources and returns only transactions that are modified *at or after* the specified timestamp (in [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) format)."
+                },
+                {
+                  "disabled": false,
+                  "key": "newest_time",
+                  "value": "<dateTime>",
+                  "description": "Filters the results by the creation time of resources and returns only transactions that are created *before* the specified timestamp (in [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) format)."
+                },
+                {
+                  "disabled": false,
+                  "key": "newest_ref",
+                  "value": "<string>",
+                  "description": "Filters the results by the reference ID of transaction events and returns only transactions with events whose IDs are *smaller* than the specified value. This parameters supersedes the `newest_time` parameter (if both are provided in the request)."
+                },
+                {
+                  "disabled": false,
+                  "key": "oldest_time",
+                  "value": "<dateTime>",
+                  "description": "Filters the results by the creation time of resources and returns only transactions that are created *at or after* the specified timestamp (in [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) format)."
+                },
+                {
+                  "disabled": false,
+                  "key": "oldest_ref",
+                  "value": "<string>",
+                  "description": "Filters the results by the reference ID of transaction events and returns only transactions with events whose IDs are *greater* than the specified value. This parameters supersedes the `oldest_time` parameter (if both are provided in the request)."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "merchant_code",
+                  "description": "(Required) Merchant code of the account whose transaction history should be listed."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "b9130f67-60c5-4573-8794-dd68a55633aa",
+              "name": "Returns a page of transaction history items.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2.1",
+                    "merchants",
+                    ":merchant_code",
+                    "transactions",
+                    "history"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "transaction_code",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "order",
+                      "value": "ascending"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "users",
+                      "value": "merchant@example.com"
+                    },
+                    {
+                      "key": "statuses[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "statuses[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "payment_types",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "payment_types",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "entry_modes[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "entry_modes[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "types",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "types",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "changes_since",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "newest_time",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "newest_ref",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "oldest_time",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "oldest_ref",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_code",
+                      "description": "(Required) Merchant code of the account whose transaction history should be listed."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"transaction_code\": \"TEENSK4W2K\",\n      \"amount\": 10.1,\n      \"currency\": \"EUR\",\n      \"timestamp\": \"2020-02-29 10:56:56.876000+00:00\",\n      \"status\": \"SUCCESSFUL\",\n      \"payment_type\": \"ECOM\",\n      \"installments_count\": 1,\n      \"merchant_code\": \"MH4H92C7\",\n      \"transaction_id\": \"410fc44a-5956-44e1-b5cc-19c6f8d727a4\",\n      \"user\": \"merchant@example.com\",\n      \"type\": \"PAYMENT\",\n      \"payout_date\": \"2019-08-28\",\n      \"payout_type\": \"BANK_ACCOUNT\",\n      \"refunded_amount\": 0\n    }\n  ],\n  \"links\": []\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "01174f50-c7e3-49e5-80af-a9cfaad079a8",
+              "name": "The request is invalid for the submitted query parameters.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2.1",
+                    "merchants",
+                    ":merchant_code",
+                    "transactions",
+                    "history"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "transaction_code",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "order",
+                      "value": "ascending"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "users",
+                      "value": "merchant@example.com"
+                    },
+                    {
+                      "key": "statuses[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "statuses[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "payment_types",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "payment_types",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "entry_modes[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "entry_modes[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "types",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "types",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "changes_since",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "newest_time",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "newest_ref",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "oldest_time",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "oldest_ref",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_code",
+                      "description": "(Required) Merchant code of the account whose transaction history should be listed."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Validation error\",\n  \"error_code\": \"INVALID\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2dd2b3be-4068-4dde-8bfa-170219a46b9c",
+              "name": "The request is not authorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2.1",
+                    "merchants",
+                    ":merchant_code",
+                    "transactions",
+                    "history"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "transaction_code",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "order",
+                      "value": "ascending"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "users",
+                      "value": "merchant@example.com"
+                    },
+                    {
+                      "key": "statuses[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "statuses[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "payment_types",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "payment_types",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "entry_modes[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "entry_modes[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "types",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "types",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "changes_since",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "newest_time",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "newest_ref",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "oldest_time",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "oldest_ref",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_code",
+                      "description": "(Required) Merchant code of the account whose transaction history should be listed."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"Unauthorized.\",\n  \"status\": 401,\n  \"title\": \"Unauthorized\",\n  \"trace_id\": \"3c77294349d3b5647ea2d990f0d8f017\",\n  \"type\": \"https://developer.sumup.com/problem/unauthorized\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.sumup.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "73f35536-429c-405f-9e12-a0d54aa5d3c0",
+    "name": "SumUp REST Checkouts Transactions API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "SumUp’s REST API operates with [JSON](https://www.json.org/json-en.html) HTTP requests and responses. The request bodies are sent through resource-oriented URLs and use the standard [HTTP response codes](https://developer.mozilla.org/docs/Web/HTTP/Status).\n\nYou can experiment and work on your integration in a sandbox that doesn't affect your regular data and doesn't process real transactions. To create a sandbox merchant account visit the [dashboard](https://me.sumup.com/settings/developer). To use the sandbox when interacting with SumUp APIs [create an API](https://me.sumup.com/settings/api-keys) key and use it for [authentication](https://developer.sumup.com/api/authentication).",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "SumUp REST Checkouts Payouts API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Payouts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List payouts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sumup.com/v1.0/merchants/:merchant_code/payouts",
+            "params": [
+              {
+                "name": "merchant_code",
+                "value": "",
+                "type": "path",
+                "description": "Merchant code of the account whose payouts should be listed."
+              },
+              {
+                "name": "start_date",
+                "value": "",
+                "type": "query",
+                "description": "Start date of the payout period filter, inclusive, in [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) `date` format (`YYYY-MM-DD`)."
+              },
+              {
+                "name": "end_date",
+                "value": "",
+                "type": "query",
+                "description": "End date of the payout period filter, inclusive, in [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) `date` format (`YYYY-MM-DD`). Must be greater than or equal to `start_date`."
+              },
+              {
+                "name": "format",
+                "value": "",
+                "type": "query",
+                "description": "Response format for the payout list."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of payout records to return."
+              },
+              {
+                "name": "order",
+                "value": "",
+                "type": "query",
+                "description": "Sort direction for the returned payouts."
+              }
+            ]
+          },
+          "docs": "Lists payout and payout-deduction records for the specified merchant account within the requested date range.\n\nThe response can include:\n- regular payouts (`type = PAYOUT`)\n- deduction records for refunds, chargebacks, direct debit returns, or balance adjustments\n\nResults are sorted by payout date in the requested `order`."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

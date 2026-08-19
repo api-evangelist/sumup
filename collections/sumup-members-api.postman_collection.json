@@ -1,0 +1,1417 @@
+{
+  "item": [
+    {
+      "id": "77449a00-60ea-4b40-8081-802fdfa1b081",
+      "name": "Members",
+      "description": {
+        "content": "Endpoints to manage account members. Members are users that have membership within merchant accounts.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "281ba38d-7f41-464e-9a13-92f84a5db97a",
+          "name": "List members",
+          "request": {
+            "name": "List members",
+            "description": {
+              "content": "Lists merchant members.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0.1",
+                "merchants",
+                ":merchant_code",
+                "members"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "Offset of the first member to return."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Maximum number of members to return."
+                },
+                {
+                  "disabled": false,
+                  "key": "scroll",
+                  "value": "false",
+                  "description": "Indicates to skip count query."
+                },
+                {
+                  "disabled": false,
+                  "key": "email",
+                  "value": "<string>",
+                  "description": "Filter the returned members by email address prefix."
+                },
+                {
+                  "disabled": false,
+                  "key": "user.id",
+                  "value": "<uuid>",
+                  "description": "Search for a member by user id."
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Filter the returned members by the membership status."
+                },
+                {
+                  "disabled": false,
+                  "key": "roles",
+                  "value": "<string>",
+                  "description": "Filter the returned members by role."
+                },
+                {
+                  "disabled": false,
+                  "key": "roles",
+                  "value": "<string>",
+                  "description": "Filter the returned members by role."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "merchant_code",
+                  "description": "(Required) Short unique identifier for the merchant."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "d6419b3f-bff4-4599-88b6-ff8fa289801f",
+              "name": "Returns a list of Member objects.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "merchants",
+                    ":merchant_code",
+                    "members"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "scroll",
+                      "value": "true"
+                    },
+                    {
+                      "key": "email",
+                      "value": "user"
+                    },
+                    {
+                      "key": "user.id",
+                      "value": "245b2ead-85bf-45ff-856f-311a88a5d454"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "roles",
+                      "value": "role_employee"
+                    },
+                    {
+                      "key": "roles",
+                      "value": "role_accountant"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_code",
+                      "description": "(Required) Short unique identifier for the merchant."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"id\": \"mem_WZsm7QTPhVrompscmPhoGTXXcrd58fr9MOhP\",\n      \"roles\": [\n        \"role_admin\"\n      ],\n      \"permissions\": [\n        \"members_read\",\n        \"members_write\",\n        \"create_moto_payments\",\n        \"full_transaction_history_view\",\n        \"refund_transactions\",\n        \"create_referral\",\n        \"developer_settings_edit\",\n        \"developer_settings_access\"\n      ],\n      \"created_at\": \"2023-01-20 15:16:17+00:00\",\n      \"updated_at\": \"2023-01-20 15:16:17+00:00\",\n      \"status\": \"<string>\",\n      \"user\": {\n        \"id\": \"44ca0f5b-813b-46e1-aee7-e6242010662e\",\n        \"email\": \"example@sumup.com\",\n        \"mfa_on_login_enabled\": true,\n        \"virtual_user\": false,\n        \"service_account_user\": false,\n        \"disabled_at\": \"2009-01-10T06:14:12.943Z\",\n        \"nickname\": \"Test User\",\n        \"picture\": \"https://usercontent.sumup.com/44ca0f5b-813b-46e1-aee7-e6242010662e.png\",\n        \"classic\": {\n          \"user_id\": 2208\n        }\n      },\n      \"invite\": {\n        \"email\": \"boaty.mcboatface@sumup.com\",\n        \"expires_at\": \"2023-01-20 15:16:17+00:00\"\n      },\n      \"metadata\": {},\n      \"attributes\": {}\n    },\n    {\n      \"id\": \"mem_WZsm7QTPhVrompscmPhoGTXXcrd58fr9MOhP\",\n      \"roles\": [\n        \"role_admin\"\n      ],\n      \"permissions\": [\n        \"members_read\",\n        \"members_write\",\n        \"create_moto_payments\",\n        \"full_transaction_history_view\",\n        \"refund_transactions\",\n        \"create_referral\",\n        \"developer_settings_edit\",\n        \"developer_settings_access\"\n      ],\n      \"created_at\": \"2023-01-20 15:16:17+00:00\",\n      \"updated_at\": \"2023-01-20 15:16:17+00:00\",\n      \"status\": \"<string>\",\n      \"user\": {\n        \"id\": \"44ca0f5b-813b-46e1-aee7-e6242010662e\",\n        \"email\": \"example@sumup.com\",\n        \"mfa_on_login_enabled\": true,\n        \"virtual_user\": false,\n        \"service_account_user\": false,\n        \"disabled_at\": \"1976-03-06T10:35:11.027Z\",\n        \"nickname\": \"Test User\",\n        \"picture\": \"https://usercontent.sumup.com/44ca0f5b-813b-46e1-aee7-e6242010662e.png\",\n        \"classic\": {\n          \"user_id\": 8804\n        }\n      },\n      \"invite\": {\n        \"email\": \"boaty.mcboatface@sumup.com\",\n        \"expires_at\": \"2023-01-20 15:16:17+00:00\"\n      },\n      \"metadata\": {},\n      \"attributes\": {}\n    }\n  ],\n  \"total_count\": 3\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4c2c2f78-33c8-4899-9bf8-711eff4e9798",
+              "name": "Merchant not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "merchants",
+                    ":merchant_code",
+                    "members"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "scroll",
+                      "value": "true"
+                    },
+                    {
+                      "key": "email",
+                      "value": "user"
+                    },
+                    {
+                      "key": "user.id",
+                      "value": "245b2ead-85bf-45ff-856f-311a88a5d454"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "roles",
+                      "value": "role_employee"
+                    },
+                    {
+                      "key": "roles",
+                      "value": "role_accountant"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_code",
+                      "description": "(Required) Short unique identifier for the merchant."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://developer.sumup.com/problem/not-found\",\n  \"title\": \"Requested resource couldn't be found.\",\n  \"status\": 404,\n  \"detail\": \"The requested resource doesn't exist or does not belong to you.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e664be3e-3f49-4f8f-a3b9-58ea8f2f064b",
+          "name": "Create a member",
+          "request": {
+            "name": "Create a member",
+            "description": {
+              "content": "Create a merchant member.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0.1",
+                "merchants",
+                ":merchant_code",
+                "members"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "merchant_code",
+                  "description": "(Required) Short unique identifier for the merchant."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"<email>\",\n  \"roles\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"is_managed_user\": \"<boolean>\",\n  \"password\": \"<password>\",\n  \"nickname\": \"<string>\",\n  \"metadata\": {\n    \"key_0\": \"string\",\n    \"key_1\": true,\n    \"key_2\": true,\n    \"key_3\": 5921.633985695837,\n    \"key_4\": false,\n    \"key_5\": \"string\",\n    \"key_6\": 8220.881987787736,\n    \"key_7\": true,\n    \"key_8\": \"string\",\n    \"key_9\": \"string\",\n    \"key_10\": 2167,\n    \"key_11\": 2988,\n    \"key_12\": true,\n    \"key_13\": 5390.052155726887,\n    \"key_14\": \"string\",\n    \"key_15\": \"string\",\n    \"key_16\": 6570.854647160619,\n    \"key_17\": 3531.936565428577,\n    \"key_18\": true,\n    \"key_19\": 5996,\n    \"key_20\": \"string\",\n    \"key_21\": 2561.3504977038638,\n    \"key_22\": 9985,\n    \"key_23\": true,\n    \"key_24\": \"string\",\n    \"key_25\": 5743,\n    \"key_26\": true,\n    \"key_27\": \"string\",\n    \"key_28\": false,\n    \"key_29\": 143.4360784513733,\n    \"key_30\": 8716,\n    \"key_31\": true,\n    \"key_32\": 9175.14215100557,\n    \"key_33\": \"string\",\n    \"key_34\": 3516,\n    \"key_35\": 1426,\n    \"key_36\": \"string\",\n    \"key_37\": 2146,\n    \"key_38\": 3387.2530091754015,\n    \"key_39\": 9155.161285420592,\n    \"key_40\": 3311.1055933145317,\n    \"key_41\": \"string\",\n    \"key_42\": false,\n    \"key_43\": true,\n    \"key_44\": 4298,\n    \"key_45\": 1647.4911571024675,\n    \"key_46\": false,\n    \"key_47\": 7878,\n    \"key_48\": true,\n    \"key_49\": 4488.532305327705,\n    \"key_50\": 30,\n    \"key_51\": true,\n    \"key_52\": \"string\",\n    \"key_53\": false,\n    \"key_54\": \"string\",\n    \"key_55\": \"string\",\n    \"key_56\": \"string\",\n    \"key_57\": 3771.4495298964944,\n    \"key_58\": 9745.287522174543,\n    \"key_59\": true,\n    \"key_60\": true,\n    \"key_61\": 4069\n  },\n  \"attributes\": {\n    \"key_0\": 7792.398825386284,\n    \"key_1\": false,\n    \"key_2\": 6909.473785251426,\n    \"key_3\": true\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4aee36ab-3594-43aa-842a-15c1d7d43878",
+              "name": "Returns the Member object if the creation succeeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "merchants",
+                    ":merchant_code",
+                    "members"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_code",
+                      "description": "(Required) Short unique identifier for the merchant."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"<email>\",\n  \"roles\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"is_managed_user\": \"<boolean>\",\n  \"password\": \"<password>\",\n  \"nickname\": \"Test User\",\n  \"metadata\": {},\n  \"attributes\": {}\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"mem_WZsm7QTPhVrompscmPhoGTXXcrd58fr9MOhP\",\n  \"roles\": [\n    \"role_admin\"\n  ],\n  \"permissions\": [\n    \"members_read\",\n    \"members_write\",\n    \"create_moto_payments\",\n    \"full_transaction_history_view\",\n    \"refund_transactions\",\n    \"create_referral\",\n    \"developer_settings_edit\",\n    \"developer_settings_access\"\n  ],\n  \"created_at\": \"2023-01-20 15:16:17+00:00\",\n  \"updated_at\": \"2023-01-20 15:16:17+00:00\",\n  \"status\": \"<string>\",\n  \"user\": {\n    \"id\": \"44ca0f5b-813b-46e1-aee7-e6242010662e\",\n    \"email\": \"example@sumup.com\",\n    \"mfa_on_login_enabled\": true,\n    \"virtual_user\": false,\n    \"service_account_user\": false,\n    \"disabled_at\": \"1995-04-19T17:04:22.146Z\",\n    \"nickname\": \"Test User\",\n    \"picture\": \"https://usercontent.sumup.com/44ca0f5b-813b-46e1-aee7-e6242010662e.png\",\n    \"classic\": {\n      \"user_id\": 7913\n    }\n  },\n  \"invite\": {\n    \"email\": \"boaty.mcboatface@sumup.com\",\n    \"expires_at\": \"2023-01-20 15:16:17+00:00\"\n  },\n  \"metadata\": {},\n  \"attributes\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1612e934-2c16-4720-a6e0-5065d7bfc2ed",
+              "name": "Invalid request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "merchants",
+                    ":merchant_code",
+                    "members"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_code",
+                      "description": "(Required) Short unique identifier for the merchant."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"<email>\",\n  \"roles\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"is_managed_user\": \"<boolean>\",\n  \"password\": \"<password>\",\n  \"nickname\": \"Test User\",\n  \"metadata\": {},\n  \"attributes\": {}\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://developer.sumup.com/problem/bad-request\",\n  \"title\": \"Bad Request\",\n  \"status\": 400,\n  \"detail\": \"Request validation failed.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a3eb9552-5aea-48a4-a4b7-7992725e2f56",
+              "name": "Merchant not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "merchants",
+                    ":merchant_code",
+                    "members"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_code",
+                      "description": "(Required) Short unique identifier for the merchant."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"<email>\",\n  \"roles\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"is_managed_user\": \"<boolean>\",\n  \"password\": \"<password>\",\n  \"nickname\": \"Test User\",\n  \"metadata\": {},\n  \"attributes\": {}\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://developer.sumup.com/problem/not-found\",\n  \"title\": \"Requested resource couldn't be found.\",\n  \"status\": 404,\n  \"detail\": \"The requested resource doesn't exist or does not belong to you.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5761f411-cfe9-407b-a227-246e803a004d",
+              "name": "Too many invitations were sent to that user and the rate limit was exceeded. The Retry-After header indicates when the client can retry.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "merchants",
+                    ":merchant_code",
+                    "members"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_code",
+                      "description": "(Required) Short unique identifier for the merchant."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"<email>\",\n  \"roles\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"is_managed_user\": \"<boolean>\",\n  \"password\": \"<password>\",\n  \"nickname\": \"Test User\",\n  \"metadata\": {},\n  \"attributes\": {}\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://developer.sumup.com/problem/too-many-requests\",\n  \"title\": \"Too Many Requests\",\n  \"status\": 429,\n  \"detail\": \"Too many requests were sent. Please try again later.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d956c0fc-ba3e-4e1c-ba43-df3af53b52a6",
+          "name": "Retrieve a member",
+          "request": {
+            "name": "Retrieve a member",
+            "description": {
+              "content": "Retrieve a merchant member.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0.1",
+                "merchants",
+                ":merchant_code",
+                "members",
+                ":member_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "merchant_code",
+                  "description": "(Required) Short unique identifier for the merchant."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "member_id",
+                  "description": "(Required) The ID of the member to retrieve."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "3092ef42-97ca-49e2-b12b-c20750b56b1d",
+              "name": "Returns the Member object for a valid identifier.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "merchants",
+                    ":merchant_code",
+                    "members",
+                    ":member_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_code",
+                      "description": "(Required) Short unique identifier for the merchant."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "member_id",
+                      "description": "(Required) The ID of the member to retrieve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"mem_WZsm7QTPhVrompscmPhoGTXXcrd58fr9MOhP\",\n  \"roles\": [\n    \"role_admin\"\n  ],\n  \"permissions\": [\n    \"members_read\",\n    \"members_write\",\n    \"create_moto_payments\",\n    \"full_transaction_history_view\",\n    \"refund_transactions\",\n    \"create_referral\",\n    \"developer_settings_edit\",\n    \"developer_settings_access\"\n  ],\n  \"created_at\": \"2023-01-20 15:16:17+00:00\",\n  \"updated_at\": \"2023-01-20 15:16:17+00:00\",\n  \"status\": \"<string>\",\n  \"user\": {\n    \"id\": \"44ca0f5b-813b-46e1-aee7-e6242010662e\",\n    \"email\": \"example@sumup.com\",\n    \"mfa_on_login_enabled\": true,\n    \"virtual_user\": false,\n    \"service_account_user\": false,\n    \"disabled_at\": \"1995-04-19T17:04:22.146Z\",\n    \"nickname\": \"Test User\",\n    \"picture\": \"https://usercontent.sumup.com/44ca0f5b-813b-46e1-aee7-e6242010662e.png\",\n    \"classic\": {\n      \"user_id\": 7913\n    }\n  },\n  \"invite\": {\n    \"email\": \"boaty.mcboatface@sumup.com\",\n    \"expires_at\": \"2023-01-20 15:16:17+00:00\"\n  },\n  \"metadata\": {},\n  \"attributes\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7baa3cf0-f6f0-4f2f-95cc-e22120d154a2",
+              "name": "Merchant or member not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "merchants",
+                    ":merchant_code",
+                    "members",
+                    ":member_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_code",
+                      "description": "(Required) Short unique identifier for the merchant."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "member_id",
+                      "description": "(Required) The ID of the member to retrieve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://developer.sumup.com/problem/not-found\",\n  \"title\": \"Requested resource couldn't be found.\",\n  \"status\": 404,\n  \"detail\": \"The requested resource doesn't exist or does not belong to you.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c2b51749-68ae-4d93-9fc7-ceed36829b09",
+          "name": "Update a member",
+          "request": {
+            "name": "Update a member",
+            "description": {
+              "content": "Update the merchant member.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0.1",
+                "merchants",
+                ":merchant_code",
+                "members",
+                ":member_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "merchant_code",
+                  "description": "(Required) Short unique identifier for the merchant."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "member_id",
+                  "description": "(Required) The ID of the member to retrieve."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"roles\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"metadata\": {\n    \"key_0\": \"string\",\n    \"key_1\": 7849,\n    \"key_2\": true,\n    \"key_3\": true,\n    \"key_4\": 2165,\n    \"key_5\": 9209.988419069425,\n    \"key_6\": 584.4333167325277,\n    \"key_7\": 8322.880385332091,\n    \"key_8\": \"string\",\n    \"key_9\": false,\n    \"key_10\": \"string\",\n    \"key_11\": 7601.369530302401,\n    \"key_12\": 1796.9506263555868,\n    \"key_13\": true,\n    \"key_14\": \"string\",\n    \"key_15\": 3396,\n    \"key_16\": \"string\",\n    \"key_17\": 1136.6509538454516,\n    \"key_18\": 663,\n    \"key_19\": false,\n    \"key_20\": false,\n    \"key_21\": false,\n    \"key_22\": 7971,\n    \"key_23\": \"string\",\n    \"key_24\": 9040.92713759971,\n    \"key_25\": \"string\",\n    \"key_26\": true,\n    \"key_27\": true,\n    \"key_28\": \"string\",\n    \"key_29\": 8372,\n    \"key_30\": \"string\",\n    \"key_31\": 2016.7461989490043\n  },\n  \"attributes\": {\n    \"key_0\": 7470.567113208321\n  },\n  \"user\": {\n    \"nickname\": \"<string>\",\n    \"password\": \"<password>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "5b74238a-9e46-4575-a98d-b958245ad8d8",
+              "name": "Returns the updated Member object if the update succeeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "merchants",
+                    ":merchant_code",
+                    "members",
+                    ":member_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_code",
+                      "description": "(Required) Short unique identifier for the merchant."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "member_id",
+                      "description": "(Required) The ID of the member to retrieve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Update member's role\": {\n    \"roles\": [\n      \"role_manager\"\n    ]\n  },\n  \"Update managed user\": {\n    \"user\": {\n      \"nickname\": \"New Employee Name\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"mem_WZsm7QTPhVrompscmPhoGTXXcrd58fr9MOhP\",\n  \"roles\": [\n    \"role_admin\"\n  ],\n  \"permissions\": [\n    \"members_read\",\n    \"members_write\",\n    \"create_moto_payments\",\n    \"full_transaction_history_view\",\n    \"refund_transactions\",\n    \"create_referral\",\n    \"developer_settings_edit\",\n    \"developer_settings_access\"\n  ],\n  \"created_at\": \"2023-01-20 15:16:17+00:00\",\n  \"updated_at\": \"2023-01-20 15:16:17+00:00\",\n  \"status\": \"<string>\",\n  \"user\": {\n    \"id\": \"44ca0f5b-813b-46e1-aee7-e6242010662e\",\n    \"email\": \"example@sumup.com\",\n    \"mfa_on_login_enabled\": true,\n    \"virtual_user\": false,\n    \"service_account_user\": false,\n    \"disabled_at\": \"1995-04-19T17:04:22.146Z\",\n    \"nickname\": \"Test User\",\n    \"picture\": \"https://usercontent.sumup.com/44ca0f5b-813b-46e1-aee7-e6242010662e.png\",\n    \"classic\": {\n      \"user_id\": 7913\n    }\n  },\n  \"invite\": {\n    \"email\": \"boaty.mcboatface@sumup.com\",\n    \"expires_at\": \"2023-01-20 15:16:17+00:00\"\n  },\n  \"metadata\": {},\n  \"attributes\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5ef9e441-aad8-4972-9c6a-01da3d7f1c28",
+              "name": "Cannot set password or nickname for an invited user.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "merchants",
+                    ":merchant_code",
+                    "members",
+                    ":member_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_code",
+                      "description": "(Required) Short unique identifier for the merchant."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "member_id",
+                      "description": "(Required) The ID of the member to retrieve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Update member's role\": {\n    \"roles\": [\n      \"role_manager\"\n    ]\n  },\n  \"Update managed user\": {\n    \"user\": {\n      \"nickname\": \"New Employee Name\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://developer.sumup.com/problem/bad-request\",\n  \"title\": \"Bad Request\",\n  \"status\": 400,\n  \"detail\": \"Request validation failed.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "07e0b89c-d7d1-4753-b5f7-468791235c05",
+              "name": "Cannot change password for managed user. Password was already used before.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "merchants",
+                    ":merchant_code",
+                    "members",
+                    ":member_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_code",
+                      "description": "(Required) Short unique identifier for the merchant."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "member_id",
+                      "description": "(Required) The ID of the member to retrieve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Update member's role\": {\n    \"roles\": [\n      \"role_manager\"\n    ]\n  },\n  \"Update managed user\": {\n    \"user\": {\n      \"nickname\": \"New Employee Name\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://developer.sumup.com/problem/forbidden\",\n  \"title\": \"Forbidden\",\n  \"status\": 403,\n  \"detail\": \"You do not have permission to perform this action.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e2b23f29-d433-4277-a49d-6a3093af5d9b",
+              "name": "Merchant or member not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "merchants",
+                    ":merchant_code",
+                    "members",
+                    ":member_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_code",
+                      "description": "(Required) Short unique identifier for the merchant."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "member_id",
+                      "description": "(Required) The ID of the member to retrieve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Update member's role\": {\n    \"roles\": [\n      \"role_manager\"\n    ]\n  },\n  \"Update managed user\": {\n    \"user\": {\n      \"nickname\": \"New Employee Name\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://developer.sumup.com/problem/not-found\",\n  \"title\": \"Requested resource couldn't be found.\",\n  \"status\": 404,\n  \"detail\": \"The requested resource doesn't exist or does not belong to you.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3ce4406c-59fd-453c-bfee-aff642f24077",
+              "name": "Cannot update member as some data conflict with existing members.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "merchants",
+                    ":merchant_code",
+                    "members",
+                    ":member_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_code",
+                      "description": "(Required) Short unique identifier for the merchant."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "member_id",
+                      "description": "(Required) The ID of the member to retrieve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Update member's role\": {\n    \"roles\": [\n      \"role_manager\"\n    ]\n  },\n  \"Update managed user\": {\n    \"user\": {\n      \"nickname\": \"New Employee Name\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://developer.sumup.com/problem/conflict\",\n  \"title\": \"Conflict\",\n  \"status\": 409,\n  \"detail\": \"The request conflicts with the current state of the resource.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e9ae4090-3782-4f7a-9c0a-7e6280a47ca6",
+          "name": "Delete a member",
+          "request": {
+            "name": "Delete a member",
+            "description": {
+              "content": "Deletes a merchant member.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0.1",
+                "merchants",
+                ":merchant_code",
+                "members",
+                ":member_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "merchant_code",
+                  "description": "(Required) Short unique identifier for the merchant."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "member_id",
+                  "description": "(Required) The ID of the member to retrieve."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/problem+json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "a8a276f4-b648-400f-ae6b-9573ff7e2179",
+              "name": "Returns an empty response if the deletion succeeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "merchants",
+                    ":merchant_code",
+                    "members",
+                    ":member_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_code",
+                      "description": "(Required) Short unique identifier for the merchant."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "member_id",
+                      "description": "(Required) The ID of the member to retrieve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "bbecc99c-819e-4f2a-86fe-768070ae1ca8",
+              "name": "Merchant or member not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "merchants",
+                    ":merchant_code",
+                    "members",
+                    ":member_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_code",
+                      "description": "(Required) Short unique identifier for the merchant."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "member_id",
+                      "description": "(Required) The ID of the member to retrieve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://developer.sumup.com/problem/not-found\",\n  \"title\": \"Requested resource couldn't be found.\",\n  \"status\": 404,\n  \"detail\": \"The requested resource doesn't exist or does not belong to you.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.sumup.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "2e4f6580-8c9e-4387-a653-322a575d7d83",
+    "name": "SumUp REST Checkouts Members API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "SumUp’s REST API operates with [JSON](https://www.json.org/json-en.html) HTTP requests and responses. The request bodies are sent through resource-oriented URLs and use the standard [HTTP response codes](https://developer.mozilla.org/docs/Web/HTTP/Status).\n\nYou can experiment and work on your integration in a sandbox that doesn't affect your regular data and doesn't process real transactions. To create a sandbox merchant account visit the [dashboard](https://me.sumup.com/settings/developer). To use the sandbox when interacting with SumUp APIs [create an API](https://me.sumup.com/settings/api-keys) key and use it for [authentication](https://developer.sumup.com/api/authentication).",
+      "type": "text/plain"
+    }
+  }
+}

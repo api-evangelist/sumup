@@ -1,0 +1,1853 @@
+{
+  "item": [
+    {
+      "id": "fa974f1a-7b4b-400a-ba41-6897a3f67d88",
+      "name": "Checkouts",
+      "description": {
+        "content": "Checkouts represent online payment sessions that you create before attempting to charge a payer. A checkout captures the payment intent, such as the amount, currency, merchant, and optional customer or redirect settings, and then moves through its lifecycle as you process it.\n\nUse this tag to:\n- create a checkout before collecting or confirming payment details\n- process the checkout with a card, saved card, wallet, or supported alternative payment method\n- retrieve or list checkouts to inspect their current state and associated payment attempts\n- deactivate a checkout that should no longer be used\n\nTypical workflow:\n- create a checkout with the order amount, currency, and merchant information\n- process the checkout through SumUp client tools such as the [Payment Widget and Swift Checkout SDK](https://developer.sumup.com/online-payments/checkouts)\n- retrieve the checkout or use the Transactions endpoints to inspect the resulting payment record\n\nCheckouts are used to initiate and orchestrate online payments. Transactions remain the authoritative record of the resulting payment outcome.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "8cd54134-6116-4302-9a42-c2c6c298dbcc",
+          "name": "Get available payment methods",
+          "request": {
+            "name": "Get available payment methods",
+            "description": {
+              "content": "Get payment methods available for the given merchant to use with a checkout.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0.1",
+                "merchants",
+                ":merchant_code",
+                "payment-methods"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "amount",
+                  "value": "<number>",
+                  "description": "The amount for which the payment methods should be eligible, in major units."
+                },
+                {
+                  "disabled": false,
+                  "key": "currency",
+                  "value": "<string>",
+                  "description": "The currency for which the payment methods should be eligible."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "merchant_code",
+                  "description": "(Required) The SumUp merchant code."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "23e37408-54e0-4d49-8539-a006e212912e",
+              "name": "Available payment methods",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "merchants",
+                    ":merchant_code",
+                    "payment-methods"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "amount",
+                      "value": "9.99"
+                    },
+                    {
+                      "key": "currency",
+                      "value": "EUR"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_code",
+                      "description": "(Required) The SumUp merchant code."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"available_payment_methods\": [\n    {\n      \"id\": \"apple_pay\"\n    },\n    {\n      \"id\": \"blik\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b8d5b9a4-cf34-47fe-b49f-d90b0e2746c6",
+              "name": "The request is invalid for the submitted query parameters.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "merchants",
+                    ":merchant_code",
+                    "payment-methods"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "amount",
+                      "value": "9.99"
+                    },
+                    {
+                      "key": "currency",
+                      "value": "EUR"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_code",
+                      "description": "(Required) The SumUp merchant code."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"failed_constraints\": [\n    {\n      \"message\": \"Currency must also be specified when filtering by amount\",\n      \"reference\": \"currency\"\n    }\n  ],\n  \"status\": 400,\n  \"title\": \"Bad Request\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1a85fa1d-8a12-4ada-8309-e7d175c48333",
+          "name": "Create a checkout",
+          "request": {
+            "name": "Create a checkout",
+            "description": {
+              "content": "Creates a new payment checkout resource. The unique `checkout_reference` created by this request, is used for further manipulation of the checkout.\n\nFor 3DS checkouts, add the `redirect_url` parameter to your request body schema.\nTo use the [Hosted Checkout](https://developer.sumup.com/online-payments/checkouts/hosted-checkout/) page, set the `hosted_checkout.enabled` to `true`.\n\nFollow by processing a checkout to charge the provided payment instrument.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0.1",
+                "checkouts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"checkout_reference\": \"<string>\",\n  \"amount\": \"<float>\",\n  \"currency\": \"<string>\",\n  \"merchant_code\": \"<string>\",\n  \"description\": \"<string>\",\n  \"return_url\": \"<uri>\",\n  \"customer_id\": \"<string>\",\n  \"purpose\": \"CHECKOUT\",\n  \"valid_until\": \"<dateTime>\",\n  \"redirect_url\": \"<string>\",\n  \"hosted_checkout\": {\n    \"enabled\": \"<boolean>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f17ae110-d14f-4a37-810a-c9b431341bec",
+              "name": "Returns the created checkout resource.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "checkouts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"checkout_reference\": \"f00a8f74-b05d-4605-bd73-2a901bae5802\",\n  \"amount\": 10.1,\n  \"currency\": \"EUR\",\n  \"merchant_code\": \"MH4H92C7\",\n  \"description\": \"Purchase\",\n  \"valid_until\": \"2020-02-29 10:56:56+00:00\",\n  \"redirect_url\": \"https://sumup.com\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"checkout_reference\": \"8ea25ec3-3293-40e9-a165-6d7f3b3073c5\",\n  \"amount\": 10.1,\n  \"currency\": \"EUR\",\n  \"merchant_code\": \"MH4H92C7\",\n  \"merchant_country\": \"DE\",\n  \"description\": \"My Checkout\",\n  \"return_url\": \"http://example.com\",\n  \"id\": \"88fcf8de-304d-4820-8f1c-ec880290eb92\",\n  \"status\": \"PENDING\",\n  \"date\": \"2020-02-29 10:56:56+00:00\",\n  \"valid_until\": \"2020-02-29 10:56:56+00:00\",\n  \"customer_id\": \"831ff8d4cd5958ab5670\",\n  \"mandate\": {\n    \"type\": \"recurrent\",\n    \"status\": \"active\",\n    \"merchant_code\": \"MH4H92C7\"\n  },\n  \"transactions\": [\n    {\n      \"id\": \"410fc44a-5956-44e1-b5cc-19c6f8d727a4\",\n      \"transaction_code\": \"TEENSK4W2K\",\n      \"amount\": 10.1,\n      \"currency\": \"EUR\",\n      \"timestamp\": \"2020-02-29 10:56:56.876000+00:00\",\n      \"status\": \"SUCCESSFUL\",\n      \"payment_type\": \"ECOM\",\n      \"installments_count\": 1,\n      \"merchant_code\": \"MH4H92C7\",\n      \"vat_amount\": 6,\n      \"tip_amount\": 3,\n      \"entry_mode\": \"CUSTOMER_ENTRY\",\n      \"auth_code\": \"012345\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "17b791e5-f7fb-43e8-9e85-3418f3d58bbd",
+              "name": "The request body is invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "checkouts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"checkout_reference\": \"f00a8f74-b05d-4605-bd73-2a901bae5802\",\n  \"amount\": 10.1,\n  \"currency\": \"EUR\",\n  \"merchant_code\": \"MH4H92C7\",\n  \"description\": \"Purchase\",\n  \"valid_until\": \"2020-02-29 10:56:56+00:00\",\n  \"redirect_url\": \"https://sumup.com\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Validation error\",\n  \"error_code\": \"MISSING\",\n  \"param\": \"merchant_code\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "997b692d-f43d-4e79-89bd-9c3b756f6ba2",
+              "name": "The request is not authorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "checkouts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"checkout_reference\": \"f00a8f74-b05d-4605-bd73-2a901bae5802\",\n  \"amount\": 10.1,\n  \"currency\": \"EUR\",\n  \"merchant_code\": \"MH4H92C7\",\n  \"description\": \"Purchase\",\n  \"valid_until\": \"2020-02-29 10:56:56+00:00\",\n  \"redirect_url\": \"https://sumup.com\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"Unauthorized.\",\n  \"status\": 401,\n  \"title\": \"Unauthorized\",\n  \"trace_id\": \"3c77294349d3b5647ea2d990f0d8f017\",\n  \"type\": \"https://developer.sumup.com/problem/unauthorized\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "879fa48a-d3e6-49ef-9b9a-7551f2588348",
+              "name": "The request isn't sufficiently authorized to create a checkout.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "checkouts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"checkout_reference\": \"f00a8f74-b05d-4605-bd73-2a901bae5802\",\n  \"amount\": 10.1,\n  \"currency\": \"EUR\",\n  \"merchant_code\": \"MH4H92C7\",\n  \"description\": \"Purchase\",\n  \"valid_until\": \"2020-02-29 10:56:56+00:00\",\n  \"redirect_url\": \"https://sumup.com\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_message\": \"checkout_payments_not_allowed\",\n  \"error_code\": \"FORBIDDEN\",\n  \"status_code\": \"403\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "751e01bd-d105-408c-92bc-705fa896bc83",
+              "name": "A checkout already exists for the provided unique parameters.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "checkouts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"checkout_reference\": \"f00a8f74-b05d-4605-bd73-2a901bae5802\",\n  \"amount\": 10.1,\n  \"currency\": \"EUR\",\n  \"merchant_code\": \"MH4H92C7\",\n  \"description\": \"Purchase\",\n  \"valid_until\": \"2020-02-29 10:56:56+00:00\",\n  \"redirect_url\": \"https://sumup.com\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"DUPLICATED_CHECKOUT\",\n  \"message\": \"Checkout with this checkout reference and pay to email already exists\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e9314757-7930-406e-8842-ea488c595722",
+          "name": "List checkouts",
+          "request": {
+            "name": "List checkouts",
+            "description": {
+              "content": "Lists created checkout resources according to the applied `checkout_reference`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0.1",
+                "checkouts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "checkout_reference",
+                  "value": "<string>",
+                  "description": "Filters the list of checkout resources by the unique ID of the checkout."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "00c452b8-dbcc-4bdb-b4a1-96540c7a9818",
+              "name": "Returns a list of checkout resources.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "checkouts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "checkout_reference",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"checkout_reference\": \"f00a8f74-b05d-4605-bd73-2a901bae5802\",\n    \"amount\": 10.1,\n    \"currency\": \"EUR\",\n    \"merchant_code\": \"MH4H92C7\",\n    \"description\": \"Purchase\",\n    \"id\": \"4e425463-3e1b-431d-83fa-1e51c2925e99\",\n    \"status\": \"PENDING\",\n    \"date\": \"2020-02-29 10:56:56+00:00\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "97aff88a-f2f8-4306-907c-68d04b6b79bc",
+              "name": "The request is not authorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "checkouts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "checkout_reference",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"Unauthorized.\",\n  \"status\": 401,\n  \"title\": \"Unauthorized\",\n  \"trace_id\": \"3c77294349d3b5647ea2d990f0d8f017\",\n  \"type\": \"https://developer.sumup.com/problem/unauthorized\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e64ebbf4-cef6-4782-b29b-f472bf309b35",
+          "name": "Retrieve a checkout",
+          "request": {
+            "name": "Retrieve a checkout",
+            "description": {
+              "content": "Retrieves an identified checkout resource. Use this request after processing a checkout to confirm its status and inform the end user respectively.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0.1",
+                "checkouts",
+                ":checkout_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "checkout_id",
+                  "description": "(Required) Unique ID of the checkout resource."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "74c817ba-09be-44a5-a3a0-4a977d3cd663",
+              "name": "Returns the requested checkout resource.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "checkouts",
+                    ":checkout_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "checkout_id",
+                      "description": "(Required) Unique ID of the checkout resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"checkout_reference\": \"f00a8f74-b05d-4605-bd73-2a901bae5802\",\n  \"amount\": 10.1,\n  \"currency\": \"EUR\",\n  \"merchant_code\": \"MH4H92C7\",\n  \"description\": \"Purchase\",\n  \"id\": \"4e425463-3e1b-431d-83fa-1e51c2925e99\",\n  \"status\": \"PENDING\",\n  \"date\": \"2020-02-29 10:56:56+00:00\",\n  \"transaction_code\": \"TEENSK4W2K\",\n  \"transaction_id\": \"410fc44a-5956-44e1-b5cc-19c6f8d727a4\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "054fd042-a8f1-4a17-b2bf-29fc2e032edb",
+              "name": "The request is not authorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "checkouts",
+                    ":checkout_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "checkout_id",
+                      "description": "(Required) Unique ID of the checkout resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"Unauthorized.\",\n  \"status\": 401,\n  \"title\": \"Unauthorized\",\n  \"trace_id\": \"3c77294349d3b5647ea2d990f0d8f017\",\n  \"type\": \"https://developer.sumup.com/problem/unauthorized\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6f7cbe30-b9a7-4e4b-a41b-d23a1678ffd7",
+              "name": "The requested resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "checkouts",
+                    ":checkout_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "checkout_id",
+                      "description": "(Required) Unique ID of the checkout resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"NOT_FOUND\",\n  \"message\": \"Resource not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "681c2c9d-8b53-4cd7-a77d-23493ff77cf4",
+          "name": "Process a checkout",
+          "request": {
+            "name": "Process a checkout",
+            "description": {
+              "content": "Processing a checkout will attempt to charge the provided payment instrument for the amount of the specified checkout resource initiated in the `Create a checkout` endpoint.\n\nFollow this request with `Retrieve a checkout` to confirm its status.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0.1",
+                "checkouts",
+                ":checkout_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "checkout_id",
+                  "description": "(Required) Unique ID of the checkout resource."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"payment_type\": \"<string>\",\n  \"installments\": \"<integer>\",\n  \"mandate\": {\n    \"type\": \"<string>\",\n    \"user_agent\": \"<string>\",\n    \"user_ip\": \"<string>\"\n  },\n  \"card\": {\n    \"name\": \"<string>\",\n    \"number\": \"<string>\",\n    \"expiry_month\": \"<string>\",\n    \"expiry_year\": \"<string>\",\n    \"cvv\": \"<string>\",\n    \"type\": \"<string>\",\n    \"zip_code\": \"<string>\"\n  },\n  \"google_pay\": \"<object>\",\n  \"apple_pay\": \"<object>\",\n  \"token\": \"<string>\",\n  \"customer_id\": \"<string>\",\n  \"personal_details\": {\n    \"first_name\": \"<string>\",\n    \"last_name\": \"<string>\",\n    \"email\": \"<string>\",\n    \"phone\": \"<string>\",\n    \"birth_date\": \"<date>\",\n    \"tax_id\": \"<string>\",\n    \"address\": {\n      \"city\": \"<string>\",\n      \"country\": \"<string>\",\n      \"line_1\": \"<string>\",\n      \"line_2\": \"<string>\",\n      \"postal_code\": \"<string>\",\n      \"state\": \"<string>\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "3e9ec32e-e239-4adf-becb-ad099eff84b8",
+              "name": "Returns the checkout resource after a processing attempt.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "checkouts",
+                    ":checkout_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "checkout_id",
+                      "description": "(Required) Unique ID of the checkout resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"payment_type\": \"card\",\n  \"installments\": 1,\n  \"mandate\": {\n    \"type\": \"recurrent\",\n    \"user_agent\": \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.104 Safari/537.36\",\n    \"user_ip\": \"172.217.169.174\"\n  },\n  \"card\": {\n    \"type\": \"VISA\",\n    \"name\": \"John Doe\",\n    \"number\": \"1234567890123456\",\n    \"expiry_year\": \"2023\",\n    \"expiry_month\": \"01\",\n    \"cvv\": \"123\",\n    \"zip_code\": \"12345\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"checkout_reference\": \"f00a8f74-b05d-4605-bd73-2a901bae5802\",\n  \"amount\": 10.1,\n  \"currency\": \"EUR\",\n  \"merchant_code\": \"MH4H92C7\",\n  \"description\": \"Purchase\",\n  \"return_url\": \"http://example.com\",\n  \"id\": \"4e425463-3e1b-431d-83fa-1e51c2925e99\",\n  \"status\": \"PENDING\",\n  \"date\": \"2020-02-29 10:56:56+00:00\",\n  \"valid_until\": \"2020-02-29 10:56:56+00:00\",\n  \"customer_id\": \"831ff8d4cd5958ab5670\",\n  \"mandate\": {\n    \"type\": \"recurrent\",\n    \"status\": \"active\",\n    \"merchant_code\": \"MH4H92C7\"\n  },\n  \"transactions\": [\n    {\n      \"id\": \"410fc44a-5956-44e1-b5cc-19c6f8d727a4\",\n      \"transaction_code\": \"TEENSK4W2K\",\n      \"amount\": 10.1,\n      \"currency\": \"EUR\",\n      \"timestamp\": \"2020-02-29 10:56:56.876000+00:00\",\n      \"status\": \"SUCCESSFUL\",\n      \"payment_type\": \"ECOM\",\n      \"installments_count\": 1,\n      \"merchant_code\": \"MH4H92C7\",\n      \"vat_amount\": 6,\n      \"tip_amount\": 3,\n      \"entry_mode\": \"CUSTOMER_ENTRY\",\n      \"auth_code\": \"053201\"\n    }\n  ],\n  \"transaction_code\": \"TEENSK4W2K\",\n  \"transaction_id\": \"410fc44a-5956-44e1-b5cc-19c6f8d727a4\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "56a3064c-1bea-4962-80bb-bbbd35f619fc",
+              "name": "Returns the next required action for asynchronous checkout processing.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "checkouts",
+                    ":checkout_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "checkout_id",
+                      "description": "(Required) Unique ID of the checkout resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"payment_type\": \"card\",\n  \"installments\": 1,\n  \"mandate\": {\n    \"type\": \"recurrent\",\n    \"user_agent\": \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.104 Safari/537.36\",\n    \"user_ip\": \"172.217.169.174\"\n  },\n  \"card\": {\n    \"type\": \"VISA\",\n    \"name\": \"John Doe\",\n    \"number\": \"1234567890123456\",\n    \"expiry_year\": \"2023\",\n    \"expiry_month\": \"01\",\n    \"cvv\": \"123\",\n    \"zip_code\": \"12345\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"next_step\": {\n    \"url\": \"https://dummy-3ds-gateway.com/cap?RID=1233&VAA=A\",\n    \"method\": \"POST\",\n    \"redirect_url\": \"https://mysite.com/completed_purchase\",\n    \"mechanism\": [\n      \"browser\",\n      \"iframe\"\n    ],\n    \"payload\": {\n      \"PaReq\": \"eJxVUttu2zAM/RXDr4MjyY5dO6BVuE27FZuDZHGG9VGRmMSFb/Wljff1k9KkF0APPCR1eHQouD6WhfWCbZfXVWyzCbUtrGSt8mof25vs3gltq+tFpURRVxjbI3b2NYfs0CLO1yiHFjmk2HVij1auYrsRW1+F0U4qZxfKwJlur4QTYcQcJoIdc+XO2/poc1gmv/GZw3k216MnLpAL1JytPIiq5yDk883Dgk+DwPV9IGcIJbYPc84o1Ye6lHqu5wVA3tJQiRL5eiiHxlqKscSq76xfeZn3qICciiDroerbkYeuvnYBMLQFP/R9MyOkM9cnCoGYJJAPScvBRJ0mOeaKr/6l08XT6jXN7tx0vvHSbOMtsj1dzB9jIKYDlOiRu1omYyy0WDCj0YxFQE55EKWZzj2f6ee9xdCYEcmnwucEaN9bvaeRR1ehFn9BgMdGr0l3aCvfYyAfem9/GENlrz36ufpTBPTv07r8lm3qpPiOo1y/7u+SJImNzacmw5hrX1wt/kRpABBDQ84bJOf16+jLt/gPhUvGGw==\",\n      \"MD\": \"b1a536c0-29b9-11eb-adc1-0242ac120002\",\n      \"TermUrl\": \"https://api.sumup.com/v0.1/checkouts/e552de3b-1777-4c91-bdb8-756967678572/complete_payment\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "16075a6d-f52e-47e9-a740-bf3271eaa43f",
+              "name": "The request body is invalid for processing the checkout.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "checkouts",
+                    ":checkout_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "checkout_id",
+                      "description": "(Required) Unique ID of the checkout resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"payment_type\": \"card\",\n  \"installments\": 1,\n  \"mandate\": {\n    \"type\": \"recurrent\",\n    \"user_agent\": \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.104 Safari/537.36\",\n    \"user_ip\": \"172.217.169.174\"\n  },\n  \"card\": {\n    \"type\": \"VISA\",\n    \"name\": \"John Doe\",\n    \"number\": \"1234567890123456\",\n    \"expiry_year\": \"2023\",\n    \"expiry_month\": \"01\",\n    \"cvv\": \"123\",\n    \"zip_code\": \"12345\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Validation error\",\n  \"error_code\": \"INVALID\",\n  \"param\": \"card.expiry_year\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "44faa5f8-61e2-4c1a-a2d0-a3d8be29e35a",
+              "name": "The request is not authorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "checkouts",
+                    ":checkout_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "checkout_id",
+                      "description": "(Required) Unique ID of the checkout resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"payment_type\": \"card\",\n  \"installments\": 1,\n  \"mandate\": {\n    \"type\": \"recurrent\",\n    \"user_agent\": \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.104 Safari/537.36\",\n    \"user_ip\": \"172.217.169.174\"\n  },\n  \"card\": {\n    \"type\": \"VISA\",\n    \"name\": \"John Doe\",\n    \"number\": \"1234567890123456\",\n    \"expiry_year\": \"2023\",\n    \"expiry_month\": \"01\",\n    \"cvv\": \"123\",\n    \"zip_code\": \"12345\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"Unauthorized.\",\n  \"status\": 401,\n  \"title\": \"Unauthorized\",\n  \"trace_id\": \"3c77294349d3b5647ea2d990f0d8f017\",\n  \"type\": \"https://developer.sumup.com/problem/unauthorized\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "67ef0c3e-ad8b-4e19-b9e8-743e1983564c",
+              "name": "The requested resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "checkouts",
+                    ":checkout_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "checkout_id",
+                      "description": "(Required) Unique ID of the checkout resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"payment_type\": \"card\",\n  \"installments\": 1,\n  \"mandate\": {\n    \"type\": \"recurrent\",\n    \"user_agent\": \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.104 Safari/537.36\",\n    \"user_ip\": \"172.217.169.174\"\n  },\n  \"card\": {\n    \"type\": \"VISA\",\n    \"name\": \"John Doe\",\n    \"number\": \"1234567890123456\",\n    \"expiry_year\": \"2023\",\n    \"expiry_month\": \"01\",\n    \"cvv\": \"123\",\n    \"zip_code\": \"12345\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"NOT_FOUND\",\n  \"message\": \"Resource not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0111f40e-d238-4258-b5ee-6db5831121e2",
+              "name": "The request conflicts with the current state of the resource.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "checkouts",
+                    ":checkout_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "checkout_id",
+                      "description": "(Required) Unique ID of the checkout resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"payment_type\": \"card\",\n  \"installments\": 1,\n  \"mandate\": {\n    \"type\": \"recurrent\",\n    \"user_agent\": \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.104 Safari/537.36\",\n    \"user_ip\": \"172.217.169.174\"\n  },\n  \"card\": {\n    \"type\": \"VISA\",\n    \"name\": \"John Doe\",\n    \"number\": \"1234567890123456\",\n    \"expiry_year\": \"2023\",\n    \"expiry_month\": \"01\",\n    \"cvv\": \"123\",\n    \"zip_code\": \"12345\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"CHECKOUT_PROCESSED\",\n  \"message\": \"Checkout is already processed\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "62273b95-acb9-4e31-8b62-fc18d250d7c1",
+          "name": "Deactivate a checkout",
+          "request": {
+            "name": "Deactivate a checkout",
+            "description": {
+              "content": "Deactivates an identified checkout resource. If the checkout has already been processed it can not be deactivated.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0.1",
+                "checkouts",
+                ":checkout_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "checkout_id",
+                  "description": "(Required) Unique ID of the checkout resource."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "82bfb768-d2a1-47e4-99bc-6f337fdbb3a9",
+              "name": "Returns the checkout object after successful deactivation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "checkouts",
+                    ":checkout_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "checkout_id",
+                      "description": "(Required) Unique ID of the checkout resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"checkout_reference\": \"f00a8f74-b05d-4605-bd73-2a901bae5802\",\n  \"id\": \"817340ce-f1d9-4609-b90a-6152f8ee267j\",\n  \"amount\": 2,\n  \"currency\": \"EUR\",\n  \"merchant_code\": \"MH4H92C7\",\n  \"description\": \"Deletion example\",\n  \"purpose\": \"CHECKOUT\",\n  \"status\": \"EXPIRED\",\n  \"date\": \"2020-02-29 10:56:56+00:00\",\n  \"valid_until\": \"2020-02-29 10:56:56+00:00\",\n  \"merchant_name\": \"Sample Merchant\",\n  \"transactions\": []\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "56c57c53-119c-4b8f-82da-72d66a96ab80",
+              "name": "The request is not authorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "checkouts",
+                    ":checkout_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "checkout_id",
+                      "description": "(Required) Unique ID of the checkout resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"Unauthorized.\",\n  \"status\": 401,\n  \"title\": \"Unauthorized\",\n  \"trace_id\": \"3c77294349d3b5647ea2d990f0d8f017\",\n  \"type\": \"https://developer.sumup.com/problem/unauthorized\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "381a84a6-0d7d-4ce7-8ed4-eb864bcaf9d7",
+              "name": "The requested resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "checkouts",
+                    ":checkout_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "checkout_id",
+                      "description": "(Required) Unique ID of the checkout resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"NOT_FOUND\",\n  \"message\": \"Resource not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "deb682cb-3565-467d-b08c-fe262a8a825d",
+              "name": "The request conflicts with the current state of the resource.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "checkouts",
+                    ":checkout_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "checkout_id",
+                      "description": "(Required) Unique ID of the checkout resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"CHECKOUT_PROCESSED\",\n  \"message\": \"Checkout is already processed\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6b87606f-ba2d-41f5-b99a-2ed539f9ada0",
+          "name": "Create an Apple Pay session",
+          "request": {
+            "name": "Create an Apple Pay session",
+            "description": {
+              "content": "Creates an Apple Pay merchant session for the specified checkout.\n\nUse this endpoint after the customer selects Apple Pay and before calling\n`ApplePaySession.completeMerchantValidation(...)` in the browser.\nSumUp validates the merchant session request and returns the Apple Pay\nsession object that your frontend should pass to Apple's JavaScript API.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0.2",
+                "checkouts",
+                ":checkout_id",
+                "apple-pay-session"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "checkout_id",
+                  "description": "(Required) Unique ID of the checkout resource."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"context\": \"<hostname>\",\n  \"target\": \"<uri>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "36926be4-503d-40e2-adef-f0e79a61adfa",
+              "name": "Successful request. Returns the Apple Pay merchant session object\nthat should be forwarded to the Apple Pay JS SDK to complete merchant\nvalidation and continue the payment flow.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.2",
+                    "checkouts",
+                    ":checkout_id",
+                    "apple-pay-session"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "checkout_id",
+                      "description": "(Required) Unique ID of the checkout resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"context\": \"example.com\",\n  \"target\": \"https://apple-pay-gateway-cert.apple.com/paymentservices/startSession\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"displayName\": \"Test Account\",\n  \"domainName\": \"pay.sumup.com\",\n  \"epochTimestamp\": 1775323532665,\n  \"expiresAt\": 1775327132665,\n  \"merchantIdentifier\": \"7801D328E6637EFC1ADE6CE01C671D2CD318E32CA4ED1F9FC390D170D827D9AB\",\n  \"merchantSessionIdentifier\": \"SSH92CC412E5FCF4FAB88684914C953C0D4_916523AAED1343F5BC5815E12BEE9250AFFDC1A17C46B0DE5A943F0F94927C24\",\n  \"nonce\": \"a968a2bf\",\n  \"operationalAnalyticsIdentifier\": \"Test Account:7801D328E6637EFC1ADE6CE01C671D2CD318E32CA4ED1F9FC390D170D827D9AB\",\n  \"pspId\": \"7801D328E6637EFC1ADE6CE01C671D2CD318E32CA4ED1F9FC390D170D827D9AB\",\n  \"retries\": 0,\n  \"signature\": \"<apple-pay-signature>\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f190dbbf-d760-4c6e-a292-45bc915afb71",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.2",
+                    "checkouts",
+                    ":checkout_id",
+                    "apple-pay-session"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "checkout_id",
+                      "description": "(Required) Unique ID of the checkout resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"context\": \"example.com\",\n  \"target\": \"https://apple-pay-gateway-cert.apple.com/paymentservices/startSession\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"INVALID\",\n  \"message\": \"Bad Request\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e5f3fe8d-6213-4b97-ab0a-9a953bd69894",
+              "name": "The requested resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.2",
+                    "checkouts",
+                    ":checkout_id",
+                    "apple-pay-session"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "checkout_id",
+                      "description": "(Required) Unique ID of the checkout resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"context\": \"example.com\",\n  \"target\": \"https://apple-pay-gateway-cert.apple.com/paymentservices/startSession\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"NOT_FOUND\",\n  \"message\": \"Resource not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.sumup.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "42ba43cc-b5f2-4eb8-952e-1b9e8e970548",
+    "name": "SumUp REST Checkouts API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "SumUp’s REST API operates with [JSON](https://www.json.org/json-en.html) HTTP requests and responses. The request bodies are sent through resource-oriented URLs and use the standard [HTTP response codes](https://developer.mozilla.org/docs/Web/HTTP/Status).\n\nYou can experiment and work on your integration in a sandbox that doesn't affect your regular data and doesn't process real transactions. To create a sandbox merchant account visit the [dashboard](https://me.sumup.com/settings/developer). To use the sandbox when interacting with SumUp APIs [create an API](https://me.sumup.com/settings/api-keys) key and use it for [authentication](https://developer.sumup.com/api/authentication).",
+      "type": "text/plain"
+    }
+  }
+}

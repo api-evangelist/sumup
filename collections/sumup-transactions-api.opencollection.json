@@ -1,0 +1,187 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "SumUp REST Checkouts Transactions API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Transactions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Refund a transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sumup.com/v1.0/merchants/:merchant_code/payments/:transaction_id/refunds",
+            "params": [
+              {
+                "name": "merchant_code",
+                "value": "",
+                "type": "path",
+                "description": "Merchant code of the account that owns the payment to refund."
+              },
+              {
+                "name": "transaction_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique ID of the transaction."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Refunds an identified transaction either in full or partially."
+        },
+        {
+          "info": {
+            "name": "Retrieve a transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sumup.com/v2.1/merchants/:merchant_code/transactions",
+            "params": [
+              {
+                "name": "merchant_code",
+                "value": "",
+                "type": "path",
+                "description": "Merchant code of the account whose transaction should be retrieved."
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "query",
+                "description": "Retrieves the transaction resource with the specified transaction ID (the `id` parameter in the transaction resource)."
+              },
+              {
+                "name": "transaction_code",
+                "value": "",
+                "type": "query",
+                "description": "Retrieves the transaction resource with the specified transaction code."
+              },
+              {
+                "name": "foreign_transaction_id",
+                "value": "",
+                "type": "query",
+                "description": "External/foreign transaction id (passed by clients)."
+              },
+              {
+                "name": "client_transaction_id",
+                "value": "",
+                "type": "query",
+                "description": "Client transaction id."
+              }
+            ]
+          },
+          "docs": "Retrieves the full details of an identified transaction. The transaction resource is identified by a query parameter and *one* of following parameters is required:\n- `id`\n- `transaction_code`\n- `foreign_transaction_id`\n- `client_transaction_id`"
+        },
+        {
+          "info": {
+            "name": "List transactions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sumup.com/v2.1/merchants/:merchant_code/transactions/history",
+            "params": [
+              {
+                "name": "merchant_code",
+                "value": "",
+                "type": "path",
+                "description": "Merchant code of the account whose transaction history should be listed."
+              },
+              {
+                "name": "transaction_code",
+                "value": "",
+                "type": "query",
+                "description": "Retrieves the transaction resource with the specified transaction code."
+              },
+              {
+                "name": "order",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the order in which the returned results are displayed."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the maximum number of results per page. Value must be a positive integer and if not specified, will return 10 results."
+              },
+              {
+                "name": "users",
+                "value": "merchant@example.com",
+                "type": "query",
+                "description": "Filters the returned results by user email."
+              },
+              {
+                "name": "statuses[]",
+                "value": "",
+                "type": "query",
+                "description": "Filters the returned results by the specified list of final statuses of the transactions."
+              },
+              {
+                "name": "payment_types",
+                "value": "",
+                "type": "query",
+                "description": "Filters the returned results by the specified list of payment types used for the transactions."
+              },
+              {
+                "name": "entry_modes[]",
+                "value": "",
+                "type": "query",
+                "description": "Filters the returned results by the specified list of entry modes."
+              },
+              {
+                "name": "types",
+                "value": "",
+                "type": "query",
+                "description": "Filters the returned results by the specified list of transaction types."
+              },
+              {
+                "name": "changes_since",
+                "value": "",
+                "type": "query",
+                "description": "Filters the results by the latest modification time of resources and returns only transactions that are modified *at or after* the specified timestamp (in [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) format)."
+              },
+              {
+                "name": "newest_time",
+                "value": "",
+                "type": "query",
+                "description": "Filters the results by the creation time of resources and returns only transactions that are created *before* the specified timestamp (in [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) format)."
+              },
+              {
+                "name": "newest_ref",
+                "value": "",
+                "type": "query",
+                "description": "Filters the results by the reference ID of transaction events and returns only transactions with events whose IDs are *smaller* than the specified value. This parameters supersedes the `newest_time` parameter (if both are provided in the request)."
+              },
+              {
+                "name": "oldest_time",
+                "value": "",
+                "type": "query",
+                "description": "Filters the results by the creation time of resources and returns only transactions that are created *at or after* the specified timestamp (in [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) format)."
+              },
+              {
+                "name": "oldest_ref",
+                "value": "",
+                "type": "query",
+                "description": "Filters the results by the reference ID of transaction events and returns only transactions with events whose IDs are *greater* than the specified value. This parameters supersedes the `oldest_time` parameter (if both are provided in the request)."
+              }
+            ]
+          },
+          "docs": "Lists detailed history of all transactions associated with the merchant profile."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

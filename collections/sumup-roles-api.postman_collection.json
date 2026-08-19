@@ -1,0 +1,1162 @@
+{
+  "item": [
+    {
+      "id": "a3256166-8a55-458e-8931-82a8051181c2",
+      "name": "Roles",
+      "description": {
+        "content": "Endpoints to manage custom roles. Custom roles allow you to tailor roles from individual permissions to match your needs. Once created, you can assign your custom roles to your merchant account members using the memberships.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "9447b6c5-c815-4d19-9965-a0a60b9718f0",
+          "name": "List roles",
+          "request": {
+            "name": "List roles",
+            "description": {
+              "content": "List merchant's custom roles.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0.1",
+                "merchants",
+                ":merchant_code",
+                "roles"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "merchant_code",
+                  "description": "(Required) Short unique identifier for the merchant."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "8511eaf5-6556-4acf-8d27-faefd78523b4",
+              "name": "Returns a list of Role objects.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "merchants",
+                    ":merchant_code",
+                    "roles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_code",
+                      "description": "(Required) Short unique identifier for the merchant."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"id\": \"role_WZsm7QTPhVrompscmPhoGTXXcrd58fr9MOhP\",\n      \"name\": \"Senior Shop Manager II\",\n      \"is_predefined\": true,\n      \"created_at\": \"2023-01-20 15:16:17+00:00\",\n      \"updated_at\": \"2023-01-20 15:16:17+00:00\",\n      \"description\": \"Manges the shop and the employees.\",\n      \"metadata\": {}\n    },\n    {\n      \"id\": \"role_WZsm7QTPhVrompscmPhoGTXXcrd58fr9MOhP\",\n      \"name\": \"Senior Shop Manager II\",\n      \"is_predefined\": true,\n      \"created_at\": \"2023-01-20 15:16:17+00:00\",\n      \"updated_at\": \"2023-01-20 15:16:17+00:00\",\n      \"description\": \"Manges the shop and the employees.\",\n      \"metadata\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "78b930f6-a369-46ce-9d11-a0e5475fedd8",
+              "name": "Merchant not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "merchants",
+                    ":merchant_code",
+                    "roles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_code",
+                      "description": "(Required) Short unique identifier for the merchant."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://developer.sumup.com/problem/not-found\",\n  \"title\": \"Requested resource couldn't be found.\",\n  \"status\": 404,\n  \"detail\": \"The requested resource doesn't exist or does not belong to you.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cd41107e-8e40-4ed7-9fdc-74d20877ba61",
+          "name": "Create a role",
+          "request": {
+            "name": "Create a role",
+            "description": {
+              "content": "Create a custom role for the merchant. Roles are defined by the set of permissions that they grant to the members that they are assigned to.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0.1",
+                "merchants",
+                ":merchant_code",
+                "roles"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "merchant_code",
+                  "description": "(Required) Short unique identifier for the merchant."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"permissions\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"metadata\": {\n    \"key_0\": false,\n    \"key_1\": \"string\",\n    \"key_2\": false,\n    \"key_3\": 1065.1787507885647,\n    \"key_4\": false,\n    \"key_5\": \"string\",\n    \"key_6\": 6999.373598385046,\n    \"key_7\": 388,\n    \"key_8\": true,\n    \"key_9\": true,\n    \"key_10\": false,\n    \"key_11\": 4645.664908617383,\n    \"key_12\": 9423.529005586215,\n    \"key_13\": 7905,\n    \"key_14\": \"string\",\n    \"key_15\": \"string\",\n    \"key_16\": 838,\n    \"key_17\": \"string\",\n    \"key_18\": 2720,\n    \"key_19\": false,\n    \"key_20\": 2942.642564962764,\n    \"key_21\": 2404,\n    \"key_22\": 8095.610326738377,\n    \"key_23\": \"string\",\n    \"key_24\": 8375.17240734145,\n    \"key_25\": false\n  },\n  \"description\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "0c1e83d2-8e2e-49d3-b225-0a324b9caeaf",
+              "name": "Returns the Role object after successful custom role creation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "merchants",
+                    ":merchant_code",
+                    "roles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_code",
+                      "description": "(Required) Short unique identifier for the merchant."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Senior Shop Manager II\",\n  \"permissions\": [\n    \"catalog_access\",\n    \"taxes_access\",\n    \"members_access\"\n  ],\n  \"metadata\": {},\n  \"description\": \"Manges the shop and the employees.\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"role_WZsm7QTPhVrompscmPhoGTXXcrd58fr9MOhP\",\n  \"name\": \"Senior Shop Manager II\",\n  \"permissions\": [],\n  \"is_predefined\": true,\n  \"created_at\": \"2023-01-20 15:16:17+00:00\",\n  \"updated_at\": \"2023-01-20 15:16:17+00:00\",\n  \"description\": \"Manges the shop and the employees.\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "efdb00e4-1615-4614-be83-1ce71a2af1e6",
+              "name": "Invalid request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "merchants",
+                    ":merchant_code",
+                    "roles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_code",
+                      "description": "(Required) Short unique identifier for the merchant."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Senior Shop Manager II\",\n  \"permissions\": [\n    \"catalog_access\",\n    \"taxes_access\",\n    \"members_access\"\n  ],\n  \"metadata\": {},\n  \"description\": \"Manges the shop and the employees.\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://developer.sumup.com/problem/bad-request\",\n  \"title\": \"Bad Request\",\n  \"status\": 400,\n  \"detail\": \"Request validation failed.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "45b6b6ef-8c2f-4014-a603-f51ee817d671",
+              "name": "Merchant not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "merchants",
+                    ":merchant_code",
+                    "roles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_code",
+                      "description": "(Required) Short unique identifier for the merchant."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Senior Shop Manager II\",\n  \"permissions\": [\n    \"catalog_access\",\n    \"taxes_access\",\n    \"members_access\"\n  ],\n  \"metadata\": {},\n  \"description\": \"Manges the shop and the employees.\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://developer.sumup.com/problem/not-found\",\n  \"title\": \"Requested resource couldn't be found.\",\n  \"status\": 404,\n  \"detail\": \"The requested resource doesn't exist or does not belong to you.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9681e55d-7eab-4525-880a-683b899bc8ad",
+          "name": "Retrieve a role",
+          "request": {
+            "name": "Retrieve a role",
+            "description": {
+              "content": "Retrieve a custom role by ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0.1",
+                "merchants",
+                ":merchant_code",
+                "roles",
+                ":role_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "merchant_code",
+                  "description": "(Required) Short unique identifier for the merchant."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "role_id",
+                  "description": "(Required) The ID of the role to retrieve."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "7613c57c-9045-4378-a86f-fd75ba10209f",
+              "name": "Returns the Role object for a valid identifier.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "merchants",
+                    ":merchant_code",
+                    "roles",
+                    ":role_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_code",
+                      "description": "(Required) Short unique identifier for the merchant."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "role_id",
+                      "description": "(Required) The ID of the role to retrieve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"role_WZsm7QTPhVrompscmPhoGTXXcrd58fr9MOhP\",\n  \"name\": \"Senior Shop Manager II\",\n  \"permissions\": [],\n  \"is_predefined\": true,\n  \"created_at\": \"2023-01-20 15:16:17+00:00\",\n  \"updated_at\": \"2023-01-20 15:16:17+00:00\",\n  \"description\": \"Manges the shop and the employees.\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b61c53ec-5510-4db9-8d9a-4ad24d675dc4",
+              "name": "Merchant or role not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "merchants",
+                    ":merchant_code",
+                    "roles",
+                    ":role_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_code",
+                      "description": "(Required) Short unique identifier for the merchant."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "role_id",
+                      "description": "(Required) The ID of the role to retrieve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://developer.sumup.com/problem/not-found\",\n  \"title\": \"Requested resource couldn't be found.\",\n  \"status\": 404,\n  \"detail\": \"The requested resource doesn't exist or does not belong to you.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5e9bb5d5-1e7d-42ae-97d9-a46d379a27a9",
+          "name": "Delete a role",
+          "request": {
+            "name": "Delete a role",
+            "description": {
+              "content": "Delete a custom role.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0.1",
+                "merchants",
+                ":merchant_code",
+                "roles",
+                ":role_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "merchant_code",
+                  "description": "(Required) Short unique identifier for the merchant."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "role_id",
+                  "description": "(Required) The ID of the role to retrieve."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/problem+json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "0675875f-6128-4407-a0ca-e123f0bfcad1",
+              "name": "Returns an empty response if the role deletion succeeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "merchants",
+                    ":merchant_code",
+                    "roles",
+                    ":role_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_code",
+                      "description": "(Required) Short unique identifier for the merchant."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "role_id",
+                      "description": "(Required) The ID of the role to retrieve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "5538033d-e83e-4c77-a58b-c307e33daf84",
+              "name": "Invalid request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "merchants",
+                    ":merchant_code",
+                    "roles",
+                    ":role_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_code",
+                      "description": "(Required) Short unique identifier for the merchant."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "role_id",
+                      "description": "(Required) The ID of the role to retrieve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://developer.sumup.com/problem/bad-request\",\n  \"title\": \"Bad Request\",\n  \"status\": 400,\n  \"detail\": \"Request validation failed.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "060da3ea-5b89-4acd-99d5-3ef5ece56785",
+              "name": "Merchant not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "merchants",
+                    ":merchant_code",
+                    "roles",
+                    ":role_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_code",
+                      "description": "(Required) Short unique identifier for the merchant."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "role_id",
+                      "description": "(Required) The ID of the role to retrieve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://developer.sumup.com/problem/not-found\",\n  \"title\": \"Requested resource couldn't be found.\",\n  \"status\": 404,\n  \"detail\": \"The requested resource doesn't exist or does not belong to you.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6644bc0b-5121-48b5-8265-17792794c794",
+          "name": "Update a role",
+          "request": {
+            "name": "Update a role",
+            "description": {
+              "content": "Update a custom role.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0.1",
+                "merchants",
+                ":merchant_code",
+                "roles",
+                ":role_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "merchant_code",
+                  "description": "(Required) Short unique identifier for the merchant."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "role_id",
+                  "description": "(Required) The ID of the role to retrieve."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"permissions\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"description\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e8d9ca61-dbfc-4180-95cf-2ee7693b9aed",
+              "name": "Returns the updated Role object if the update succeeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "merchants",
+                    ":merchant_code",
+                    "roles",
+                    ":role_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_code",
+                      "description": "(Required) Short unique identifier for the merchant."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "role_id",
+                      "description": "(Required) The ID of the role to retrieve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Senior Shop Manager II\",\n  \"permissions\": [\n    \"catalog_access\",\n    \"taxes_access\",\n    \"members_access\"\n  ],\n  \"description\": \"Manges the shop and the employees.\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"role_WZsm7QTPhVrompscmPhoGTXXcrd58fr9MOhP\",\n  \"name\": \"Senior Shop Manager II\",\n  \"permissions\": [],\n  \"is_predefined\": true,\n  \"created_at\": \"2023-01-20 15:16:17+00:00\",\n  \"updated_at\": \"2023-01-20 15:16:17+00:00\",\n  \"description\": \"Manges the shop and the employees.\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "75d8cc90-4004-42e8-89bd-1f15abb0dac9",
+              "name": "Invalid request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "merchants",
+                    ":merchant_code",
+                    "roles",
+                    ":role_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_code",
+                      "description": "(Required) Short unique identifier for the merchant."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "role_id",
+                      "description": "(Required) The ID of the role to retrieve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Senior Shop Manager II\",\n  \"permissions\": [\n    \"catalog_access\",\n    \"taxes_access\",\n    \"members_access\"\n  ],\n  \"description\": \"Manges the shop and the employees.\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://developer.sumup.com/problem/bad-request\",\n  \"title\": \"Bad Request\",\n  \"status\": 400,\n  \"detail\": \"Request validation failed.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7045bdc2-5a50-45fd-9f56-8692bbc51b16",
+              "name": "Merchant not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "merchants",
+                    ":merchant_code",
+                    "roles",
+                    ":role_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_code",
+                      "description": "(Required) Short unique identifier for the merchant."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "role_id",
+                      "description": "(Required) The ID of the role to retrieve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Senior Shop Manager II\",\n  \"permissions\": [\n    \"catalog_access\",\n    \"taxes_access\",\n    \"members_access\"\n  ],\n  \"description\": \"Manges the shop and the employees.\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://developer.sumup.com/problem/not-found\",\n  \"title\": \"Requested resource couldn't be found.\",\n  \"status\": 404,\n  \"detail\": \"The requested resource doesn't exist or does not belong to you.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.sumup.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "28fbd2ff-9deb-4bce-bfb9-23c115ffa13d",
+    "name": "SumUp REST Checkouts Roles API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "SumUp’s REST API operates with [JSON](https://www.json.org/json-en.html) HTTP requests and responses. The request bodies are sent through resource-oriented URLs and use the standard [HTTP response codes](https://developer.mozilla.org/docs/Web/HTTP/Status).\n\nYou can experiment and work on your integration in a sandbox that doesn't affect your regular data and doesn't process real transactions. To create a sandbox merchant account visit the [dashboard](https://me.sumup.com/settings/developer). To use the sandbox when interacting with SumUp APIs [create an API](https://me.sumup.com/settings/api-keys) key and use it for [authentication](https://developer.sumup.com/api/authentication).",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,2357 @@
+{
+  "item": [
+    {
+      "id": "7c5ce917-da09-4c31-9481-6267b42ad8a7",
+      "name": "Readers",
+      "description": {
+        "content": "A reader represents a device that accepts payments. You can use the SumUp Solo to accept in-person payments.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "33c61420-a080-407c-a49a-018298f530ca",
+          "name": "List Readers",
+          "request": {
+            "name": "List Readers",
+            "description": {
+              "content": "List all readers of the merchant.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0.1",
+                "merchants",
+                ":merchant_code",
+                "readers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "merchant_code",
+                  "description": "(Required) Short unique identifier for the merchant."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "1e5d0ad2-3e15-4a5d-99d6-e24347cfd18b",
+              "name": "Returns a list Reader objects.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "merchants",
+                    ":merchant_code",
+                    "readers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_code",
+                      "description": "(Required) Short unique identifier for the merchant."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"id\": \"rdr_3MSAFM23CK82VSTT4BN6RWSQ65\",\n      \"name\": \"Frontdesk\",\n      \"status\": \"paired\",\n      \"device\": {\n        \"identifier\": \"U1DT3NA00-CN\",\n        \"model\": \"solo\"\n      },\n      \"created_at\": \"2023-01-18 15:16:17+00:00\",\n      \"updated_at\": \"2023-01-20 15:16:17+00:00\",\n      \"metadata\": {},\n      \"service_account_id\": \"fea39b91-5de7-65db-c269-8591efce4681\"\n    },\n    {\n      \"id\": \"rdr_3MSAFM23CK82VSTT4BN6RWSQ65\",\n      \"name\": \"Frontdesk\",\n      \"status\": \"paired\",\n      \"device\": {\n        \"identifier\": \"U1DT3NA00-CN\",\n        \"model\": \"solo\"\n      },\n      \"created_at\": \"2023-01-18 15:16:17+00:00\",\n      \"updated_at\": \"2023-01-20 15:16:17+00:00\",\n      \"metadata\": {},\n      \"service_account_id\": \"25a3f1a2-2963-97bc-e20f-d233fd1b6485\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "416bf5be-26ee-4660-8c4d-036d0391e3e3",
+              "name": "Authentication failed or missing required scope.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "merchants",
+                    ":merchant_code",
+                    "readers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_code",
+                      "description": "(Required) Short unique identifier for the merchant."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://developer.sumup.com/problem/unauthorized\",\n  \"title\": \"Unauthorized\",\n  \"status\": 401,\n  \"detail\": \"Authentication credentials are missing or invalid.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a0337c20-1c70-4c11-b094-663da4aaf56e",
+          "name": "Create a Reader",
+          "request": {
+            "name": "Create a Reader",
+            "description": {
+              "content": "Create a new Reader for the merchant account.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0.1",
+                "merchants",
+                ":merchant_code",
+                "readers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "merchant_code",
+                  "description": "(Required) Short unique identifier for the merchant."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pairing_code\": \"<string>\",\n  \"name\": \"<string>\",\n  \"metadata\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\",\n    \"key_2\": true,\n    \"key_3\": \"string\",\n    \"key_4\": false,\n    \"key_5\": 5665,\n    \"key_6\": 2318.1372591980753,\n    \"key_7\": true,\n    \"key_8\": 8403\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f9c8a426-f12d-4c53-a46a-259e490dce8b",
+              "name": "Returns the Reader object if the creation succeeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "merchants",
+                    ":merchant_code",
+                    "readers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_code",
+                      "description": "(Required) Short unique identifier for the merchant."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"pairing_code\": \"4WLFDSBF\",\n  \"name\": \"Frontdesk\",\n  \"metadata\": {}\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"rdr_3MSAFM23CK82VSTT4BN6RWSQ65\",\n  \"name\": \"Frontdesk\",\n  \"status\": \"processing\",\n  \"device\": {\n    \"identifier\": \"U1DT3NA00-CN\",\n    \"model\": \"solo\"\n  },\n  \"created_at\": \"2023-05-09 14:50:20.214000+00:00\",\n  \"updated_at\": \"2023-05-09 14:52:58.714000+00:00\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "03a5adca-670a-46ad-9ca8-b0d455d81470",
+              "name": "The request is invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "merchants",
+                    ":merchant_code",
+                    "readers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_code",
+                      "description": "(Required) Short unique identifier for the merchant."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"pairing_code\": \"4WLFDSBF\",\n  \"name\": \"Frontdesk\",\n  \"metadata\": {}\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://developer.sumup.com/problem/bad-request\",\n  \"title\": \"Bad Request\",\n  \"status\": 400,\n  \"detail\": \"Request validation failed.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "af0e97d6-edfa-487f-a959-4abab8d17d43",
+              "name": "There's no pending reader for the submitted pairing code.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "merchants",
+                    ":merchant_code",
+                    "readers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_code",
+                      "description": "(Required) Short unique identifier for the merchant."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"pairing_code\": \"4WLFDSBF\",\n  \"name\": \"Frontdesk\",\n  \"metadata\": {}\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://developer.sumup.com/problem/not-found\",\n  \"title\": \"Requested resource couldn't be found.\",\n  \"status\": 404,\n  \"detail\": \"The requested resource doesn't exist or does not belong to you.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e66cb3bf-1c19-4274-a876-048885cc226c",
+              "name": "The Reader is not in a pending state.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "merchants",
+                    ":merchant_code",
+                    "readers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_code",
+                      "description": "(Required) Short unique identifier for the merchant."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"pairing_code\": \"4WLFDSBF\",\n  \"name\": \"Frontdesk\",\n  \"metadata\": {}\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://developer.sumup.com/problem/conflict\",\n  \"title\": \"Conflict\",\n  \"status\": 409,\n  \"detail\": \"The request conflicts with the current state of the resource.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c955fb3a-0f95-4ab3-8714-a83f32c02bd9",
+          "name": "Retrieve a Reader",
+          "request": {
+            "name": "Retrieve a Reader",
+            "description": {
+              "content": "Retrieve a Reader.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0.1",
+                "merchants",
+                ":merchant_code",
+                "readers",
+                ":reader_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "merchant_code",
+                  "description": "(Required) Short unique identifier for the merchant."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "reader_id",
+                  "description": "(Required) The unique identifier of the reader."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Return the reader only if it has been modified after the specified timestamp given in the headers.\n\nTimestamps are accepted in the following formats:\n\n - HTTP Standard: [IMF format (RFC 5322)](https://www.rfc-editor.org/rfc/rfc5322#section-3.3), sometimes also referred to as [RFC 7231](https://www.rfc-editor.org/rfc/rfc7231#section-7.1.1.1).\n - RFC 3339: Used for timestamps in JSON payloads on this API.",
+                "key": "If-Modified-Since",
+                "value": "<httpdate>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "e5d6e2b3-026a-479d-844c-4e18321fb93d",
+              "name": "Returns a Reader object for a valid identifier.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "merchants",
+                    ":merchant_code",
+                    "readers",
+                    ":reader_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_code",
+                      "description": "(Required) Short unique identifier for the merchant."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "reader_id",
+                      "description": "(Required) The unique identifier of the reader."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Return the reader only if it has been modified after the specified timestamp given in the headers.\n\nTimestamps are accepted in the following formats:\n\n - HTTP Standard: [IMF format (RFC 5322)](https://www.rfc-editor.org/rfc/rfc5322#section-3.3), sometimes also referred to as [RFC 7231](https://www.rfc-editor.org/rfc/rfc7231#section-7.1.1.1).\n - RFC 3339: Used for timestamps in JSON payloads on this API.",
+                    "key": "If-Modified-Since",
+                    "value": "Tue, 03 May 2022 14:46:44 GMT"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"rdr_3MSAFM23CK82VSTT4BN6RWSQ65\",\n  \"name\": \"Frontdesk\",\n  \"status\": \"paired\",\n  \"device\": {\n    \"identifier\": \"U1DT3NA00-CN\",\n    \"model\": \"solo\"\n  },\n  \"created_at\": \"2023-01-18 15:16:17+00:00\",\n  \"updated_at\": \"2023-01-20 15:16:17+00:00\",\n  \"metadata\": {},\n  \"service_account_id\": \"341fa68f-5ea9-40c4-d15f-cb05fc7d96f9\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "50f51f8a-05a9-4fdb-a791-fe909c4c961b",
+              "name": "The requested Reader resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "merchants",
+                    ":merchant_code",
+                    "readers",
+                    ":reader_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_code",
+                      "description": "(Required) Short unique identifier for the merchant."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "reader_id",
+                      "description": "(Required) The unique identifier of the reader."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Return the reader only if it has been modified after the specified timestamp given in the headers.\n\nTimestamps are accepted in the following formats:\n\n - HTTP Standard: [IMF format (RFC 5322)](https://www.rfc-editor.org/rfc/rfc5322#section-3.3), sometimes also referred to as [RFC 7231](https://www.rfc-editor.org/rfc/rfc7231#section-7.1.1.1).\n - RFC 3339: Used for timestamps in JSON payloads on this API.",
+                    "key": "If-Modified-Since",
+                    "value": "Tue, 03 May 2022 14:46:44 GMT"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://developer.sumup.com/problem/not-found\",\n  \"title\": \"Requested resource couldn't be found.\",\n  \"status\": 404,\n  \"detail\": \"The requested resource doesn't exist or does not belong to you.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cc6a4d48-b4de-425c-9a05-febd4a593d94",
+          "name": "Delete a reader",
+          "request": {
+            "name": "Delete a reader",
+            "description": {
+              "content": "Delete a reader.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0.1",
+                "merchants",
+                ":merchant_code",
+                "readers",
+                ":reader_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "merchant_code",
+                  "description": "(Required) Short unique identifier for the merchant."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "reader_id",
+                  "description": "(Required) The unique identifier of the reader."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/problem+json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "87aa6d3b-cf82-4e1d-ab82-b3da5ef74e17",
+              "name": "Returns an empty response if the deletion succeeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "merchants",
+                    ":merchant_code",
+                    "readers",
+                    ":reader_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_code",
+                      "description": "(Required) Short unique identifier for the merchant."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "reader_id",
+                      "description": "(Required) The unique identifier of the reader."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "5d68d536-ac87-4286-a25e-45d2c092ec94",
+              "name": "The requested Reader resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "merchants",
+                    ":merchant_code",
+                    "readers",
+                    ":reader_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_code",
+                      "description": "(Required) Short unique identifier for the merchant."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "reader_id",
+                      "description": "(Required) The unique identifier of the reader."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://developer.sumup.com/problem/not-found\",\n  \"title\": \"Requested resource couldn't be found.\",\n  \"status\": 404,\n  \"detail\": \"The requested resource doesn't exist or does not belong to you.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "93d7220a-3e97-48ec-86d6-e71b9c794297",
+          "name": "Update a Reader",
+          "request": {
+            "name": "Update a Reader",
+            "description": {
+              "content": "Update a Reader.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0.1",
+                "merchants",
+                ":merchant_code",
+                "readers",
+                ":reader_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "merchant_code",
+                  "description": "(Required) Short unique identifier for the merchant."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "reader_id",
+                  "description": "(Required) The unique identifier of the reader."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"metadata\": {\n    \"key_0\": true,\n    \"key_1\": \"string\",\n    \"key_2\": 1329.7783898257653,\n    \"key_3\": 1562,\n    \"key_4\": 9635,\n    \"key_5\": \"string\",\n    \"key_6\": \"string\",\n    \"key_7\": 9671,\n    \"key_8\": 1940.4265521689279,\n    \"key_9\": 6930.929183211353,\n    \"key_10\": 4072,\n    \"key_11\": 3844,\n    \"key_12\": 9621,\n    \"key_13\": true,\n    \"key_14\": \"string\",\n    \"key_15\": 5657,\n    \"key_16\": 2405,\n    \"key_17\": false,\n    \"key_18\": \"string\",\n    \"key_19\": \"string\",\n    \"key_20\": \"string\",\n    \"key_21\": 5388.173787195751,\n    \"key_22\": 2448.501106404869,\n    \"key_23\": 2059,\n    \"key_24\": 9627,\n    \"key_25\": \"string\",\n    \"key_26\": 8454,\n    \"key_27\": \"string\",\n    \"key_28\": \"string\",\n    \"key_29\": true,\n    \"key_30\": false,\n    \"key_31\": 8732.77858724003,\n    \"key_32\": \"string\",\n    \"key_33\": false,\n    \"key_34\": 8885,\n    \"key_35\": 4203,\n    \"key_36\": \"string\",\n    \"key_37\": 1144.3514292638567,\n    \"key_38\": true,\n    \"key_39\": 3488.155312515425,\n    \"key_40\": \"string\",\n    \"key_41\": false,\n    \"key_42\": 706,\n    \"key_43\": \"string\",\n    \"key_44\": \"string\",\n    \"key_45\": false,\n    \"key_46\": \"string\",\n    \"key_47\": \"string\",\n    \"key_48\": \"string\",\n    \"key_49\": 2379,\n    \"key_50\": true,\n    \"key_51\": 9100.632432072496,\n    \"key_52\": 8196.6575182968,\n    \"key_53\": 7631.608300041966,\n    \"key_54\": 2552.44902268024,\n    \"key_55\": \"string\",\n    \"key_56\": \"string\",\n    \"key_57\": true,\n    \"key_58\": 3479.6066872013075,\n    \"key_59\": 2837,\n    \"key_60\": 4864.974514104282\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c15cdc80-75e5-4c5d-bd72-4e143ed21edc",
+              "name": "Returns the updated Reader object if the update succeeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "merchants",
+                    ":merchant_code",
+                    "readers",
+                    ":reader_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_code",
+                      "description": "(Required) Short unique identifier for the merchant."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "reader_id",
+                      "description": "(Required) The unique identifier of the reader."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Frontdesk\",\n  \"metadata\": {}\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"rdr_3MSAFM23CK82VSTT4BN6RWSQ65\",\n  \"name\": \"Frontdesk\",\n  \"status\": \"paired\",\n  \"device\": {\n    \"identifier\": \"U1DT3NA00-CN\",\n    \"model\": \"solo\"\n  },\n  \"created_at\": \"2023-01-18 15:16:17+00:00\",\n  \"updated_at\": \"2023-01-20 15:16:17+00:00\",\n  \"metadata\": {},\n  \"service_account_id\": \"341fa68f-5ea9-40c4-d15f-cb05fc7d96f9\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "814da1ce-6c59-4c7e-93c1-0d222955f826",
+              "name": "The request isn't sufficiently authorized to modify the reader.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "merchants",
+                    ":merchant_code",
+                    "readers",
+                    ":reader_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_code",
+                      "description": "(Required) Short unique identifier for the merchant."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "reader_id",
+                      "description": "(Required) The unique identifier of the reader."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Frontdesk\",\n  \"metadata\": {}\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://developer.sumup.com/problem/forbidden\",\n  \"title\": \"Forbidden\",\n  \"status\": 403,\n  \"detail\": \"You do not have permission to perform this action.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3c9c93a8-d62f-4c6f-bc68-a6f26b1e3a71",
+              "name": "The requested Reader resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "merchants",
+                    ":merchant_code",
+                    "readers",
+                    ":reader_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_code",
+                      "description": "(Required) Short unique identifier for the merchant."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "reader_id",
+                      "description": "(Required) The unique identifier of the reader."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Frontdesk\",\n  \"metadata\": {}\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://developer.sumup.com/problem/not-found\",\n  \"title\": \"Requested resource couldn't be found.\",\n  \"status\": 404,\n  \"detail\": \"The requested resource doesn't exist or does not belong to you.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9eb224ea-c3e9-460d-8b3f-af3a7d9c814a",
+          "name": "Create a Reader Checkout",
+          "request": {
+            "name": "Create a Reader Checkout",
+            "description": {
+              "content": "Creates a Checkout for a Reader.\n\nThis process is asynchronous and the actual transaction may take some time to be started on the device.\n\n\nThere are some caveats when using this endpoint:\n* The target device must be online, otherwise checkout won't be accepted\n* After the checkout is accepted, the system has 60 seconds to start the payment on the target device. During this time, any other checkout for the same device will be rejected.\n\n\n**Note**: If the target device is a Solo, it must be in version 3.3.24.3 or higher.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0.1",
+                "merchants",
+                ":merchant_code",
+                "readers",
+                ":reader_id",
+                "checkout"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "merchant_code",
+                  "description": "(Required) Merchant Code"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "reader_id",
+                  "description": "(Required) The unique identifier of the Reader"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"total_amount\": {\n    \"currency\": \"<string>\",\n    \"minor_unit\": \"<integer>\",\n    \"value\": \"<integer>\"\n  },\n  \"aade\": {\n    \"provider_id\": \"<string>\",\n    \"signature\": \"<string>\",\n    \"signature_data\": \"<string>\"\n  },\n  \"affiliate\": {\n    \"app_id\": \"<string>\",\n    \"key\": \"<string>\",\n    \"foreign_transaction_id\": \"<string>\",\n    \"tags\": {\n      \"key_0\": \"string\",\n      \"key_1\": true\n    }\n  },\n  \"card_type\": \"<string>\",\n  \"description\": \"<string>\",\n  \"installments\": \"<integer>\",\n  \"return_url\": \"<uri>\",\n  \"tip_rates\": [\n    \"<float>\",\n    \"<float>\"\n  ],\n  \"tip_timeout\": 30\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "cdbf1710-b8c5-43b7-91ba-8ee26d3faa91",
+              "name": "The Checkout got successfully created for the given reader.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "merchants",
+                    ":merchant_code",
+                    "readers",
+                    ":reader_id",
+                    "checkout"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_code",
+                      "description": "(Required) Merchant Code"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "reader_id",
+                      "description": "(Required) The unique identifier of the Reader"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"total_amount\": {\n    \"currency\": \"EUR\",\n    \"minor_unit\": 2,\n    \"value\": 1000\n  },\n  \"aade\": {\n    \"provider_id\": \"123\",\n    \"signature\": \"QjcxRDdBNTU1MDcyRTNFRTREMkZEM0Y0NTdBMjkxMTU4MzBFNkNCQTs7MjAyNTExMTIyMTQ3MTM7Nzk2OzEwNDs5MDA7OTAwOzU0ODg5MDM5\",\n    \"signature_data\": \"B71D7A555072E3EE4D2FD3F457A29115830E6CBA;;20251112214713;796;104;900;900;54889039\"\n  },\n  \"affiliate\": {\n    \"app_id\": \"com.example.app\",\n    \"key\": \"123e4567-e89b-12d3-a456-426614174000\",\n    \"foreign_transaction_id\": \"19e12390-72cf-4f9f-80b5-b0c8a67fa43f\",\n    \"tags\": {\n      \"custom_key_1\": \"custom_value_1\",\n      \"custom_key_2\": \"custom_value_2\"\n    }\n  },\n  \"card_type\": \"credit\",\n  \"description\": \"<string>\",\n  \"installments\": 1,\n  \"return_url\": \"https://www.example.com\",\n  \"tip_rates\": [\n    \"<float>\",\n    \"<float>\"\n  ],\n  \"tip_timeout\": 30\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"client_transaction_id\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f432ddde-7766-4276-8a53-01602d5e4404",
+              "name": "Response when given params (or one of them) are invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "merchants",
+                    ":merchant_code",
+                    "readers",
+                    ":reader_id",
+                    "checkout"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_code",
+                      "description": "(Required) Merchant Code"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "reader_id",
+                      "description": "(Required) The unique identifier of the Reader"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"total_amount\": {\n    \"currency\": \"EUR\",\n    \"minor_unit\": 2,\n    \"value\": 1000\n  },\n  \"aade\": {\n    \"provider_id\": \"123\",\n    \"signature\": \"QjcxRDdBNTU1MDcyRTNFRTREMkZEM0Y0NTdBMjkxMTU4MzBFNkNCQTs7MjAyNTExMTIyMTQ3MTM7Nzk2OzEwNDs5MDA7OTAwOzU0ODg5MDM5\",\n    \"signature_data\": \"B71D7A555072E3EE4D2FD3F457A29115830E6CBA;;20251112214713;796;104;900;900;54889039\"\n  },\n  \"affiliate\": {\n    \"app_id\": \"com.example.app\",\n    \"key\": \"123e4567-e89b-12d3-a456-426614174000\",\n    \"foreign_transaction_id\": \"19e12390-72cf-4f9f-80b5-b0c8a67fa43f\",\n    \"tags\": {\n      \"custom_key_1\": \"custom_value_1\",\n      \"custom_key_2\": \"custom_value_2\"\n    }\n  },\n  \"card_type\": \"credit\",\n  \"description\": \"<string>\",\n  \"installments\": 1,\n  \"return_url\": \"https://www.example.com\",\n  \"tip_rates\": [\n    \"<float>\",\n    \"<float>\"\n  ],\n  \"tip_timeout\": 30\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": {\n    \"type\": \"string\",\n    \"detail\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fa58408f-c346-440c-8fe6-1a8ff360f136",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "merchants",
+                    ":merchant_code",
+                    "readers",
+                    ":reader_id",
+                    "checkout"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_code",
+                      "description": "(Required) Merchant Code"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "reader_id",
+                      "description": "(Required) The unique identifier of the Reader"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"total_amount\": {\n    \"currency\": \"EUR\",\n    \"minor_unit\": 2,\n    \"value\": 1000\n  },\n  \"aade\": {\n    \"provider_id\": \"123\",\n    \"signature\": \"QjcxRDdBNTU1MDcyRTNFRTREMkZEM0Y0NTdBMjkxMTU4MzBFNkNCQTs7MjAyNTExMTIyMTQ3MTM7Nzk2OzEwNDs5MDA7OTAwOzU0ODg5MDM5\",\n    \"signature_data\": \"B71D7A555072E3EE4D2FD3F457A29115830E6CBA;;20251112214713;796;104;900;900;54889039\"\n  },\n  \"affiliate\": {\n    \"app_id\": \"com.example.app\",\n    \"key\": \"123e4567-e89b-12d3-a456-426614174000\",\n    \"foreign_transaction_id\": \"19e12390-72cf-4f9f-80b5-b0c8a67fa43f\",\n    \"tags\": {\n      \"custom_key_1\": \"custom_value_1\",\n      \"custom_key_2\": \"custom_value_2\"\n    }\n  },\n  \"card_type\": \"credit\",\n  \"description\": \"<string>\",\n  \"installments\": 1,\n  \"return_url\": \"https://www.example.com\",\n  \"tip_rates\": [\n    \"<float>\",\n    \"<float>\"\n  ],\n  \"tip_timeout\": 30\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": {\n    \"type\": \"string\",\n    \"detail\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "70b03d9d-3f7c-469a-881c-4af509ab4a8f",
+              "name": "Response when given reader is not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "merchants",
+                    ":merchant_code",
+                    "readers",
+                    ":reader_id",
+                    "checkout"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_code",
+                      "description": "(Required) Merchant Code"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "reader_id",
+                      "description": "(Required) The unique identifier of the Reader"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"total_amount\": {\n    \"currency\": \"EUR\",\n    \"minor_unit\": 2,\n    \"value\": 1000\n  },\n  \"aade\": {\n    \"provider_id\": \"123\",\n    \"signature\": \"QjcxRDdBNTU1MDcyRTNFRTREMkZEM0Y0NTdBMjkxMTU4MzBFNkNCQTs7MjAyNTExMTIyMTQ3MTM7Nzk2OzEwNDs5MDA7OTAwOzU0ODg5MDM5\",\n    \"signature_data\": \"B71D7A555072E3EE4D2FD3F457A29115830E6CBA;;20251112214713;796;104;900;900;54889039\"\n  },\n  \"affiliate\": {\n    \"app_id\": \"com.example.app\",\n    \"key\": \"123e4567-e89b-12d3-a456-426614174000\",\n    \"foreign_transaction_id\": \"19e12390-72cf-4f9f-80b5-b0c8a67fa43f\",\n    \"tags\": {\n      \"custom_key_1\": \"custom_value_1\",\n      \"custom_key_2\": \"custom_value_2\"\n    }\n  },\n  \"card_type\": \"credit\",\n  \"description\": \"<string>\",\n  \"installments\": 1,\n  \"return_url\": \"https://www.example.com\",\n  \"tip_rates\": [\n    \"<float>\",\n    \"<float>\"\n  ],\n  \"tip_timeout\": 30\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": {\n    \"detail\": \"Not Found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "13182887-d4b4-47ef-8827-ac67bfec204b",
+              "name": "Response when given params (or one of them) are invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "merchants",
+                    ":merchant_code",
+                    "readers",
+                    ":reader_id",
+                    "checkout"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_code",
+                      "description": "(Required) Merchant Code"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "reader_id",
+                      "description": "(Required) The unique identifier of the Reader"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"total_amount\": {\n    \"currency\": \"EUR\",\n    \"minor_unit\": 2,\n    \"value\": 1000\n  },\n  \"aade\": {\n    \"provider_id\": \"123\",\n    \"signature\": \"QjcxRDdBNTU1MDcyRTNFRTREMkZEM0Y0NTdBMjkxMTU4MzBFNkNCQTs7MjAyNTExMTIyMTQ3MTM7Nzk2OzEwNDs5MDA7OTAwOzU0ODg5MDM5\",\n    \"signature_data\": \"B71D7A555072E3EE4D2FD3F457A29115830E6CBA;;20251112214713;796;104;900;900;54889039\"\n  },\n  \"affiliate\": {\n    \"app_id\": \"com.example.app\",\n    \"key\": \"123e4567-e89b-12d3-a456-426614174000\",\n    \"foreign_transaction_id\": \"19e12390-72cf-4f9f-80b5-b0c8a67fa43f\",\n    \"tags\": {\n      \"custom_key_1\": \"custom_value_1\",\n      \"custom_key_2\": \"custom_value_2\"\n    }\n  },\n  \"card_type\": \"credit\",\n  \"description\": \"<string>\",\n  \"installments\": 1,\n  \"return_url\": \"https://www.example.com\",\n  \"tip_rates\": [\n    \"<float>\",\n    \"<float>\"\n  ],\n  \"tip_timeout\": 30\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": {\n    \"key_0\": 3388.90831662783,\n    \"key_1\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f67f3c57-8245-45a8-9db4-6b215d52d985",
+          "name": "Get a Reader Status",
+          "request": {
+            "name": "Get a Reader Status",
+            "description": {
+              "content": "Provides the last known status for a Reader.\n\nThis endpoint allows you to retrieve updates from the connected card reader, including the current screen being displayed during the payment process and the device status (battery level, connectivity, and update state).\n\nSupported States\n\n* `IDLE` – Reader ready for next transaction\n* `SELECTING_TIP` – Waiting for tip input\n* `WAITING_FOR_CARD` – Awaiting card insert/tap\n* `WAITING_FOR_PIN` – Waiting for PIN entry\n* `WAITING_FOR_SIGNATURE` – Waiting for customer signature\n* `UPDATING_FIRMWARE` – Firmware update in progress\n\nDevice Status\n\n* `ONLINE` – Device connected and operational\n* `OFFLINE` – Device disconnected (last state persisted)\n\n**Note**: If the target device is a Solo, it must be in version 3.3.39.0 or higher.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0.1",
+                "merchants",
+                ":merchant_code",
+                "readers",
+                ":reader_id",
+                "status"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "merchant_code",
+                  "description": "(Required) Merchant Code"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "reader_id",
+                  "description": "(Required) The unique identifier of the Reader"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "6ed58ee6-27a8-454f-9c4d-8de75ef28019",
+              "name": "Response with the device status.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "merchants",
+                    ":merchant_code",
+                    "readers",
+                    ":reader_id",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_code",
+                      "description": "(Required) Merchant Code"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "reader_id",
+                      "description": "(Required) The unique identifier of the Reader"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"battery_level\": 10,\n    \"battery_temperature\": 35,\n    \"connection_type\": \"Wi-Fi\",\n    \"firmware_version\": \"3.3.3.21\",\n    \"last_activity\": \"2025-09-25 15:20:00+00:00\",\n    \"state\": \"IDLE\",\n    \"status\": \"ONLINE\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "33f0ef43-c25a-4fb0-b757-f3ad3fbf3899",
+              "name": "Response when given params (or one of them) are invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "merchants",
+                    ":merchant_code",
+                    "readers",
+                    ":reader_id",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_code",
+                      "description": "(Required) Merchant Code"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "reader_id",
+                      "description": "(Required) The unique identifier of the Reader"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": {\n    \"detail\": \"Bad request\",\n    \"type\": \"INVALID_BEARER_TOKEN\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ab35c75c-d361-422a-b3c8-1730171dd62e",
+              "name": "Response when given merchant's token is invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "merchants",
+                    ":merchant_code",
+                    "readers",
+                    ":reader_id",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_code",
+                      "description": "(Required) Merchant Code"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "reader_id",
+                      "description": "(Required) The unique identifier of the Reader"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": {\n    \"detail\": \"Unauthorized\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d45faf02-9019-47b2-9388-99d02154b1f9",
+              "name": "Response when given reader is not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "merchants",
+                    ":merchant_code",
+                    "readers",
+                    ":reader_id",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_code",
+                      "description": "(Required) Merchant Code"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "reader_id",
+                      "description": "(Required) The unique identifier of the Reader"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": {\n    \"detail\": \"Not Found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c5c48048-b9f4-4a56-89e6-5fcb3ee7e7f0",
+          "name": "Terminate a Reader Checkout",
+          "request": {
+            "name": "Terminate a Reader Checkout",
+            "description": {
+              "content": "Terminate a Reader Checkout stops the current transaction on the target device.\n\nThis process is asynchronous and the actual termination may take some time to be performed on the device.\n\n\nThere are some caveats when using this endpoint:\n* The target device must be online, otherwise terminate won't be accepted\n* The action will succeed only if the device is waiting for cardholder action: e.g: waiting for card, waiting for PIN, etc.\n* There is no confirmation of the termination.\n\nIf a transaction is successfully terminated and `return_url` was provided on Checkout, the transaction status will be sent as `failed` to the provided URL.\n\n\n**Note**: If the target device is a Solo, it must be in version 3.3.28.0 or higher.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0.1",
+                "merchants",
+                ":merchant_code",
+                "readers",
+                ":reader_id",
+                "terminate"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "merchant_code",
+                  "description": "(Required) Merchant Code"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "reader_id",
+                  "description": "(Required) The unique identifier of the Reader"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "40e84305-3d00-45d9-ad3b-565fbbdd0b7a",
+              "name": "The Terminate action was successfully dispatched for the given reader.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "merchants",
+                    ":merchant_code",
+                    "readers",
+                    ":reader_id",
+                    "terminate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_code",
+                      "description": "(Required) Merchant Code"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "reader_id",
+                      "description": "(Required) The unique identifier of the Reader"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2ea80dd9-f2ad-42b2-9c27-b6f3f7b419f3",
+              "name": "Response when given params (or one of them) are invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "merchants",
+                    ":merchant_code",
+                    "readers",
+                    ":reader_id",
+                    "terminate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_code",
+                      "description": "(Required) Merchant Code"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "reader_id",
+                      "description": "(Required) The unique identifier of the Reader"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": {\n    \"type\": \"string\",\n    \"detail\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e0f4be4d-20d9-4bd2-9172-7ad7db65bd48",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "merchants",
+                    ":merchant_code",
+                    "readers",
+                    ":reader_id",
+                    "terminate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_code",
+                      "description": "(Required) Merchant Code"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "reader_id",
+                      "description": "(Required) The unique identifier of the Reader"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": {\n    \"type\": \"string\",\n    \"detail\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "510d1b2f-fd3f-49b8-86ee-eb0824fca3f8",
+              "name": "Response when given reader is not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "merchants",
+                    ":merchant_code",
+                    "readers",
+                    ":reader_id",
+                    "terminate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_code",
+                      "description": "(Required) Merchant Code"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "reader_id",
+                      "description": "(Required) The unique identifier of the Reader"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": {\n    \"detail\": \"Not Found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8d9e7a13-adc2-49d4-9797-9f9c56abbbed",
+              "name": "Response when given params (or one of them) are invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "merchants",
+                    ":merchant_code",
+                    "readers",
+                    ":reader_id",
+                    "terminate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_code",
+                      "description": "(Required) Merchant Code"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "reader_id",
+                      "description": "(Required) The unique identifier of the Reader"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": {\n    \"key_0\": 9274,\n    \"key_1\": \"string\",\n    \"key_2\": true\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.sumup.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "e3d24ee5-bd0e-42a8-a391-a977ab137d9c",
+    "name": "SumUp REST Checkouts Readers API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "SumUp’s REST API operates with [JSON](https://www.json.org/json-en.html) HTTP requests and responses. The request bodies are sent through resource-oriented URLs and use the standard [HTTP response codes](https://developer.mozilla.org/docs/Web/HTTP/Status).\n\nYou can experiment and work on your integration in a sandbox that doesn't affect your regular data and doesn't process real transactions. To create a sandbox merchant account visit the [dashboard](https://me.sumup.com/settings/developer). To use the sandbox when interacting with SumUp APIs [create an API](https://me.sumup.com/settings/api-keys) key and use it for [authentication](https://developer.sumup.com/api/authentication).",
+      "type": "text/plain"
+    }
+  }
+}

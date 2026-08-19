@@ -1,0 +1,119 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "SumUp REST Checkouts Customers API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Customers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a customer",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sumup.com/v0.1/customers",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new saved customer resource which you can later manipulate and save payment instruments to."
+        },
+        {
+          "info": {
+            "name": "Retrieve a customer",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sumup.com/v0.1/customers/:customer_id",
+            "params": [
+              {
+                "name": "customer_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique ID of the saved customer resource."
+              }
+            ]
+          },
+          "docs": "Retrieves an identified saved customer resource through the unique `customer_id` parameter, generated upon customer creation."
+        },
+        {
+          "info": {
+            "name": "Update a customer",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.sumup.com/v0.1/customers/:customer_id",
+            "params": [
+              {
+                "name": "customer_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique ID of the saved customer resource."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an identified saved customer resource's personal details.\n\nThe request only overwrites the parameters included in the request, all other parameters will remain with their initially assigned values."
+        },
+        {
+          "info": {
+            "name": "List payment instruments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sumup.com/v0.1/customers/:customer_id/payment-instruments",
+            "params": [
+              {
+                "name": "customer_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique ID of the saved customer resource."
+              }
+            ]
+          },
+          "docs": "Lists all payment instrument resources that are saved for an identified customer."
+        },
+        {
+          "info": {
+            "name": "Deactivate a payment instrument",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.sumup.com/v0.1/customers/:customer_id/payment-instruments/:token",
+            "params": [
+              {
+                "name": "customer_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique ID of the saved customer resource."
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "path",
+                "description": "Unique token identifying the card saved as a payment instrument resource."
+              }
+            ]
+          },
+          "docs": "Deactivates an identified card payment instrument resource for a customer."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

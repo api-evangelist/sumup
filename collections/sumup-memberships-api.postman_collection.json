@@ -1,0 +1,410 @@
+{
+  "item": [
+    {
+      "id": "2b616a1b-3052-4f1c-a40a-bdbfbdd0b424",
+      "name": "Memberships",
+      "description": {
+        "content": "Endpoints to manage user's memberships. Memberships are used to connect the user to merchant accounts and to grant them access to the merchant's resources via roles.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "73e1662e-9851-44a9-ae0d-d860a893da87",
+          "name": "List memberships",
+          "request": {
+            "name": "List memberships",
+            "description": {
+              "content": "List memberships of the current user.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0.1",
+                "memberships"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "Offset of the first member to return."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Maximum number of members to return."
+                },
+                {
+                  "disabled": false,
+                  "key": "kind",
+                  "value": "<string>",
+                  "description": "Filter memberships by resource kind."
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Filter the returned memberships by the membership status."
+                },
+                {
+                  "disabled": false,
+                  "key": "resource.type",
+                  "value": "<string>",
+                  "description": "Filter memberships by resource kind."
+                },
+                {
+                  "disabled": false,
+                  "key": "resource.attributes.sandbox",
+                  "value": "<boolean>",
+                  "description": "Filter memberships by the sandbox status of the resource the membership is in."
+                },
+                {
+                  "disabled": false,
+                  "key": "resource.name",
+                  "value": "<string>",
+                  "description": "Filter memberships by the name of the resource the membership is in."
+                },
+                {
+                  "disabled": false,
+                  "key": "resource.parent.id",
+                  "value": "<string>",
+                  "description": "Filter memberships by the parent of the resource the membership is in.\nWhen filtering by parent both `resource.parent.id` and `resource.parent.type` must be present. Pass explicit null to filter for resources without a parent."
+                },
+                {
+                  "disabled": false,
+                  "key": "resource.parent.type",
+                  "value": "<string>",
+                  "description": "Filter memberships by the parent of the resource the membership is in.\nWhen filtering by parent both `resource.parent.id` and `resource.parent.type` must be present. Pass explicit null to filter for resources without a parent."
+                },
+                {
+                  "disabled": false,
+                  "key": "roles",
+                  "value": "<string>",
+                  "description": "Filter the returned memberships by role."
+                },
+                {
+                  "disabled": false,
+                  "key": "roles",
+                  "value": "<string>",
+                  "description": "Filter the returned memberships by role."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "97743074-e2e6-4ee8-80d6-4d64b77badd0",
+              "name": "Returns a list of Membership objects.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "memberships"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "kind",
+                      "value": "merchant"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "resource.type",
+                      "value": "merchant"
+                    },
+                    {
+                      "key": "resource.attributes.sandbox",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "resource.name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "resource.parent.id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "resource.parent.type",
+                      "value": "merchant"
+                    },
+                    {
+                      "key": "roles",
+                      "value": "role_employee"
+                    },
+                    {
+                      "key": "roles",
+                      "value": "role_accountant"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"total_count\": 3,\n  \"items\": [\n    {\n      \"id\": \"mem_WZsm7QTPhVrompscmPhoGTXXcrd58fr9MOhP\",\n      \"resource_id\": \"M2DDT39A\",\n      \"type\": \"merchant\",\n      \"roles\": [\n        \"role_admin\"\n      ],\n      \"permissions\": [\n        \"members_read\",\n        \"members_write\",\n        \"create_moto_payments\",\n        \"full_transaction_history_view\",\n        \"refund_transactions\",\n        \"create_referral\",\n        \"developer_settings_edit\",\n        \"developer_settings_access\"\n      ],\n      \"created_at\": \"2023-01-20 15:16:17+00:00\",\n      \"updated_at\": \"2023-01-20 15:16:17+00:00\",\n      \"status\": \"<string>\",\n      \"resource\": {\n        \"id\": \"M2DDT39A\",\n        \"type\": \"merchant\",\n        \"name\": \"Acme Corp\",\n        \"created_at\": \"2023-01-20 15:16:17+00:00\",\n        \"updated_at\": \"2023-01-20 15:16:17+00:00\",\n        \"logo\": \"https://images.sumup.com/img_2x4y6z8a0b1c2d3e4f5g6h7j8k.png\",\n        \"attributes\": {}\n      },\n      \"invite\": {\n        \"email\": \"boaty.mcboatface@sumup.com\",\n        \"expires_at\": \"2023-01-20 15:16:17+00:00\"\n      },\n      \"metadata\": {},\n      \"attributes\": {}\n    },\n    {\n      \"id\": \"mem_WZsm7QTPhVrompscmPhoGTXXcrd58fr9MOhP\",\n      \"resource_id\": \"M2DDT39A\",\n      \"type\": \"merchant\",\n      \"roles\": [\n        \"role_admin\"\n      ],\n      \"permissions\": [\n        \"members_read\",\n        \"members_write\",\n        \"create_moto_payments\",\n        \"full_transaction_history_view\",\n        \"refund_transactions\",\n        \"create_referral\",\n        \"developer_settings_edit\",\n        \"developer_settings_access\"\n      ],\n      \"created_at\": \"2023-01-20 15:16:17+00:00\",\n      \"updated_at\": \"2023-01-20 15:16:17+00:00\",\n      \"status\": \"<string>\",\n      \"resource\": {\n        \"id\": \"M2DDT39A\",\n        \"type\": \"merchant\",\n        \"name\": \"Acme Corp\",\n        \"created_at\": \"2023-01-20 15:16:17+00:00\",\n        \"updated_at\": \"2023-01-20 15:16:17+00:00\",\n        \"logo\": \"https://images.sumup.com/img_2x4y6z8a0b1c2d3e4f5g6h7j8k.png\",\n        \"attributes\": {}\n      },\n      \"invite\": {\n        \"email\": \"boaty.mcboatface@sumup.com\",\n        \"expires_at\": \"2023-01-20 15:16:17+00:00\"\n      },\n      \"metadata\": {},\n      \"attributes\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "deb83e5a-d75a-4e74-9519-2b1271b46ec6",
+              "name": "Invalid query parameter combination.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "memberships"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "kind",
+                      "value": "merchant"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "resource.type",
+                      "value": "merchant"
+                    },
+                    {
+                      "key": "resource.attributes.sandbox",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "resource.name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "resource.parent.id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "resource.parent.type",
+                      "value": "merchant"
+                    },
+                    {
+                      "key": "roles",
+                      "value": "role_employee"
+                    },
+                    {
+                      "key": "roles",
+                      "value": "role_accountant"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://developer.sumup.com/problem/bad-request\",\n  \"title\": \"Bad Request\",\n  \"status\": 400,\n  \"detail\": \"Request validation failed.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c7d56f87-811b-494a-9f3c-cb9130531c78",
+              "name": "Authentication failed or missing required scope.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "memberships"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "kind",
+                      "value": "merchant"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "resource.type",
+                      "value": "merchant"
+                    },
+                    {
+                      "key": "resource.attributes.sandbox",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "resource.name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "resource.parent.id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "resource.parent.type",
+                      "value": "merchant"
+                    },
+                    {
+                      "key": "roles",
+                      "value": "role_employee"
+                    },
+                    {
+                      "key": "roles",
+                      "value": "role_accountant"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://developer.sumup.com/problem/unauthorized\",\n  \"title\": \"Unauthorized\",\n  \"status\": 401,\n  \"detail\": \"Authentication credentials are missing or invalid.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.sumup.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "974edd87-013f-4874-b1b7-6c2a660b5154",
+    "name": "SumUp REST Checkouts Memberships API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "SumUp’s REST API operates with [JSON](https://www.json.org/json-en.html) HTTP requests and responses. The request bodies are sent through resource-oriented URLs and use the standard [HTTP response codes](https://developer.mozilla.org/docs/Web/HTTP/Status).\n\nYou can experiment and work on your integration in a sandbox that doesn't affect your regular data and doesn't process real transactions. To create a sandbox merchant account visit the [dashboard](https://me.sumup.com/settings/developer). To use the sandbox when interacting with SumUp APIs [create an API](https://me.sumup.com/settings/api-keys) key and use it for [authentication](https://developer.sumup.com/api/authentication).",
+      "type": "text/plain"
+    }
+  }
+}

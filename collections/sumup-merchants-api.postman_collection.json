@@ -1,0 +1,590 @@
+{
+  "item": [
+    {
+      "id": "f0f80098-76b4-4601-9634-e7818bce71c9",
+      "name": "Merchants",
+      "description": {
+        "content": "Merchant account represents a single business entity at SumUp.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "183f661b-5395-42aa-9e8c-c5d3b54e2254",
+          "name": "Retrieve a Merchant",
+          "request": {
+            "name": "Retrieve a Merchant",
+            "description": {
+              "content": "Retrieve a merchant.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "merchants",
+                ":merchant_code"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "version",
+                  "value": "<string>",
+                  "description": "The version of the resource. At the moment, the only supported value is `latest`. When provided and the requested resource's `change_status` is pending, the resource will be returned with all pending changes applied. When no changes are pending the resource is returned as is. The `change_status` in the response body will reflect the current state of the resource.\n"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "merchant_code",
+                  "description": "(Required) Short unique identifier for the merchant."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "e04cb3b9-681c-4910-a290-2c81e5a9e38a",
+              "name": "Returns a Merchant for a valid identifier.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "merchants",
+                    ":merchant_code"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_code",
+                      "description": "(Required) Short unique identifier for the merchant."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"country\": \"st\",\n  \"created_at\": \"1979-09-12T04:20:07.079Z\",\n  \"default_currency\": \"EUR\",\n  \"default_locale\": \"de-DE\",\n  \"merchant_code\": \"MK01A8C2\",\n  \"updated_at\": \"1957-09-02T17:35:08.621Z\",\n  \"organization_id\": \"G0UZPVAX\",\n  \"business_type\": \"string\",\n  \"company\": {\n    \"name\": \"Gin & Doughnuts Bar GmbH\",\n    \"merchant_category_code\": \"1532\",\n    \"legal_type\": \"string\",\n    \"address\": {\n      \"country\": \"st\",\n      \"street_address\": [\n        \"Paul-Linke-Ufer 39-40\",\n        \"2. Hinterhof\"\n      ],\n      \"post_code\": \"10999\",\n      \"city\": \"Berlin\",\n      \"province\": \"Ontario\",\n      \"region\": \"Baden-Wuerttemberg\",\n      \"county\": \"Dublin\",\n      \"autonomous_community\": \"Catalonia\",\n      \"post_town\": \"London\",\n      \"state\": \"California\",\n      \"neighborhood\": \"Copacabana\",\n      \"commune\": \"Providencia\",\n      \"department\": \"Antioquia\",\n      \"municipality\": \"Medellin\",\n      \"district\": \"Lisbon\",\n      \"zip_code\": \"94103\",\n      \"eircode\": \"D02 X285\"\n    },\n    \"trading_address\": {\n      \"country\": \"st\",\n      \"street_address\": [\n        \"Paul-Linke-Ufer 39-40\",\n        \"2. Hinterhof\"\n      ],\n      \"post_code\": \"10999\",\n      \"city\": \"Berlin\",\n      \"province\": \"Ontario\",\n      \"region\": \"Baden-Wuerttemberg\",\n      \"county\": \"Dublin\",\n      \"autonomous_community\": \"Catalonia\",\n      \"post_town\": \"London\",\n      \"state\": \"California\",\n      \"neighborhood\": \"Copacabana\",\n      \"commune\": \"Providencia\",\n      \"department\": \"Antioquia\",\n      \"municipality\": \"Medellin\",\n      \"district\": \"Lisbon\",\n      \"zip_code\": \"94103\",\n      \"eircode\": \"D02 X285\"\n    },\n    \"identifiers\": [\n      {\n        \"ref\": \"string\",\n        \"value\": \"string\"\n      },\n      {\n        \"ref\": \"string\",\n        \"value\": \"string\"\n      }\n    ],\n    \"phone_number\": \"+420123456789\",\n    \"website\": \"http://rFMrWdRCWDpgYSaIvgRHMGJutusGOUOy.ahyveFJAUtP7zr9vBX3jp0BDag1MvV+CbxWQHgPcZSCR0Lewf36Yu\",\n    \"attributes\": {}\n  },\n  \"business_profile\": {\n    \"name\": \"Example Coffee\",\n    \"dynamic_descriptor\": \"Example Coffee\",\n    \"website\": \"https://example.com\",\n    \"email\": \"contact@example.com\",\n    \"phone_number\": \"+420123456789\",\n    \"address\": {\n      \"country\": \"st\",\n      \"street_address\": [\n        \"Paul-Linke-Ufer 39-40\",\n        \"2. Hinterhof\"\n      ],\n      \"post_code\": \"10999\",\n      \"city\": \"Berlin\",\n      \"province\": \"Ontario\",\n      \"region\": \"Baden-Wuerttemberg\",\n      \"county\": \"Dublin\",\n      \"autonomous_community\": \"Catalonia\",\n      \"post_town\": \"London\",\n      \"state\": \"California\",\n      \"neighborhood\": \"Copacabana\",\n      \"commune\": \"Providencia\",\n      \"department\": \"Antioquia\",\n      \"municipality\": \"Medellin\",\n      \"district\": \"Lisbon\",\n      \"zip_code\": \"94103\",\n      \"eircode\": \"D02 X285\"\n    },\n    \"branding\": {\n      \"icon\": \"https://kkQPms.tgOwNtOCWhwbqtpsADnCOP6qoHLqmc\",\n      \"logo\": \"https://uijeaprP.uwKoknAJHLOjYnpZdN,JpC3ePqzNa+MSVnmJI6yIBHRmM\",\n      \"hero\": \"https://RKtIESbXijRuKgKZxyvlm.dhytfmIpX-CsVCUdKWnz6HuaNgPkXGOVceFwLD.pjdLbmKp8\",\n      \"primary_color\": \"string\",\n      \"primary_color_fg\": \"string\",\n      \"secondary_color\": \"string\",\n      \"secondary_color_fg\": \"string\",\n      \"background_color\": \"string\"\n    }\n  },\n  \"avatar\": \"https://rSB.poxvjl0ZP2WYMufuRr2ZwCbcQ4xM\",\n  \"alias\": \"string\",\n  \"sandbox\": false,\n  \"meta\": {},\n  \"classic\": {\n    \"id\": 1234\n  },\n  \"version\": \"string\",\n  \"change_status\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a0e8c1ff-4bd9-4ab6-a3f5-b25f34983e1b",
+              "name": "The requested Merchant does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "merchants",
+                    ":merchant_code"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_code",
+                      "description": "(Required) Short unique identifier for the merchant."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://developer.sumup.com/problem/not-found\",\n  \"title\": \"Requested resource couldn't be found.\",\n  \"status\": 404,\n  \"detail\": \"The requested resource doesn't exist or does not belong to you.\",\n  \"instance\": \"http://FxMzKVzQbFEcccYXbVk.werC7QsD+cK0QG2SC3C7M5YOJ69Wctxyx\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "93c3b1a0-576b-456b-802d-c91ec0841799",
+          "name": "List Persons",
+          "request": {
+            "name": "List Persons",
+            "description": {
+              "content": "Returns a list of persons related to the merchant.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "merchants",
+                ":merchant_code",
+                "persons"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "version",
+                  "value": "<string>",
+                  "description": "The version of the resource. At the moment, the only supported value is `latest`. When provided and the requested resource's `change_status` is pending, the resource will be returned with all pending changes applied. When no changes are pending the resource is returned as is. The `change_status` in the response body will reflect the current state of the resource.\n"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "merchant_code",
+                  "description": "(Required) Short unique identifier for the merchant."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "2ec170b5-7179-496d-ac5f-976c1302f687",
+              "name": "Returns a list of persons for a valid merchant identifier.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "merchants",
+                    ":merchant_code",
+                    "persons"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_code",
+                      "description": "(Required) Short unique identifier for the merchant."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"id\": \"string\",\n      \"user_id\": \"string\",\n      \"birthdate\": \"1980-01-12\",\n      \"given_name\": \"James Herrald\",\n      \"family_name\": \"Bond\",\n      \"middle_name\": \"Maria Sophie\",\n      \"phone_number\": \"+420123456789\",\n      \"relationships\": [\n        \"string\"\n      ],\n      \"ownership\": {\n        \"share\": 50000\n      },\n      \"address\": {\n        \"country\": \"st\",\n        \"street_address\": [\n          \"Paul-Linke-Ufer 39-40\",\n          \"2. Hinterhof\"\n        ],\n        \"post_code\": \"10999\",\n        \"city\": \"Berlin\",\n        \"province\": \"Ontario\",\n        \"region\": \"Baden-Wuerttemberg\",\n        \"county\": \"Dublin\",\n        \"autonomous_community\": \"Catalonia\",\n        \"post_town\": \"London\",\n        \"state\": \"California\",\n        \"neighborhood\": \"Copacabana\",\n        \"commune\": \"Providencia\",\n        \"department\": \"Antioquia\",\n        \"municipality\": \"Medellin\",\n        \"district\": \"Lisbon\",\n        \"zip_code\": \"94103\",\n        \"eircode\": \"D02 X285\"\n      },\n      \"identifiers\": [\n        {\n          \"ref\": \"string\",\n          \"value\": \"string\"\n        },\n        {\n          \"ref\": \"string\",\n          \"value\": \"string\"\n        }\n      ],\n      \"citizenship\": \"st\",\n      \"nationality\": \"string\",\n      \"country_of_residence\": \"st\",\n      \"version\": \"string\",\n      \"change_status\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"user_id\": \"string\",\n      \"birthdate\": \"1980-01-12\",\n      \"given_name\": \"James Herrald\",\n      \"family_name\": \"Bond\",\n      \"middle_name\": \"Maria Sophie\",\n      \"phone_number\": \"+420123456789\",\n      \"relationships\": [\n        \"string\"\n      ],\n      \"ownership\": {\n        \"share\": 50000\n      },\n      \"address\": {\n        \"country\": \"st\",\n        \"street_address\": [\n          \"Paul-Linke-Ufer 39-40\",\n          \"2. Hinterhof\"\n        ],\n        \"post_code\": \"10999\",\n        \"city\": \"Berlin\",\n        \"province\": \"Ontario\",\n        \"region\": \"Baden-Wuerttemberg\",\n        \"county\": \"Dublin\",\n        \"autonomous_community\": \"Catalonia\",\n        \"post_town\": \"London\",\n        \"state\": \"California\",\n        \"neighborhood\": \"Copacabana\",\n        \"commune\": \"Providencia\",\n        \"department\": \"Antioquia\",\n        \"municipality\": \"Medellin\",\n        \"district\": \"Lisbon\",\n        \"zip_code\": \"94103\",\n        \"eircode\": \"D02 X285\"\n      },\n      \"identifiers\": [\n        {\n          \"ref\": \"string\",\n          \"value\": \"string\"\n        },\n        {\n          \"ref\": \"string\",\n          \"value\": \"string\"\n        }\n      ],\n      \"citizenship\": \"st\",\n      \"nationality\": \"string\",\n      \"country_of_residence\": \"st\",\n      \"version\": \"string\",\n      \"change_status\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9af032f1-291a-405d-bef0-c60b6cd37cac",
+              "name": "The requested Merchant does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "merchants",
+                    ":merchant_code",
+                    "persons"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_code",
+                      "description": "(Required) Short unique identifier for the merchant."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://developer.sumup.com/problem/not-found\",\n  \"title\": \"Requested resource couldn't be found.\",\n  \"status\": 404,\n  \"detail\": \"The requested resource doesn't exist or does not belong to you.\",\n  \"instance\": \"http://FxMzKVzQbFEcccYXbVk.werC7QsD+cK0QG2SC3C7M5YOJ69Wctxyx\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b5f847bf-f7b3-4f06-8883-a0feded5782b",
+          "name": "Retrieve a Person",
+          "request": {
+            "name": "Retrieve a Person",
+            "description": {
+              "content": "Returns a single person related to the merchant.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "merchants",
+                ":merchant_code",
+                "persons",
+                ":person_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "version",
+                  "value": "<string>",
+                  "description": "The version of the resource. At the moment, the only supported value is `latest`. When provided and the requested resource's `change_status` is pending, the resource will be returned with all pending changes applied. When no changes are pending the resource is returned as is. The `change_status` in the response body will reflect the current state of the resource.\n"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "merchant_code",
+                  "description": "(Required) Short unique identifier for the merchant."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "person_id",
+                  "description": "(Required) Person ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "e59b7419-baba-43ba-849e-d5f42fccae60",
+              "name": "Returns a Person for a valid identifier.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "merchants",
+                    ":merchant_code",
+                    "persons",
+                    ":person_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_code",
+                      "description": "(Required) Short unique identifier for the merchant."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "person_id",
+                      "description": "(Required) Person ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"user_id\": \"string\",\n  \"birthdate\": \"1980-01-12\",\n  \"given_name\": \"James Herrald\",\n  \"family_name\": \"Bond\",\n  \"middle_name\": \"Maria Sophie\",\n  \"phone_number\": \"+420123456789\",\n  \"relationships\": [\n    \"string\"\n  ],\n  \"ownership\": {\n    \"share\": 50000\n  },\n  \"address\": {\n    \"country\": \"st\",\n    \"street_address\": [\n      \"Paul-Linke-Ufer 39-40\",\n      \"2. Hinterhof\"\n    ],\n    \"post_code\": \"10999\",\n    \"city\": \"Berlin\",\n    \"province\": \"Ontario\",\n    \"region\": \"Baden-Wuerttemberg\",\n    \"county\": \"Dublin\",\n    \"autonomous_community\": \"Catalonia\",\n    \"post_town\": \"London\",\n    \"state\": \"California\",\n    \"neighborhood\": \"Copacabana\",\n    \"commune\": \"Providencia\",\n    \"department\": \"Antioquia\",\n    \"municipality\": \"Medellin\",\n    \"district\": \"Lisbon\",\n    \"zip_code\": \"94103\",\n    \"eircode\": \"D02 X285\"\n  },\n  \"identifiers\": [\n    {\n      \"ref\": \"string\",\n      \"value\": \"string\"\n    },\n    {\n      \"ref\": \"string\",\n      \"value\": \"string\"\n    }\n  ],\n  \"citizenship\": \"st\",\n  \"nationality\": \"string\",\n  \"country_of_residence\": \"st\",\n  \"version\": \"string\",\n  \"change_status\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "26d19d8f-0fe4-4215-928e-12b9ffe5729f",
+              "name": "The requested Person does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "merchants",
+                    ":merchant_code",
+                    "persons",
+                    ":person_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_code",
+                      "description": "(Required) Short unique identifier for the merchant."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "person_id",
+                      "description": "(Required) Person ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://developer.sumup.com/problem/not-found\",\n  \"title\": \"Requested resource couldn't be found.\",\n  \"status\": 404,\n  \"detail\": \"The requested resource doesn't exist or does not belong to you.\",\n  \"instance\": \"http://FxMzKVzQbFEcccYXbVk.werC7QsD+cK0QG2SC3C7M5YOJ69Wctxyx\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.sumup.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "3f77822d-7216-40a6-830e-ce5b6dfa2c1d",
+    "name": "SumUp REST Checkouts Merchants API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "SumUp’s REST API operates with [JSON](https://www.json.org/json-en.html) HTTP requests and responses. The request bodies are sent through resource-oriented URLs and use the standard [HTTP response codes](https://developer.mozilla.org/docs/Web/HTTP/Status).\n\nYou can experiment and work on your integration in a sandbox that doesn't affect your regular data and doesn't process real transactions. To create a sandbox merchant account visit the [dashboard](https://me.sumup.com/settings/developer). To use the sandbox when interacting with SumUp APIs [create an API](https://me.sumup.com/settings/api-keys) key and use it for [authentication](https://developer.sumup.com/api/authentication).",
+      "type": "text/plain"
+    }
+  }
+}

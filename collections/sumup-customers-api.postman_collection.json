@@ -1,0 +1,1562 @@
+{
+  "item": [
+    {
+      "id": "40509fd2-7e83-452a-870a-cc7fec1308bc",
+      "name": "Customers",
+      "description": {
+        "content": "Allow your regular customers to save their information with the Customers model.\n\nThis will prevent re-entering payment instrument information for recurring payments on your platform.\n\nDepending on the needs you can allow, creating, listing or deactivating payment instruments & creating, retrieving and updating customers.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a8f30333-494f-457e-ba50-a01d3296c0b9",
+          "name": "Create a customer",
+          "request": {
+            "name": "Create a customer",
+            "description": {
+              "content": "Creates a new saved customer resource which you can later manipulate and save payment instruments to.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0.1",
+                "customers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customer_id\": \"<string>\",\n  \"personal_details\": {\n    \"first_name\": \"<string>\",\n    \"last_name\": \"<string>\",\n    \"email\": \"<string>\",\n    \"phone\": \"<string>\",\n    \"birth_date\": \"<date>\",\n    \"tax_id\": \"<string>\",\n    \"address\": {\n      \"city\": \"<string>\",\n      \"country\": \"<string>\",\n      \"line_1\": \"<string>\",\n      \"line_2\": \"<string>\",\n      \"postal_code\": \"<string>\",\n      \"state\": \"<string>\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ee3d6501-91e5-47a4-adf2-8ab4af05c2e8",
+              "name": "Returns the customer resource.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "customers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customer_id\": \"831ff8d4cd5958ab5670\",\n  \"personal_details\": {\n    \"first_name\": \"John\",\n    \"last_name\": \"Doe\",\n    \"email\": \"user@example.com\",\n    \"phone\": \"+491635559723\",\n    \"birth_date\": \"1993-12-31\",\n    \"tax_id\": \"423.378.593-47\",\n    \"address\": {\n      \"city\": \"Berlin\",\n      \"country\": \"DE\",\n      \"line_1\": \"Sample street\",\n      \"line_2\": \"ap. 5\",\n      \"postal_code\": \"10115\",\n      \"state\": \"Berlin\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"customer_id\": \"831ff8d4cd5958ab5670\",\n  \"personal_details\": {\n    \"first_name\": \"John\",\n    \"last_name\": \"Doe\",\n    \"email\": \"user@example.com\",\n    \"phone\": \"+491635559723\",\n    \"birth_date\": \"1993-12-31\",\n    \"tax_id\": \"423.378.593-47\",\n    \"address\": {\n      \"city\": \"Berlin\",\n      \"country\": \"DE\",\n      \"line_1\": \"Sample street\",\n      \"line_2\": \"ap. 5\",\n      \"postal_code\": \"10115\",\n      \"state\": \"Berlin\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "908766c7-7cec-4cbd-901d-e1d32bbeb70b",
+              "name": "The request body is invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "customers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customer_id\": \"831ff8d4cd5958ab5670\",\n  \"personal_details\": {\n    \"first_name\": \"John\",\n    \"last_name\": \"Doe\",\n    \"email\": \"user@example.com\",\n    \"phone\": \"+491635559723\",\n    \"birth_date\": \"1993-12-31\",\n    \"tax_id\": \"423.378.593-47\",\n    \"address\": {\n      \"city\": \"Berlin\",\n      \"country\": \"DE\",\n      \"line_1\": \"Sample street\",\n      \"line_2\": \"ap. 5\",\n      \"postal_code\": \"10115\",\n      \"state\": \"Berlin\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"INVALID\",\n  \"message\": \"Validation error\",\n  \"param\": \"customer_id\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0cdd9091-4a53-46b9-8c36-f7334085836d",
+              "name": "The request is not authorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "customers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customer_id\": \"831ff8d4cd5958ab5670\",\n  \"personal_details\": {\n    \"first_name\": \"John\",\n    \"last_name\": \"Doe\",\n    \"email\": \"user@example.com\",\n    \"phone\": \"+491635559723\",\n    \"birth_date\": \"1993-12-31\",\n    \"tax_id\": \"423.378.593-47\",\n    \"address\": {\n      \"city\": \"Berlin\",\n      \"country\": \"DE\",\n      \"line_1\": \"Sample street\",\n      \"line_2\": \"ap. 5\",\n      \"postal_code\": \"10115\",\n      \"state\": \"Berlin\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"Unauthorized.\",\n  \"status\": 401,\n  \"title\": \"Unauthorized\",\n  \"trace_id\": \"3c77294349d3b5647ea2d990f0d8f017\",\n  \"type\": \"https://developer.sumup.com/problem/unauthorized\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3e9a8d1d-21fe-40f2-a9ed-dbb24e958067",
+              "name": "The request is authenticated but not permitted for this operation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "customers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customer_id\": \"831ff8d4cd5958ab5670\",\n  \"personal_details\": {\n    \"first_name\": \"John\",\n    \"last_name\": \"Doe\",\n    \"email\": \"user@example.com\",\n    \"phone\": \"+491635559723\",\n    \"birth_date\": \"1993-12-31\",\n    \"tax_id\": \"423.378.593-47\",\n    \"address\": {\n      \"city\": \"Berlin\",\n      \"country\": \"DE\",\n      \"line_1\": \"Sample street\",\n      \"line_2\": \"ap. 5\",\n      \"postal_code\": \"10115\",\n      \"state\": \"Berlin\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_message\": \"request_not_allowed\",\n  \"error_code\": \"FORBIDDEN\",\n  \"status_code\": \"403\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1ea7b804-d5b8-4083-9781-335760416aa1",
+              "name": "A customer with the provided identifier already exists.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "customers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customer_id\": \"831ff8d4cd5958ab5670\",\n  \"personal_details\": {\n    \"first_name\": \"John\",\n    \"last_name\": \"Doe\",\n    \"email\": \"user@example.com\",\n    \"phone\": \"+491635559723\",\n    \"birth_date\": \"1993-12-31\",\n    \"tax_id\": \"423.378.593-47\",\n    \"address\": {\n      \"city\": \"Berlin\",\n      \"country\": \"DE\",\n      \"line_1\": \"Sample street\",\n      \"line_2\": \"ap. 5\",\n      \"postal_code\": \"10115\",\n      \"state\": \"Berlin\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Customer already exists\",\n  \"error_code\": \"CUSTOMER_ALREADY_EXISTS\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "eda88330-b237-4d14-bbb2-3ea72afc6cb7",
+          "name": "Retrieve a customer",
+          "request": {
+            "name": "Retrieve a customer",
+            "description": {
+              "content": "Retrieves an identified saved customer resource through the unique `customer_id` parameter, generated upon customer creation.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0.1",
+                "customers",
+                ":customer_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "customer_id",
+                  "description": "(Required) Unique ID of the saved customer resource."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "c6a20246-3c3d-4d98-8882-b2a359e991e5",
+              "name": "Returns the customer resource.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "customers",
+                    ":customer_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "customer_id",
+                      "description": "(Required) Unique ID of the saved customer resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"customer_id\": \"831ff8d4cd5958ab5670\",\n  \"personal_details\": {\n    \"first_name\": \"John\",\n    \"last_name\": \"Doe\",\n    \"email\": \"user@example.com\",\n    \"phone\": \"+491635559723\",\n    \"birth_date\": \"1993-12-31\",\n    \"tax_id\": \"423.378.593-47\",\n    \"address\": {\n      \"city\": \"Berlin\",\n      \"country\": \"DE\",\n      \"line_1\": \"Sample street\",\n      \"line_2\": \"ap. 5\",\n      \"postal_code\": \"10115\",\n      \"state\": \"Berlin\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a33dc1e5-2d3c-4dbf-8c53-643369dc47d1",
+              "name": "The request is not authorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "customers",
+                    ":customer_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "customer_id",
+                      "description": "(Required) Unique ID of the saved customer resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"Unauthorized.\",\n  \"status\": 401,\n  \"title\": \"Unauthorized\",\n  \"trace_id\": \"3c77294349d3b5647ea2d990f0d8f017\",\n  \"type\": \"https://developer.sumup.com/problem/unauthorized\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "80ceb46e-305e-4989-a01a-3ff283eef312",
+              "name": "The request is authenticated but not permitted for this operation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "customers",
+                    ":customer_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "customer_id",
+                      "description": "(Required) Unique ID of the saved customer resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_message\": \"request_not_allowed\",\n  \"error_code\": \"FORBIDDEN\",\n  \"status_code\": \"403\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "eadef062-d070-44a4-bcbd-2ba25784fe81",
+              "name": "The requested resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "customers",
+                    ":customer_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "customer_id",
+                      "description": "(Required) Unique ID of the saved customer resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"NOT_FOUND\",\n  \"message\": \"Resource not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "04746d2d-422d-46ec-b353-3d7c20e4fac7",
+          "name": "Update a customer",
+          "request": {
+            "name": "Update a customer",
+            "description": {
+              "content": "Updates an identified saved customer resource's personal details.\n\nThe request only overwrites the parameters included in the request, all other parameters will remain with their initially assigned values.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0.1",
+                "customers",
+                ":customer_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "customer_id",
+                  "description": "(Required) Unique ID of the saved customer resource."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"personal_details\": {\n    \"first_name\": \"<string>\",\n    \"last_name\": \"<string>\",\n    \"email\": \"<string>\",\n    \"phone\": \"<string>\",\n    \"birth_date\": \"<date>\",\n    \"tax_id\": \"<string>\",\n    \"address\": {\n      \"city\": \"<string>\",\n      \"country\": \"<string>\",\n      \"line_1\": \"<string>\",\n      \"line_2\": \"<string>\",\n      \"postal_code\": \"<string>\",\n      \"state\": \"<string>\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "efbd08da-d5de-4961-a92d-c2e199930654",
+              "name": "Returns the customer resource.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "customers",
+                    ":customer_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "customer_id",
+                      "description": "(Required) Unique ID of the saved customer resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"personal_details\": {\n    \"first_name\": \"John\",\n    \"last_name\": \"Doe\",\n    \"email\": \"user@example.com\",\n    \"phone\": \"+491635559723\",\n    \"birth_date\": \"1993-12-31\",\n    \"tax_id\": \"423.378.593-47\",\n    \"address\": {\n      \"city\": \"Berlin\",\n      \"country\": \"DE\",\n      \"line_1\": \"Sample street\",\n      \"line_2\": \"ap. 5\",\n      \"postal_code\": \"10115\",\n      \"state\": \"Berlin\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"customer_id\": \"831ff8d4cd5958ab5670\",\n  \"personal_details\": {\n    \"first_name\": \"John\",\n    \"last_name\": \"Doe\",\n    \"email\": \"user@example.com\",\n    \"phone\": \"+491635559723\",\n    \"birth_date\": \"1993-12-31\",\n    \"tax_id\": \"423.378.593-47\",\n    \"address\": {\n      \"city\": \"Berlin\",\n      \"country\": \"DE\",\n      \"line_1\": \"Sample street\",\n      \"line_2\": \"ap. 5\",\n      \"postal_code\": \"10115\",\n      \"state\": \"Berlin\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "142fe8ba-4990-4fe1-b42a-92a6c900f986",
+              "name": "The request is not authorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "customers",
+                    ":customer_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "customer_id",
+                      "description": "(Required) Unique ID of the saved customer resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"personal_details\": {\n    \"first_name\": \"John\",\n    \"last_name\": \"Doe\",\n    \"email\": \"user@example.com\",\n    \"phone\": \"+491635559723\",\n    \"birth_date\": \"1993-12-31\",\n    \"tax_id\": \"423.378.593-47\",\n    \"address\": {\n      \"city\": \"Berlin\",\n      \"country\": \"DE\",\n      \"line_1\": \"Sample street\",\n      \"line_2\": \"ap. 5\",\n      \"postal_code\": \"10115\",\n      \"state\": \"Berlin\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"Unauthorized.\",\n  \"status\": 401,\n  \"title\": \"Unauthorized\",\n  \"trace_id\": \"3c77294349d3b5647ea2d990f0d8f017\",\n  \"type\": \"https://developer.sumup.com/problem/unauthorized\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "54f68fe8-ca2b-42c8-8add-35363ea20885",
+              "name": "The request is authenticated but not permitted for this operation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "customers",
+                    ":customer_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "customer_id",
+                      "description": "(Required) Unique ID of the saved customer resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"personal_details\": {\n    \"first_name\": \"John\",\n    \"last_name\": \"Doe\",\n    \"email\": \"user@example.com\",\n    \"phone\": \"+491635559723\",\n    \"birth_date\": \"1993-12-31\",\n    \"tax_id\": \"423.378.593-47\",\n    \"address\": {\n      \"city\": \"Berlin\",\n      \"country\": \"DE\",\n      \"line_1\": \"Sample street\",\n      \"line_2\": \"ap. 5\",\n      \"postal_code\": \"10115\",\n      \"state\": \"Berlin\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_message\": \"request_not_allowed\",\n  \"error_code\": \"FORBIDDEN\",\n  \"status_code\": \"403\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ba5c8a97-0cc5-48cd-9250-34223fc5b8d4",
+              "name": "The requested resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "customers",
+                    ":customer_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "customer_id",
+                      "description": "(Required) Unique ID of the saved customer resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"personal_details\": {\n    \"first_name\": \"John\",\n    \"last_name\": \"Doe\",\n    \"email\": \"user@example.com\",\n    \"phone\": \"+491635559723\",\n    \"birth_date\": \"1993-12-31\",\n    \"tax_id\": \"423.378.593-47\",\n    \"address\": {\n      \"city\": \"Berlin\",\n      \"country\": \"DE\",\n      \"line_1\": \"Sample street\",\n      \"line_2\": \"ap. 5\",\n      \"postal_code\": \"10115\",\n      \"state\": \"Berlin\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"NOT_FOUND\",\n  \"message\": \"Resource not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3854aa1d-a53f-425d-889e-de616b0821be",
+          "name": "List payment instruments",
+          "request": {
+            "name": "List payment instruments",
+            "description": {
+              "content": "Lists all payment instrument resources that are saved for an identified customer.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0.1",
+                "customers",
+                ":customer_id",
+                "payment-instruments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "customer_id",
+                  "description": "(Required) Unique ID of the saved customer resource."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "d6754e74-2c26-49f3-8b85-b0a2610e9a4f",
+              "name": "Returns the list of saved payment instruments for the customer.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "customers",
+                    ":customer_id",
+                    "payment-instruments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "customer_id",
+                      "description": "(Required) Unique ID of the saved customer resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"token\": \"bcfc8e5f-3b47-4cb9-854b-3b7a4cce7be3\",\n    \"active\": true,\n    \"type\": \"card\",\n    \"mandate\": {\n      \"type\": \"recurrent\",\n      \"status\": \"active\",\n      \"merchant_code\": \"MH4H92C7\"\n    },\n    \"card\": {\n      \"last_4_digits\": \"0001\",\n      \"type\": \"VISA\"\n    },\n    \"created_at\": \"2021-03-30 10:06:07+00:00\"\n  },\n  {\n    \"token\": \"bcfc8e5f-3b47-4cb9-854b-3b7a4cce7be3\",\n    \"active\": true,\n    \"type\": \"card\",\n    \"mandate\": {\n      \"type\": \"recurrent\",\n      \"status\": \"active\",\n      \"merchant_code\": \"MH4H92C7\"\n    },\n    \"card\": {\n      \"last_4_digits\": \"0001\",\n      \"type\": \"VISA\"\n    },\n    \"created_at\": \"2021-03-30 10:06:07+00:00\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3b2adc45-d100-4f62-8a81-176bab2fa5a6",
+              "name": "The request is not authorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "customers",
+                    ":customer_id",
+                    "payment-instruments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "customer_id",
+                      "description": "(Required) Unique ID of the saved customer resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"Unauthorized.\",\n  \"status\": 401,\n  \"title\": \"Unauthorized\",\n  \"trace_id\": \"3c77294349d3b5647ea2d990f0d8f017\",\n  \"type\": \"https://developer.sumup.com/problem/unauthorized\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e73538d1-d1df-49a5-9f54-fb17df29cf9e",
+              "name": "The request is authenticated but not permitted for this operation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "customers",
+                    ":customer_id",
+                    "payment-instruments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "customer_id",
+                      "description": "(Required) Unique ID of the saved customer resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_message\": \"request_not_allowed\",\n  \"error_code\": \"FORBIDDEN\",\n  \"status_code\": \"403\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b661f8f2-e2ec-4e9a-9997-b6aff7722af9",
+              "name": "The requested resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "customers",
+                    ":customer_id",
+                    "payment-instruments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "customer_id",
+                      "description": "(Required) Unique ID of the saved customer resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"NOT_FOUND\",\n  \"message\": \"Resource not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "416a0782-f68c-4cc6-8664-02b29f4b4a11",
+          "name": "Deactivate a payment instrument",
+          "request": {
+            "name": "Deactivate a payment instrument",
+            "description": {
+              "content": "Deactivates an identified card payment instrument resource for a customer.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0.1",
+                "customers",
+                ":customer_id",
+                "payment-instruments",
+                ":token"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "customer_id",
+                  "description": "(Required) Unique ID of the saved customer resource."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "token",
+                  "description": "(Required) Unique token identifying the card saved as a payment instrument resource."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "742519fd-dda1-4ae5-a4ed-5920d49c0a71",
+              "name": "Returns an empty response body when the operation succeeds.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "customers",
+                    ":customer_id",
+                    "payment-instruments",
+                    ":token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "customer_id",
+                      "description": "(Required) Unique ID of the saved customer resource."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "token",
+                      "description": "(Required) Unique token identifying the card saved as a payment instrument resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e9a99e42-be13-483b-9734-5eb45b46ba3b",
+              "name": "The request is invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "customers",
+                    ":customer_id",
+                    "payment-instruments",
+                    ":token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "customer_id",
+                      "description": "(Required) Unique ID of the saved customer resource."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "token",
+                      "description": "(Required) Unique token identifying the card saved as a payment instrument resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"INVALID_REQUEST\",\n  \"message\": \"bad request\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bc675b1b-b06a-4978-9016-b72277e2638d",
+              "name": "The request is not authorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "customers",
+                    ":customer_id",
+                    "payment-instruments",
+                    ":token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "customer_id",
+                      "description": "(Required) Unique ID of the saved customer resource."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "token",
+                      "description": "(Required) Unique token identifying the card saved as a payment instrument resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"Unauthorized.\",\n  \"status\": 401,\n  \"title\": \"Unauthorized\",\n  \"trace_id\": \"3c77294349d3b5647ea2d990f0d8f017\",\n  \"type\": \"https://developer.sumup.com/problem/unauthorized\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "96a72339-4bd4-4892-bec3-807314290494",
+              "name": "The request is authenticated but not permitted for this operation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "customers",
+                    ":customer_id",
+                    "payment-instruments",
+                    ":token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "customer_id",
+                      "description": "(Required) Unique ID of the saved customer resource."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "token",
+                      "description": "(Required) Unique token identifying the card saved as a payment instrument resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_message\": \"request_not_allowed\",\n  \"error_code\": \"FORBIDDEN\",\n  \"status_code\": \"403\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bea80334-f939-40c1-8a3a-3dd6aad70b76",
+              "name": "The requested resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0.1",
+                    "customers",
+                    ":customer_id",
+                    "payment-instruments",
+                    ":token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "customer_id",
+                      "description": "(Required) Unique ID of the saved customer resource."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "token",
+                      "description": "(Required) Unique token identifying the card saved as a payment instrument resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"NOT_FOUND\",\n  \"message\": \"Resource not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.sumup.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "245b2429-aeab-4612-8b08-cd40c6536479",
+    "name": "SumUp REST Checkouts Customers API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "SumUp’s REST API operates with [JSON](https://www.json.org/json-en.html) HTTP requests and responses. The request bodies are sent through resource-oriented URLs and use the standard [HTTP response codes](https://developer.mozilla.org/docs/Web/HTTP/Status).\n\nYou can experiment and work on your integration in a sandbox that doesn't affect your regular data and doesn't process real transactions. To create a sandbox merchant account visit the [dashboard](https://me.sumup.com/settings/developer). To use the sandbox when interacting with SumUp APIs [create an API](https://me.sumup.com/settings/api-keys) key and use it for [authentication](https://developer.sumup.com/api/authentication).",
+      "type": "text/plain"
+    }
+  }
+}

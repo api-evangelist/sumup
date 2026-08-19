@@ -1,0 +1,139 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "SumUp REST Checkouts Roles API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Roles",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List roles",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sumup.com/v0.1/merchants/:merchant_code/roles",
+            "params": [
+              {
+                "name": "merchant_code",
+                "value": "",
+                "type": "path",
+                "description": "Short unique identifier for the merchant."
+              }
+            ]
+          },
+          "docs": "List merchant's custom roles."
+        },
+        {
+          "info": {
+            "name": "Create a role",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sumup.com/v0.1/merchants/:merchant_code/roles",
+            "params": [
+              {
+                "name": "merchant_code",
+                "value": "",
+                "type": "path",
+                "description": "Short unique identifier for the merchant."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a custom role for the merchant. Roles are defined by the set of permissions that they grant to the members that they are assigned to."
+        },
+        {
+          "info": {
+            "name": "Retrieve a role",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sumup.com/v0.1/merchants/:merchant_code/roles/:role_id",
+            "params": [
+              {
+                "name": "merchant_code",
+                "value": "",
+                "type": "path",
+                "description": "Short unique identifier for the merchant."
+              },
+              {
+                "name": "role_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the role to retrieve."
+              }
+            ]
+          },
+          "docs": "Retrieve a custom role by ID."
+        },
+        {
+          "info": {
+            "name": "Update a role",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.sumup.com/v0.1/merchants/:merchant_code/roles/:role_id",
+            "params": [
+              {
+                "name": "merchant_code",
+                "value": "",
+                "type": "path",
+                "description": "Short unique identifier for the merchant."
+              },
+              {
+                "name": "role_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the role to retrieve."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a custom role."
+        },
+        {
+          "info": {
+            "name": "Delete a role",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.sumup.com/v0.1/merchants/:merchant_code/roles/:role_id",
+            "params": [
+              {
+                "name": "merchant_code",
+                "value": "",
+                "type": "path",
+                "description": "Short unique identifier for the merchant."
+              },
+              {
+                "name": "role_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the role to retrieve."
+              }
+            ]
+          },
+          "docs": "Delete a custom role."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

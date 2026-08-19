@@ -1,0 +1,49 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "SumUp REST Checkouts Receipts API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Receipts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve receipt details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sumup.com/v1.1/receipts/:transaction_id",
+            "params": [
+              {
+                "name": "transaction_id",
+                "value": "",
+                "type": "path",
+                "description": "SumUp unique transaction ID or transaction code, e.g. TS7HDYLSKD."
+              },
+              {
+                "name": "mid",
+                "value": "",
+                "type": "query",
+                "description": "Merchant code."
+              },
+              {
+                "name": "tx_event_id",
+                "value": "",
+                "type": "query",
+                "description": "The ID of the transaction event (refund)."
+              }
+            ]
+          },
+          "docs": "Retrieves receipt specific data for a transaction."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

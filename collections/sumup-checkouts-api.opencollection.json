@@ -1,0 +1,167 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "SumUp REST Checkouts API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Checkouts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get available payment methods",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sumup.com/v0.1/merchants/:merchant_code/payment-methods",
+            "params": [
+              {
+                "name": "merchant_code",
+                "value": "",
+                "type": "path",
+                "description": "The SumUp merchant code."
+              },
+              {
+                "name": "amount",
+                "value": "",
+                "type": "query",
+                "description": "The amount for which the payment methods should be eligible, in major units."
+              },
+              {
+                "name": "currency",
+                "value": "",
+                "type": "query",
+                "description": "The currency for which the payment methods should be eligible."
+              }
+            ]
+          },
+          "docs": "Get payment methods available for the given merchant to use with a checkout."
+        },
+        {
+          "info": {
+            "name": "List checkouts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sumup.com/v0.1/checkouts",
+            "params": [
+              {
+                "name": "checkout_reference",
+                "value": "",
+                "type": "query",
+                "description": "Filters the list of checkout resources by the unique ID of the checkout."
+              }
+            ]
+          },
+          "docs": "Lists created checkout resources according to the applied `checkout_reference`."
+        },
+        {
+          "info": {
+            "name": "Create a checkout",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sumup.com/v0.1/checkouts",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new payment checkout resource. The unique `checkout_reference` created by this request, is used for further manipulation of the checkout.\n\nFor 3DS checkouts, add the `redirect_url` parameter to your request body schema.\nTo use the [Hosted Checkout](https://developer.sumup.com/online-payments/checkouts/hosted-checkout/) page, set the `hosted_checkout.enabled` to `true`.\n\nFollow by processing a checkout to charge the provided payment instrument."
+        },
+        {
+          "info": {
+            "name": "Retrieve a checkout",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sumup.com/v0.1/checkouts/:checkout_id",
+            "params": [
+              {
+                "name": "checkout_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique ID of the checkout resource."
+              }
+            ]
+          },
+          "docs": "Retrieves an identified checkout resource. Use this request after processing a checkout to confirm its status and inform the end user respectively."
+        },
+        {
+          "info": {
+            "name": "Process a checkout",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.sumup.com/v0.1/checkouts/:checkout_id",
+            "params": [
+              {
+                "name": "checkout_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique ID of the checkout resource."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Processing a checkout will attempt to charge the provided payment instrument for the amount of the specified checkout resource initiated in the `Create a checkout` endpoint.\n\nFollow this request with `Retrieve a checkout` to confirm its status."
+        },
+        {
+          "info": {
+            "name": "Deactivate a checkout",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.sumup.com/v0.1/checkouts/:checkout_id",
+            "params": [
+              {
+                "name": "checkout_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique ID of the checkout resource."
+              }
+            ]
+          },
+          "docs": "Deactivates an identified checkout resource. If the checkout has already been processed it can not be deactivated."
+        },
+        {
+          "info": {
+            "name": "Create an Apple Pay session",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.sumup.com/v0.2/checkouts/:checkout_id/apple-pay-session",
+            "params": [
+              {
+                "name": "checkout_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique ID of the checkout resource."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates an Apple Pay merchant session for the specified checkout.\n\nUse this endpoint after the customer selects Apple Pay and before calling\n`ApplePaySession.completeMerchantValidation(...)` in the browser.\nSumUp validates the merchant session request and returns the Apple Pay\nsession object that your frontend should pass to Apple's JavaScript API.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
