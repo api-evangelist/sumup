@@ -25,6 +25,14 @@ modified: '2026-06-13'
 specificationVersion: '0.23'
 tags:
   - Payments
+  - Point-of-Sale
+  - Card Readers
+  - Checkout
+  - Fintech
+  - Mobile Payments
+  - Online Payments
+tags_raw:
+  - Payments
   - POS
   - Point of Sale
   - Card Readers
@@ -259,6 +267,8 @@ apis:
   humanURL: https://developer.sumup.com/api
   baseURL: https://api.sumup.com
   tags:
+  - Transaction
+  tags_raw:
   - Transactions
   properties:
   - type: OpenAPI
