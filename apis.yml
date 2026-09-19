@@ -40,7 +40,7 @@ specificationVersion: '0.23'
 tags:
   - Payments
   - Point-of-Sale
-  - Card Readers
+  - Card Reader
   - Checkout
   - Fintech
   - Mobile Payments
@@ -88,6 +88,8 @@ apis:
   humanURL: https://developer.sumup.com/api
   baseURL: https://api.sumup.com
   tags:
+  - Checkout
+  tags_raw:
   - Checkouts
   properties:
   - type: OpenAPI
@@ -144,6 +146,8 @@ apis:
   humanURL: https://developer.sumup.com/api
   baseURL: https://api.sumup.com
   tags:
+  - Membership
+  tags_raw:
   - Memberships
   properties:
   - type: OpenAPI
