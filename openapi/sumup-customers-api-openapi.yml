@@ -1,11 +1,11 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: SumUp REST Checkouts Customers API
+  title: SumUp REST Customers API
   version: 1.0.0
-  description: 'SumUp’s REST API operates with [JSON](https://www.json.org/json-en.html) HTTP requests and responses. The request bodies are sent through resource-oriented URLs and use the standard [HTTP response codes](https://developer.mozilla.org/docs/Web/HTTP/Status).
+  description: 'SumUp’s REST API operates with JSON HTTP requests and responses. The request bodies are sent through resource-oriented URLs and use the standard HTTP response codes.
 
 
-    You can experiment and work on your integration in a sandbox that doesn''t affect your regular data and doesn''t process real transactions. To create a sandbox merchant account visit the [dashboard](https://me.sumup.com/settings/developer). To use the sandbox when interacting with SumUp APIs [create an API](https://me.sumup.com/settings/api-keys) key and use it for [authentication](https://developer.sumup.com/api/authentication).'
+    You can experiment and work on your integration in a sandbox that doesn''t affect your regular data and doesn''t process real transactions. To create a sandbox merchant account visit the dashboard. To use the sandbox when interacting with SumUp APIs create an API key and use it for authentication.'
   license:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0.html
@@ -418,16 +418,6 @@ paths:
       - payment_instruments
 components:
   schemas:
-    ErrorExtended:
-      description: Error payload with the invalid parameter reference.
-      allOf:
-      - $ref: '#/components/schemas/Error'
-      - type: object
-        properties:
-          param:
-            description: Parameter name (with relative location) to which the error applies. Parameters from embedded resources are displayed using dot notation. For example, `card.name` refers to the `name` parameter embedded in the `card` object.
-            type: string
-      title: Error Extended
     CardType:
       description: Issuing card network of the payment card used for the transaction.
       type: string
@@ -457,19 +447,6 @@ components:
       - VR
       - UNKNOWN
       title: Card Type
-    Customer:
-      description: Saved customer details.
-      type: object
-      properties:
-        customer_id:
-          description: Unique ID of the customer.
-          type: string
-          example: 831ff8d4cd5958ab5670
-        personal_details:
-          $ref: '#/components/schemas/PersonalDetails'
-      required:
-      - customer_id
-      title: Customer
     AddressLegacy:
       description: Profile's personal address information.
       type: object
@@ -499,6 +476,65 @@ components:
           type: string
           example: Berlin
       title: Address Legacy
+    PersonalDetails:
+      description: Personal details for the customer.
+      type: object
+      properties:
+        first_name:
+          description: First name of the customer.
+          type: string
+          example: John
+        last_name:
+          description: Last name of the customer.
+          type: string
+          example: Doe
+        email:
+          description: Email address of the customer.
+          type: string
+          example: user@example.com
+        phone:
+          description: Phone number of the customer.
+          type: string
+          example: '+491635559723'
+        birth_date:
+          description: Date of birth of the customer.
+          type: string
+          format: date
+          example: 1993-12-31
+        tax_id:
+          description: An identification number user for tax purposes (e.g. CPF)
+          type: string
+          example: 423.378.593-47
+          maxLength: 255
+        address:
+          $ref: '#/components/schemas/AddressLegacy'
+      title: Personal Details
+    Customer:
+      description: Saved customer details.
+      type: object
+      properties:
+        customer_id:
+          description: Unique ID of the customer.
+          type: string
+          example: 831ff8d4cd5958ab5670
+        personal_details:
+          $ref: '#/components/schemas/PersonalDetails'
+      required:
+      - customer_id
+      title: Customer
+    Error:
+      description: Error message structure.
+      type: object
+      properties:
+        message:
+          description: Short description of the error.
+          type: string
+          example: Resource not found
+        error_code:
+          description: Platform code for the error.
+          type: string
+          example: NOT_FOUND
+      title: Error
     MandateResponse:
       description: Details of the mandate linked to the saved payment instrument.
       type: object
@@ -539,51 +575,6 @@ components:
           type: string
           example: '403'
       title: Error Forbidden
-    Problem:
-      description: 'A RFC 9457 problem details object.
-
-
-        Additional properties specific to the problem type may be present.'
-      type: object
-      properties:
-        type:
-          description: A URI reference that identifies the problem type.
-          type: string
-          format: uri
-          example: https://developer.sumup.com/problem/not-found
-        title:
-          description: A short, human-readable summary of the problem type.
-          type: string
-          example: Requested resource couldn't be found.
-        status:
-          description: The HTTP status code generated by the origin server for this occurrence of the problem.
-          type: integer
-          example: 404
-        detail:
-          description: A human-readable explanation specific to this occurrence of the problem.
-          type: string
-          example: The requested resource doesn't exist or does not belong to you.
-        instance:
-          description: A URI reference that identifies the specific occurrence of the problem.
-          type: string
-          format: uri
-      additionalProperties: true
-      required:
-      - type
-      title: Problem
-    Error:
-      description: Error message structure.
-      type: object
-      properties:
-        message:
-          description: Short description of the error.
-          type: string
-          example: Resource not found
-        error_code:
-          description: Platform code for the error.
-          type: string
-          example: NOT_FOUND
-      title: Error
     PaymentInstrumentResponse:
       description: Payment Instrument Response
       type: object
@@ -634,39 +625,48 @@ components:
           type: VISA
         created_at: 2021-03-30 10:06:07+00:00
       title: Payment Instrument Response
-    PersonalDetails:
-      description: Personal details for the customer.
+    Problem:
+      description: 'A RFC 9457 problem details object.
+
+
+        Additional properties specific to the problem type may be present.'
       type: object
       properties:
-        first_name:
-          description: First name of the customer.
+        type:
+          description: A URI reference that identifies the problem type.
           type: string
-          example: John
-        last_name:
-          description: Last name of the customer.
+          format: uri
+          example: https://developer.sumup.com/problem/not-found
+        title:
+          description: A short, human-readable summary of the problem type.
           type: string
-          example: Doe
-        email:
-          description: Email address of the customer.
+          example: Requested resource couldn't be found.
+        status:
+          description: The HTTP status code generated by the origin server for this occurrence of the problem.
+          type: integer
+          example: 404
+        detail:
+          description: A human-readable explanation specific to this occurrence of the problem.
           type: string
-          example: user@example.com
-        phone:
-          description: Phone number of the customer.
+          example: The requested resource doesn't exist or does not belong to you.
+        instance:
+          description: A URI reference that identifies the specific occurrence of the problem.
           type: string
-          example: '+491635559723'
-        birth_date:
-          description: Date of birth of the customer.
-          type: string
-          format: date
-          example: 1993-12-31
-        tax_id:
-          description: An identification number user for tax purposes (e.g. CPF)
-          type: string
-          example: 423.378.593-47
-          maxLength: 255
-        address:
-          $ref: '#/components/schemas/AddressLegacy'
-      title: Personal Details
+          format: uri
+      additionalProperties: true
+      required:
+      - type
+      title: Problem
+    ErrorExtended:
+      description: Error payload with the invalid parameter reference.
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        properties:
+          param:
+            description: Parameter name (with relative location) to which the error applies. Parameters from embedded resources are displayed using dot notation. For example, `card.name` refers to the `name` parameter embedded in the `card` object.
+            type: string
+      title: Error Extended
   securitySchemes:
     apiKey:
       description: API keys allow you easily interact with SumUp APIs. API keys are static tokens. You can create API keys from the [Dashboard](https://me.sumup.com/settings/api-keys)

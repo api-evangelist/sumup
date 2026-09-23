@@ -1,11 +1,11 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: SumUp REST Checkouts Readers API
+  title: SumUp REST Readers API
   version: 1.0.0
-  description: 'SumUp’s REST API operates with [JSON](https://www.json.org/json-en.html) HTTP requests and responses. The request bodies are sent through resource-oriented URLs and use the standard [HTTP response codes](https://developer.mozilla.org/docs/Web/HTTP/Status).
+  description: 'SumUp’s REST API operates with JSON HTTP requests and responses. The request bodies are sent through resource-oriented URLs and use the standard HTTP response codes.
 
 
-    You can experiment and work on your integration in a sandbox that doesn''t affect your regular data and doesn''t process real transactions. To create a sandbox merchant account visit the [dashboard](https://me.sumup.com/settings/developer). To use the sandbox when interacting with SumUp APIs [create an API](https://me.sumup.com/settings/api-keys) key and use it for [authentication](https://developer.sumup.com/api/authentication).'
+    You can experiment and work on your integration in a sandbox that doesn''t affect your regular data and doesn''t process real transactions. To create a sandbox merchant account visit the dashboard. To use the sandbox when interacting with SumUp APIs create an API key and use it for authentication.'
   license:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0.html
@@ -367,7 +367,6 @@ paths:
         This process is asynchronous and the actual transaction may take some time to be started on the device.
 
 
-
         There are some caveats when using this endpoint:
 
         * The target device must be online, otherwise checkout won''t be accepted
@@ -375,10 +374,7 @@ paths:
         * After the checkout is accepted, the system has 60 seconds to start the payment on the target device. During this time, any other checkout for the same device will be rejected.
 
 
-
-        **Note**: If the target device is a Solo, it must be in version 3.3.24.3 or higher.
-
-        '
+        **Note**: If the target device is a Solo, it must be in version 3.3.24.3 or higher.'
       parameters:
       - name: merchant_code
         in: path
@@ -528,9 +524,7 @@ paths:
         * `OFFLINE` – Device disconnected (last state persisted)
 
 
-        **Note**: If the target device is a Solo, it must be in version 3.3.39.0 or higher.
-
-        '
+        **Note**: If the target device is a Solo, it must be in version 3.3.39.0 or higher.'
       parameters:
       - name: merchant_code
         in: path
@@ -618,7 +612,6 @@ paths:
         This process is asynchronous and the actual termination may take some time to be performed on the device.
 
 
-
         There are some caveats when using this endpoint:
 
         * The target device must be online, otherwise terminate won''t be accepted
@@ -631,10 +624,7 @@ paths:
         If a transaction is successfully terminated and `return_url` was provided on Checkout, the transaction status will be sent as `failed` to the provided URL.
 
 
-
-        **Note**: If the target device is a Solo, it must be in version 3.3.28.0 or higher.
-
-        '
+        **Note**: If the target device is a Solo, it must be in version 3.3.28.0 or higher.'
       parameters:
       - name: merchant_code
         in: path
@@ -731,153 +721,6 @@ paths:
       - readers.write
 components:
   schemas:
-    ReaderPairingCode:
-      description: The pairing code is a 8 or 9 character alphanumeric string that is displayed on a SumUp Device after initiating the pairing. It is used to link the physical device to the created pairing.
-      type: string
-      example: 4WLFDSBF
-      maxLength: 9
-      minLength: 8
-    CreateReaderTerminateError:
-      description: Error description
-      type: object
-      properties:
-        errors:
-          type: object
-          properties:
-            detail:
-              description: Error message
-              type: string
-            type:
-              description: Error code
-              type: string
-          required:
-          - type
-      required:
-      - errors
-      title: CreateReaderTerminateError
-    Unauthorized:
-      description: 401 Unauthorized
-      type: object
-      properties:
-        errors:
-          type: object
-          properties:
-            detail:
-              description: Fuller message giving context to error
-              type: string
-            type:
-              description: Key indicating type of error. Present only for typed 401 responses (e.g. invalid token, invalid password). Absent for generic unauthorized responses.
-              type: string
-              enum:
-              - INVALID_ACCESS_TOKEN
-              - INVALID_PASSWORD
-          required:
-          - detail
-      example:
-        errors:
-          detail: Unauthorized
-      required:
-      - errors
-      title: Unauthorized
-    NotFound:
-      description: 404 Not Found
-      type: object
-      properties:
-        errors:
-          type: object
-          properties:
-            detail:
-              description: Fuller message giving context to error
-              type: string
-          required:
-          - detail
-      example:
-        errors:
-          detail: Not Found
-      required:
-      - errors
-      title: NotFound
-    ReaderID:
-      description: 'Unique identifier of the object.
-
-
-        Note that this identifies the instance of the physical devices pairing with your SumUp account. If you [delete](https://developer.sumup.com/api/readers/delete-reader) a reader, and pair the device again, the ID will be different. Do not use this ID to refer to a physical device.'
-      type: string
-      example: rdr_3MSAFM23CK82VSTT4BN6RWSQ65
-      maxLength: 30
-      minLength: 30
-    ReaderStatus:
-      description: 'The status of the reader object gives information about the current state of the reader.
-
-
-        Possible values:
-
-
-        - `unknown` - The reader status is unknown.
-
-        - `processing` - The reader is created and waits for the physical device to confirm the pairing.
-
-        - `paired` - The reader is paired with a merchant account and can be used with SumUp APIs.
-
-        - `expired` - The pairing is expired and no longer usable with the account. The resource needs to get recreated.'
-      type: string
-      example: paired
-      enum:
-      - unknown
-      - processing
-      - paired
-      - expired
-    Metadata:
-      description: Set of user-defined key-value pairs attached to the object. Partial updates are not supported. When updating, always submit whole metadata. Maximum of 64 parameters are allowed in the object.
-      type: object
-      example: {}
-      additionalProperties: true
-      maxProperties: 64
-    BadRequest:
-      description: 400 Bad Request
-      type: object
-      properties:
-        errors:
-          type: object
-          properties:
-            detail:
-              description: Fuller message giving context to error
-              type: string
-            type:
-              description: Key indicating type of error
-              type: string
-              enum:
-              - INVALID_BEARER_TOKEN
-              - INVALID_USER_AGENT
-              - NOT_ENOUGH_UNPAID_PAYOUTS
-              - DUPLICATE_HEADERS
-          required:
-          - type
-      example:
-        errors:
-          detail: Bad request
-          type: INVALID_BEARER_TOKEN
-      required:
-      - errors
-      title: BadRequest
-    ReaderDevice:
-      description: Information about the underlying physical device.
-      type: object
-      properties:
-        identifier:
-          description: A unique identifier of the physical device (e.g. serial number).
-          type: string
-          example: U1DT3NA00-CN
-        model:
-          description: Identifier of the model of the device.
-          type: string
-          example: solo
-          enum:
-          - solo
-          - virtual-solo
-      required:
-      - identifier
-      - model
     CreateReaderCheckoutRequest:
       description: Reader Checkout
       type: object
@@ -912,8 +755,9 @@ components:
             It is a field that allow for integrators to track the source of the transaction.
 
             '
-          type: object
-          nullable: true
+          type:
+          - object
+          - 'null'
           properties:
             app_id:
               description: 'Application ID of the affiliate.
@@ -984,10 +828,11 @@ components:
             Otherwise, the checkout will be rejected.
 
             '
-          type: integer
+          type:
+          - integer
+          - 'null'
           example: 1
           minimum: 1
-          nullable: true
         return_url:
           description: 'Webhook URL to which the payment result will be sent.
 
@@ -1092,101 +937,47 @@ components:
       required:
       - total_amount
       title: CreateReaderCheckoutRequest
-    ReaderCheckoutStatusChange:
-      description: The callback payload containing the status change of the Reader Checkout.
+    ReaderDevice:
+      description: Information about the underlying physical device.
       type: object
       properties:
-        event_type:
-          description: Type of event.
+        identifier:
+          description: A unique identifier of the physical device (e.g. serial number).
           type: string
-          example: solo.transaction.updated
-        id:
-          description: Unique identifier for the event.
+          example: U1DT3NA00-CN
+        model:
+          description: Identifier of the model of the device.
           type: string
-          format: uuid
-          example: 3fa85f64-5717-4562-b3fc-2c963f66afa6
-        payload:
-          description: The event payload.
+          example: solo
+          enum:
+          - solo
+          - virtual-solo
+      required:
+      - identifier
+      - model
+    CreateReaderCheckoutResponse:
+      type: object
+      properties:
+        data:
           type: object
           properties:
             client_transaction_id:
-              description: The unique client transaction id. It is the same returned by the Checkout.
+              description: 'The client transaction ID is a unique identifier for the transaction that is generated for the client.
+
+
+                It can be used later to fetch the transaction details via the [Transactions API](https://developer.sumup.com/api/transactions/get).
+
+                '
               type: string
-              format: uuid
               example: 3fa85f64-5717-4562-b3fc-2c963f66afa6
-            merchant_code:
-              description: The merchant code associated with the transaction.
-              type: string
-              example: M1234567
-            status:
-              description: The current status of the transaction.
-              type: string
-              example: successful
-              enum:
-              - successful
-              - failed
-            transaction_id:
-              description: 'The transaction id. Deprecated: use `client_transaction_id` instead.'
-              type: string
-              format: uuid
-              example: 3fa85f64-5717-4562-b3fc-2c963f66afa6
-              deprecated: true
           required:
           - client_transaction_id
-          - merchant_code
-          - status
-        timestamp:
-          description: Timestamp of the event.
-          type: string
-          format: date-time
-          example: 2023-10-05 14:48:00+00:00
+      example:
+        data:
+          client_transaction_id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
       required:
-      - id
-      - event_type
-      - payload
-      - timestamp
-      title: ReaderCheckoutStatusChange
-    Reader:
-      description: A physical card reader device that can accept in-person payments.
-      type: object
-      properties:
-        id:
-          $ref: '#/components/schemas/ReaderID'
-        name:
-          $ref: '#/components/schemas/ReaderName'
-        status:
-          $ref: '#/components/schemas/ReaderStatus'
-        device:
-          $ref: '#/components/schemas/ReaderDevice'
-        metadata:
-          $ref: '#/components/schemas/Metadata'
-        service_account_id:
-          description: 'Identifier of the system-managed service account associated with this reader.
-
-            Present only for readers that are already paired.
-
-            This field is currently in beta and may change.'
-          type: string
-          format: uuid
-          x-beta: true
-        created_at:
-          description: The timestamp of when the reader was created.
-          type: string
-          format: date-time
-          example: 2023-01-18 15:16:17+00:00
-        updated_at:
-          description: The timestamp of when the reader was last updated.
-          type: string
-          format: date-time
-          example: 2023-01-20 15:16:17+00:00
-      required:
-      - id
-      - name
-      - status
-      - device
-      - created_at
-      - updated_at
-      title: Reader
+      - data
+      title: CreateReaderCheckoutResponse
     CreateReaderCheckoutUnprocessableEntity:
       description: Unprocessable entity
       type: object
@@ -1230,6 +1021,207 @@ components:
       required:
       - errors
       title: CreateReaderCheckoutUnprocessableEntity
+    Metadata:
+      description: Set of user-defined key-value pairs attached to the object. Partial updates are not supported. When updating, always submit whole metadata. Maximum of 64 parameters are allowed in the object.
+      type: object
+      example: {}
+      additionalProperties: true
+      maxProperties: 64
+    CreateReaderTerminateUnprocessableEntity:
+      description: Unprocessable entity
+      type: object
+      properties:
+        errors:
+          type: object
+          additionalProperties: true
+      example:
+        ReaderOffline:
+          description: Error returned when the target device is not online.
+          value:
+            errors:
+              detail: The device is offline.
+              type: READER_OFFLINE
+      required:
+      - errors
+      title: CreateReaderTerminateUnprocessableEntity
+    Unauthorized:
+      description: 401 Unauthorized
+      type: object
+      properties:
+        errors:
+          type: object
+          properties:
+            detail:
+              description: Fuller message giving context to error
+              type: string
+            type:
+              description: Key indicating type of error. Present only for typed 401 responses (e.g. invalid token, invalid password). Absent for generic unauthorized responses.
+              type: string
+              enum:
+              - INVALID_ACCESS_TOKEN
+              - INVALID_PASSWORD
+          required:
+          - detail
+      example:
+        errors:
+          detail: Unauthorized
+      required:
+      - errors
+      title: Unauthorized
+    BadRequest:
+      description: 400 Bad Request
+      type: object
+      properties:
+        errors:
+          type: object
+          properties:
+            detail:
+              description: Fuller message giving context to error
+              type: string
+            type:
+              description: Key indicating type of error
+              type: string
+              enum:
+              - INVALID_BEARER_TOKEN
+              - INVALID_USER_AGENT
+              - NOT_ENOUGH_UNPAID_PAYOUTS
+              - DUPLICATE_HEADERS
+          required:
+          - type
+      example:
+        errors:
+          detail: Bad request
+          type: INVALID_BEARER_TOKEN
+      required:
+      - errors
+      title: BadRequest
+    Reader:
+      description: A physical card reader device that can accept in-person payments.
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/ReaderID'
+        name:
+          $ref: '#/components/schemas/ReaderName'
+        status:
+          $ref: '#/components/schemas/ReaderStatus'
+        device:
+          $ref: '#/components/schemas/ReaderDevice'
+        metadata:
+          $ref: '#/components/schemas/Metadata'
+        service_account_id:
+          description: 'Identifier of the system-managed service account associated with this reader.
+
+            Present only for readers that are already paired.
+
+            This field is currently in beta and may change.'
+          type: string
+          format: uuid
+          x-beta: true
+        created_at:
+          description: The timestamp of when the reader was created.
+          type: string
+          format: date-time
+          example: 2023-01-18 15:16:17+00:00
+        updated_at:
+          description: The timestamp of when the reader was last updated.
+          type: string
+          format: date-time
+          example: 2023-01-20 15:16:17+00:00
+      required:
+      - id
+      - name
+      - status
+      - device
+      - created_at
+      - updated_at
+      title: Reader
+    Problem:
+      description: 'A RFC 9457 problem details object.
+
+
+        Additional properties specific to the problem type may be present.'
+      type: object
+      properties:
+        type:
+          description: A URI reference that identifies the problem type.
+          type: string
+          format: uri
+          example: https://developer.sumup.com/problem/not-found
+        title:
+          description: A short, human-readable summary of the problem type.
+          type: string
+          example: Requested resource couldn't be found.
+        status:
+          description: The HTTP status code generated by the origin server for this occurrence of the problem.
+          type: integer
+          example: 404
+        detail:
+          description: A human-readable explanation specific to this occurrence of the problem.
+          type: string
+          example: The requested resource doesn't exist or does not belong to you.
+        instance:
+          description: A URI reference that identifies the specific occurrence of the problem.
+          type: string
+          format: uri
+      additionalProperties: true
+      required:
+      - type
+      title: Problem
+    ReaderID:
+      description: 'Unique identifier of the object.
+
+
+        Note that this identifies the instance of the physical devices pairing with your SumUp account. If you [delete](https://developer.sumup.com/api/readers/delete-reader) a reader, and pair the device again, the ID will be different. Do not use this ID to refer to a physical device.'
+      type: string
+      example: rdr_3MSAFM23CK82VSTT4BN6RWSQ65
+      maxLength: 30
+      minLength: 30
+    ReaderPairingCode:
+      description: The pairing code is a 8 or 9 character alphanumeric string that is displayed on a SumUp Device after initiating the pairing. It is used to link the physical device to the created pairing.
+      type: string
+      example: 4WLFDSBF
+      maxLength: 9
+      minLength: 8
+    CreateReaderCheckoutError:
+      description: Error description
+      type: object
+      properties:
+        errors:
+          type: object
+          properties:
+            detail:
+              description: Error message
+              type: string
+            type:
+              description: Error code
+              type: string
+          required:
+          - type
+      required:
+      - errors
+      title: CreateReaderCheckoutError
+    ReaderStatus:
+      description: 'The status of the reader object gives information about the current state of the reader.
+
+
+        Possible values:
+
+
+        - `unknown` - The reader status is unknown.
+
+        - `processing` - The reader is created and waits for the physical device to confirm the pairing.
+
+        - `paired` - The reader is paired with a merchant account and can be used with SumUp APIs.
+
+        - `expired` - The pairing is expired and no longer usable with the account. The resource needs to get recreated.'
+      type: string
+      example: paired
+      enum:
+      - unknown
+      - processing
+      - paired
+      - expired
     StatusResponse:
       description: Status of a device
       type: object
@@ -1301,67 +1293,84 @@ components:
       required:
       - data
       title: StatusResponse
-    CreateReaderCheckoutResponse:
+    NotFound:
+      description: 404 Not Found
       type: object
       properties:
-        data:
+        errors:
           type: object
           properties:
-            client_transaction_id:
-              description: 'The client transaction ID is a unique identifier for the transaction that is generated for the client.
-
-
-                It can be used later to fetch the transaction details via the [Transactions API](https://developer.sumup.com/api/transactions/get).
-
-                '
+            detail:
+              description: Fuller message giving context to error
               type: string
-              example: 3fa85f64-5717-4562-b3fc-2c963f66afa6
           required:
-          - client_transaction_id
+          - detail
       example:
-        data:
-          client_transaction_id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+        errors:
+          detail: Not Found
       required:
-      - data
-      title: CreateReaderCheckoutResponse
+      - errors
+      title: NotFound
     ReaderName:
       description: Custom human-readable, user-defined name for easier identification of the reader.
       type: string
       example: Frontdesk
       maxLength: 500
-    Problem:
-      description: 'A RFC 9457 problem details object.
-
-
-        Additional properties specific to the problem type may be present.'
+    ReaderCheckoutStatusChange:
+      description: The callback payload containing the status change of the Reader Checkout.
       type: object
       properties:
-        type:
-          description: A URI reference that identifies the problem type.
+        event_type:
+          description: Type of event.
           type: string
-          format: uri
-          example: https://developer.sumup.com/problem/not-found
-        title:
-          description: A short, human-readable summary of the problem type.
+          example: solo.transaction.updated
+        id:
+          description: Unique identifier for the event.
           type: string
-          example: Requested resource couldn't be found.
-        status:
-          description: The HTTP status code generated by the origin server for this occurrence of the problem.
-          type: integer
-          example: 404
-        detail:
-          description: A human-readable explanation specific to this occurrence of the problem.
+          format: uuid
+          example: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+        payload:
+          description: The event payload.
+          type: object
+          properties:
+            client_transaction_id:
+              description: The unique client transaction id. It is the same returned by the Checkout.
+              type: string
+              format: uuid
+              example: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+            merchant_code:
+              description: The merchant code associated with the transaction.
+              type: string
+              example: M1234567
+            status:
+              description: The current status of the transaction.
+              type: string
+              example: successful
+              enum:
+              - successful
+              - failed
+            transaction_id:
+              description: 'The transaction id. Deprecated: use `client_transaction_id` instead.'
+              type: string
+              format: uuid
+              example: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+              deprecated: true
+          required:
+          - client_transaction_id
+          - merchant_code
+          - status
+        timestamp:
+          description: Timestamp of the event.
           type: string
-          example: The requested resource doesn't exist or does not belong to you.
-        instance:
-          description: A URI reference that identifies the specific occurrence of the problem.
-          type: string
-          format: uri
-      additionalProperties: true
+          format: date-time
+          example: 2023-10-05 14:48:00+00:00
       required:
-      - type
-      title: Problem
-    CreateReaderCheckoutError:
+      - id
+      - event_type
+      - payload
+      - timestamp
+      title: ReaderCheckoutStatusChange
+    CreateReaderTerminateError:
       description: Error description
       type: object
       properties:
@@ -1378,24 +1387,7 @@ components:
           - type
       required:
       - errors
-      title: CreateReaderCheckoutError
-    CreateReaderTerminateUnprocessableEntity:
-      description: Unprocessable entity
-      type: object
-      properties:
-        errors:
-          type: object
-          additionalProperties: true
-      example:
-        ReaderOffline:
-          description: Error returned when the target device is not online.
-          value:
-            errors:
-              detail: The device is offline.
-              type: READER_OFFLINE
-      required:
-      - errors
-      title: CreateReaderTerminateUnprocessableEntity
+      title: CreateReaderTerminateError
   securitySchemes:
     apiKey:
       description: API keys allow you easily interact with SumUp APIs. API keys are static tokens. You can create API keys from the [Dashboard](https://me.sumup.com/settings/api-keys)

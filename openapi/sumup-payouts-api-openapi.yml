@@ -1,11 +1,11 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: SumUp REST Checkouts Payouts API
+  title: SumUp REST Payouts API
   version: 1.0.0
-  description: 'SumUp’s REST API operates with [JSON](https://www.json.org/json-en.html) HTTP requests and responses. The request bodies are sent through resource-oriented URLs and use the standard [HTTP response codes](https://developer.mozilla.org/docs/Web/HTTP/Status).
+  description: 'SumUp’s REST API operates with JSON HTTP requests and responses. The request bodies are sent through resource-oriented URLs and use the standard HTTP response codes.
 
 
-    You can experiment and work on your integration in a sandbox that doesn''t affect your regular data and doesn''t process real transactions. To create a sandbox merchant account visit the [dashboard](https://me.sumup.com/settings/developer). To use the sandbox when interacting with SumUp APIs [create an API](https://me.sumup.com/settings/api-keys) key and use it for [authentication](https://developer.sumup.com/api/authentication).'
+    You can experiment and work on your integration in a sandbox that doesn''t affect your regular data and doesn''t process real transactions. To create a sandbox merchant account visit the dashboard. To use the sandbox when interacting with SumUp APIs create an API key and use it for authentication.'
   license:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0.html
@@ -167,16 +167,12 @@ paths:
       - user.profile_readonly
 components:
   schemas:
-    ErrorExtended:
-      description: Error payload with the invalid parameter reference.
-      allOf:
-      - $ref: '#/components/schemas/Error'
-      - type: object
-        properties:
-          param:
-            description: Parameter name (with relative location) to which the error applies. Parameters from embedded resources are displayed using dot notation. For example, `card.name` refers to the `name` parameter embedded in the `card` object.
-            type: string
-      title: Error Extended
+    FinancialPayouts:
+      description: Ordered list of payout and payout-deduction records.
+      type: array
+      items:
+        $ref: '#/components/schemas/FinancialPayout'
+      title: Financial Payouts
     FinancialPayout:
       description: 'A single payout-related record.
 
@@ -247,12 +243,19 @@ components:
       - reference
       - transaction_code
       title: Financial Payout
-    FinancialPayouts:
-      description: Ordered list of payout and payout-deduction records.
-      type: array
-      items:
-        $ref: '#/components/schemas/FinancialPayout'
-      title: Financial Payouts
+    Error:
+      description: Error message structure.
+      type: object
+      properties:
+        message:
+          description: Short description of the error.
+          type: string
+          example: Resource not found
+        error_code:
+          description: Platform code for the error.
+          type: string
+          example: NOT_FOUND
+      title: Error
     Problem:
       description: 'A RFC 9457 problem details object.
 
@@ -285,19 +288,16 @@ components:
       required:
       - type
       title: Problem
-    Error:
-      description: Error message structure.
-      type: object
-      properties:
-        message:
-          description: Short description of the error.
-          type: string
-          example: Resource not found
-        error_code:
-          description: Platform code for the error.
-          type: string
-          example: NOT_FOUND
-      title: Error
+    ErrorExtended:
+      description: Error payload with the invalid parameter reference.
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        properties:
+          param:
+            description: Parameter name (with relative location) to which the error applies. Parameters from embedded resources are displayed using dot notation. For example, `card.name` refers to the `name` parameter embedded in the `card` object.
+            type: string
+      title: Error Extended
   securitySchemes:
     apiKey:
       description: API keys allow you easily interact with SumUp APIs. API keys are static tokens. You can create API keys from the [Dashboard](https://me.sumup.com/settings/api-keys)
