@@ -383,6 +383,12 @@ components:
       required:
       - type
       title: Problem
+    Metadata:
+      description: Set of user-defined key-value pairs attached to the object. Partial updates are not supported. When updating, always submit whole metadata. Maximum of 64 parameters are allowed in the object.
+      type: object
+      example: {}
+      additionalProperties: true
+      maxProperties: 64
     Role:
       description: A custom role that can be used to assign set of permissions to members.
       type: object
@@ -430,12 +436,6 @@ components:
       - created_at
       - updated_at
       title: Role
-    Metadata:
-      description: Set of user-defined key-value pairs attached to the object. Partial updates are not supported. When updating, always submit whole metadata. Maximum of 64 parameters are allowed in the object.
-      type: object
-      example: {}
-      additionalProperties: true
-      maxProperties: 64
   securitySchemes:
     apiKey:
       description: API keys allow you easily interact with SumUp APIs. API keys are static tokens. You can create API keys from the [Dashboard](https://me.sumup.com/settings/api-keys)
