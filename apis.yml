@@ -297,6 +297,9 @@ apis:
     url: >-
       https://www.postman.com/sumupengineering/sumup-developers/collection/iqa7nry/sumup-rest-api
 common:
+  - type: CapabilityMap
+    url: capabilities/sumup-capability-edges.yml
+    name: SumUp Business Capability Map
   - type: IssueTracker
     url: https://github.com/sumup/sumup-openapi/issues
   - type: SecurityPolicy
