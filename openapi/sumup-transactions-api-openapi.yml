@@ -402,6 +402,456 @@ paths:
       - transactions.history
 components:
   schemas:
+    Device:
+      description: Details of the device used to create the transaction.
+      type: object
+      properties:
+        name:
+          description: Device name.
+          type: string
+          example: m0xx
+        system_name:
+          description: Device OS.
+          type: string
+          example: Android
+        model:
+          description: Device model.
+          type: string
+          example: GT-I9300
+        system_version:
+          description: Device OS version.
+          type: string
+          example: '4.3'
+        uuid:
+          description: Device UUID.
+          type: string
+          example: 3ae2a6b7-fb0d-3b50-adbf-cb7e2db30cd2
+      title: Device
+    EventType:
+      description: Type of the transaction event.
+      type: string
+      enum:
+      - PAYOUT
+      - CHARGE_BACK
+      - REFUND
+      - PAYOUT_DEDUCTION
+      title: Event Type
+    CardType:
+      description: Issuing card network of the payment card used for the transaction.
+      type: string
+      enum:
+      - ALELO
+      - AMEX
+      - CONECS
+      - CUP
+      - DINERS
+      - DISCOVER
+      - EFTPOS
+      - ELO
+      - ELV
+      - GIROCARD
+      - HIPERCARD
+      - INTERAC
+      - JCB
+      - MAESTRO
+      - MASTERCARD
+      - PLUXEE
+      - SWILE
+      - TICKET
+      - VISA
+      - VISA_ELECTRON
+      - VISA_VPAY
+      - VPAY
+      - VR
+      - UNKNOWN
+      title: Card Type
+    Lat:
+      description: Latitude value from the coordinates of the payment location (as received from the payment terminal reader).
+      type: number
+      format: float
+      maximum: 90
+      minimum: 0
+      title: Latitude
+    TransactionEvent:
+      description: Detailed information about a transaction event.
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/EventID'
+        event_type:
+          $ref: '#/components/schemas/EventType'
+        status:
+          $ref: '#/components/schemas/EventStatus'
+        amount:
+          description: Amount of the event.
+          type: number
+          format: decimal
+          example: 58.8
+        due_date:
+          description: Date when the transaction event is due to occur.
+          type: string
+          format: date
+          example: 2020-05-25
+        date:
+          description: Date when the transaction event occurred.
+          type: string
+          format: date
+          example: 2020-05-25
+        installment_number:
+          description: Consecutive number of the installment that is paid. Applicable only payout events, i.e. `event_type = PAYOUT`.
+          type: integer
+          example: 1
+        timestamp:
+          description: Date and time of the transaction event.
+          type: string
+          format: date-time
+          example: 2020-05-25 10:49:42.784000+00:00
+      title: Transaction Event
+    TransactionHistory:
+      description: Transaction entry returned in history listing responses.
+      allOf:
+      - $ref: '#/components/schemas/TransactionBase'
+      - $ref: '#/components/schemas/TransactionMixinHistory'
+      - type: object
+        properties:
+          transaction_id:
+            $ref: '#/components/schemas/TransactionID'
+          client_transaction_id:
+            description: Client-specific ID of the transaction.
+            type: string
+          user:
+            description: Email address of the registered user (merchant) to whom the payment is made.
+            type: string
+            format: email
+          type:
+            description: Type of the transaction for the registered user specified in the `user` property.
+            type: string
+            enum:
+            - PAYMENT
+            - REFUND
+            - CHARGE_BACK
+          card_type:
+            $ref: '#/components/schemas/CardType'
+          payout_date:
+            description: Payout date (if paid out at once).
+            type: string
+            format: date
+            example: 2019-08-28
+          payout_type:
+            description: Payout type.
+            type: string
+            example: BANK_ACCOUNT
+            enum:
+            - BANK_ACCOUNT
+            - PREPAID_CARD
+          refunded_amount:
+            description: Total refunded amount.
+            type: number
+            format: decimal
+            example: 0
+      title: Transaction History
+    TransactionStatus:
+      description: 'Current status of the transaction.
+
+
+        - `PENDING`: The transaction has been created but its final outcome is not known yet.
+
+        - `SUCCESSFUL`: The transaction completed successfully.
+
+        - `CANCELLED`: The transaction was cancelled or otherwise reversed before completion.
+
+        - `FAILED`: The transaction attempt did not complete successfully.
+
+        - `REFUNDED`: The transaction was refunded in full or in part.'
+      type: string
+      enum:
+      - SUCCESSFUL
+      - CANCELLED
+      - FAILED
+      - PENDING
+      - REFUNDED
+      title: Transaction Status
+    Product:
+      description: Purchase product.
+      type: object
+      properties:
+        name:
+          description: Product name.
+          type: string
+          example: Purchase reader for merchant with code ME3FCAVF
+        price_label:
+          description: Product description.
+          type: string
+        price:
+          description: Product price.
+          type: number
+          format: decimal
+          example: 100
+        vat_rate:
+          description: VAT percentage.
+          type: number
+          format: decimal
+        single_vat_amount:
+          description: VAT amount for a single product.
+          type: number
+          format: decimal
+        price_with_vat:
+          description: Product price incl. VAT.
+          type: number
+          format: decimal
+        vat_amount:
+          description: VAT amount.
+          type: number
+          format: decimal
+        quantity:
+          description: Product quantity.
+          type: integer
+          example: 1
+        total_price:
+          description: Quantity x product price.
+          type: number
+          format: decimal
+          example: 100
+        total_with_vat:
+          description: Total price incl. VAT.
+          type: number
+          format: decimal
+      title: Product
+    EntryMode:
+      description: Entry mode of the payment details.
+      type: string
+      enum:
+      - BOLETO
+      - SOFORT
+      - IDEAL
+      - BANCONTACT
+      - EPS
+      - MYBANK
+      - SATISPAY
+      - BLIK
+      - P24
+      - GIROPAY
+      - PIX
+      - QR_CODE_PIX
+      - APPLE_PAY
+      - GOOGLE_PAY
+      - PAYPAL
+      - TWINT
+      - NONE
+      - CHIP
+      - MANUAL_ENTRY
+      - CUSTOMER_ENTRY
+      - MAGSTRIPE_FALLBACK
+      - MAGSTRIPE
+      - DIRECT_DEBIT
+      - CONTACTLESS
+      - MOTO
+      - CONTACTLESS_MAGSTRIPE
+      - N/A
+      title: Entry Mode
+    TransactionID:
+      description: Unique ID of the transaction.
+      type: string
+      title: Transaction ID
+    PaymentType:
+      description: Payment type used for the transaction.
+      type: string
+      enum:
+      - CASH
+      - POS
+      - ECOM
+      - RECURRING
+      - BITCOIN
+      - BALANCE
+      - MOTO
+      - BOLETO
+      - DIRECT_DEBIT
+      - APM
+      - UNKNOWN
+      title: Payment Type
+    Lon:
+      description: Longitude value from the coordinates of the payment location (as received from the payment terminal reader).
+      type: number
+      format: float
+      maximum: 180
+      minimum: 0
+      title: Longitude
+    HorizontalAccuracy:
+      description: Indication of the precision of the geographical position received from the payment terminal.
+      type: number
+      format: float
+      title: Horizontal Accuracy
+    ElvCardAccount:
+      description: Details of the ELV card account associated with the transaction.
+      type: object
+      properties:
+        sort_code:
+          description: ELV card sort code.
+          type: string
+          example: '87096214'
+        last_4_digits:
+          description: ELV card account number last 4 digits.
+          type: string
+          example: '5674'
+        sequence_no:
+          description: ELV card sequence number.
+          type: integer
+          example: 1
+        iban:
+          description: ELV IBAN.
+          type: string
+          example: DE60870962140012345674
+      title: ELV Card Account
+    TransactionsHistoryLink:
+      description: Hypermedia link used for transaction history pagination.
+      type: object
+      properties:
+        rel:
+          description: Relation.
+          type: string
+          example: next
+        href:
+          description: Location.
+          type: string
+          example: limit=10&oldest_ref=090df9bf-93b7-40f1-8181-fbdb236568a1&order=ascending
+      required:
+      - rel
+      - href
+      title: Transactions History Link
+    EventStatus:
+      description: 'Status of the transaction event.
+
+
+        Not every value is used for every event type.
+
+
+        - `PENDING`: The event has been created but is not final yet. Used for events that are still being processed and whose final outcome is not known yet.
+
+        - `SCHEDULED`: The event is planned for a future payout cycle but has not been executed yet. This applies to payout events before money is actually sent out.
+
+        - `RECONCILED`: The underlying payment has been matched with settlement data and is ready to continue through payout processing, but the funds have not been paid out yet. This applies to payout events.
+
+        - `PAID_OUT`: The payout event has been completed and the funds were included in a merchant payout.
+
+        - `REFUNDED`: A refund event has been accepted and recorded in the refund flow. This is the status returned for refund events once the transaction amount is being or has been returned to the payer.
+
+        - `SUCCESSFUL`: The event completed successfully. Use this as the generic terminal success status for event types that do not expose a more specific business outcome such as `PAID_OUT` or `REFUNDED`.
+
+        - `FAILED`: The event could not be completed. Typical examples are a payout that could not be executed or an event that was rejected during processing.'
+      type: string
+      enum:
+      - FAILED
+      - PAID_OUT
+      - PENDING
+      - RECONCILED
+      - REFUNDED
+      - SCHEDULED
+      - SUCCESSFUL
+      title: Event Status
+    Error:
+      description: Error message structure.
+      type: object
+      properties:
+        message:
+          description: Short description of the error.
+          type: string
+          example: Resource not found
+        error_code:
+          description: Platform code for the error.
+          type: string
+          example: NOT_FOUND
+      title: Error
+    Link:
+      description: Details of a link to a related resource.
+      type: object
+      properties:
+        rel:
+          description: Specifies the relation to the current resource.
+          type: string
+        href:
+          description: URL for accessing the related resource.
+          type: string
+          format: uri
+        type:
+          description: Specifies the media type of the related resource.
+          type: string
+        min_amount:
+          description: Minimum allowed amount for the refund.
+          type: number
+          format: float
+        max_amount:
+          description: Maximum allowed amount for the refund.
+          type: number
+          format: float
+      title: Link
+    Problem:
+      description: 'A RFC 9457 problem details object.
+
+
+        Additional properties specific to the problem type may be present.'
+      type: object
+      properties:
+        type:
+          description: A URI reference that identifies the problem type.
+          type: string
+          format: uri
+          example: https://developer.sumup.com/problem/not-found
+        title:
+          description: A short, human-readable summary of the problem type.
+          type: string
+          example: Requested resource couldn't be found.
+        status:
+          description: The HTTP status code generated by the origin server for this occurrence of the problem.
+          type: integer
+          example: 404
+        detail:
+          description: A human-readable explanation specific to this occurrence of the problem.
+          type: string
+          example: The requested resource doesn't exist or does not belong to you.
+        instance:
+          description: A URI reference that identifies the specific occurrence of the problem.
+          type: string
+          format: uri
+      additionalProperties: true
+      required:
+      - type
+      title: Problem
+    Event:
+      description: High-level transaction event details.
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/EventID'
+        transaction_id:
+          $ref: '#/components/schemas/TransactionID'
+        type:
+          $ref: '#/components/schemas/EventType'
+        status:
+          $ref: '#/components/schemas/EventStatus'
+        amount:
+          description: Amount of the event.
+          type: number
+          format: float
+        timestamp:
+          description: Date and time of the transaction event.
+          type: string
+          format: date-time
+        fee_amount:
+          description: Amount of the fee related to the event.
+          type: number
+          format: float
+        installment_number:
+          description: Consecutive number of the installment.
+          type: integer
+        deducted_amount:
+          description: Amount deducted for the event.
+          type: number
+          format: float
+        deducted_fee_amount:
+          description: Amount of the fee deducted for the event.
+          type: number
+          format: float
+      title: Event
     TransactionFull:
       description: Full transaction resource with checkout, payout, and event details.
       allOf:
@@ -589,90 +1039,11 @@ components:
             description: Indicates whether tax deduction is enabled for the transaction.
             type: boolean
       title: Transaction Full
-    Currency:
-      description: Three-letter [ISO4217](https://en.wikipedia.org/wiki/ISO_4217) code of the currency for the amount. Currently supported currency values are enumerated above.
-      type: string
-      example: EUR
-      enum:
-      - BGN
-      - BRL
-      - CHF
-      - CLP
-      - COP
-      - CZK
-      - DKK
-      - EUR
-      - GBP
-      - HRK
-      - HUF
-      - NOK
-      - PLN
-      - RON
-      - SEK
-      - USD
-      title: Currency
-    TransactionCheckoutInfo:
-      description: Checkout-specific fields associated with a transaction.
-      type: object
-      properties:
-        merchant_code:
-          description: Unique code of the registered merchant to whom the payment is made.
-          type: string
-          example: MH4H92C7
-        vat_amount:
-          description: Amount of the applicable VAT (out of the total transaction amount).
-          type: number
-          format: float
-          example: 6
-        tip_amount:
-          description: Amount of the tip (out of the total transaction amount).
-          type: number
-          format: float
-          example: 3
-        entry_mode:
-          $ref: '#/components/schemas/EntryMode'
-        auth_code:
-          description: Authorization code for the transaction sent by the payment card issuer or bank. Applicable only to card payments.
-          type: string
-          example: '053201'
-      title: Transaction Checkout Info
-    Lon:
-      description: Longitude value from the coordinates of the payment location (as received from the payment terminal reader).
-      type: number
-      format: float
-      maximum: 180
-      minimum: 0
-      title: Longitude
-    EventStatus:
-      description: 'Status of the transaction event.
-
-
-        Not every value is used for every event type.
-
-
-        - `PENDING`: The event has been created but is not final yet. Used for events that are still being processed and whose final outcome is not known yet.
-
-        - `SCHEDULED`: The event is planned for a future payout cycle but has not been executed yet. This applies to payout events before money is actually sent out.
-
-        - `RECONCILED`: The underlying payment has been matched with settlement data and is ready to continue through payout processing, but the funds have not been paid out yet. This applies to payout events.
-
-        - `PAID_OUT`: The payout event has been completed and the funds were included in a merchant payout.
-
-        - `REFUNDED`: A refund event has been accepted and recorded in the refund flow. This is the status returned for refund events once the transaction amount is being or has been returned to the payer.
-
-        - `SUCCESSFUL`: The event completed successfully. Use this as the generic terminal success status for event types that do not expose a more specific business outcome such as `PAID_OUT` or `REFUNDED`.
-
-        - `FAILED`: The event could not be completed. Typical examples are a payout that could not be executed or an event that was rejected during processing.'
-      type: string
-      enum:
-      - FAILED
-      - PAID_OUT
-      - PENDING
-      - RECONCILED
-      - REFUNDED
-      - SCHEDULED
-      - SUCCESSFUL
-      title: Event Status
+    EventID:
+      description: Unique ID of the transaction event.
+      type: integer
+      format: int64
+      title: Event ID
     TransactionMixinHistory:
       description: Additional transaction fields used by history and detailed views.
       type: object
@@ -727,237 +1098,6 @@ components:
           type: integer
           minimum: 1
       title: Transaction Base
-    HorizontalAccuracy:
-      description: Indication of the precision of the geographical position received from the payment terminal.
-      type: number
-      format: float
-      title: Horizontal Accuracy
-    Lat:
-      description: Latitude value from the coordinates of the payment location (as received from the payment terminal reader).
-      type: number
-      format: float
-      maximum: 90
-      minimum: 0
-      title: Latitude
-    TransactionsHistoryLink:
-      description: Hypermedia link used for transaction history pagination.
-      type: object
-      properties:
-        rel:
-          description: Relation.
-          type: string
-          example: next
-        href:
-          description: Location.
-          type: string
-          example: limit=10&oldest_ref=090df9bf-93b7-40f1-8181-fbdb236568a1&order=ascending
-      required:
-      - rel
-      - href
-      title: Transactions History Link
-    Link:
-      description: Details of a link to a related resource.
-      type: object
-      properties:
-        rel:
-          description: Specifies the relation to the current resource.
-          type: string
-        href:
-          description: URL for accessing the related resource.
-          type: string
-          format: uri
-        type:
-          description: Specifies the media type of the related resource.
-          type: string
-        min_amount:
-          description: Minimum allowed amount for the refund.
-          type: number
-          format: float
-        max_amount:
-          description: Maximum allowed amount for the refund.
-          type: number
-          format: float
-      title: Link
-    EventType:
-      description: Type of the transaction event.
-      type: string
-      enum:
-      - PAYOUT
-      - CHARGE_BACK
-      - REFUND
-      - PAYOUT_DEDUCTION
-      title: Event Type
-    Problem:
-      description: 'A RFC 9457 problem details object.
-
-
-        Additional properties specific to the problem type may be present.'
-      type: object
-      properties:
-        type:
-          description: A URI reference that identifies the problem type.
-          type: string
-          format: uri
-          example: https://developer.sumup.com/problem/not-found
-        title:
-          description: A short, human-readable summary of the problem type.
-          type: string
-          example: Requested resource couldn't be found.
-        status:
-          description: The HTTP status code generated by the origin server for this occurrence of the problem.
-          type: integer
-          example: 404
-        detail:
-          description: A human-readable explanation specific to this occurrence of the problem.
-          type: string
-          example: The requested resource doesn't exist or does not belong to you.
-        instance:
-          description: A URI reference that identifies the specific occurrence of the problem.
-          type: string
-          format: uri
-      additionalProperties: true
-      required:
-      - type
-      title: Problem
-    CardType:
-      description: Issuing card network of the payment card used for the transaction.
-      type: string
-      enum:
-      - ALELO
-      - AMEX
-      - CONECS
-      - CUP
-      - DINERS
-      - DISCOVER
-      - EFTPOS
-      - ELO
-      - ELV
-      - GIROCARD
-      - HIPERCARD
-      - INTERAC
-      - JCB
-      - MAESTRO
-      - MASTERCARD
-      - PLUXEE
-      - SWILE
-      - TICKET
-      - VISA
-      - VISA_ELECTRON
-      - VISA_VPAY
-      - VPAY
-      - VR
-      - UNKNOWN
-      title: Card Type
-    PaymentType:
-      description: Payment type used for the transaction.
-      type: string
-      enum:
-      - CASH
-      - POS
-      - ECOM
-      - RECURRING
-      - BITCOIN
-      - BALANCE
-      - MOTO
-      - BOLETO
-      - DIRECT_DEBIT
-      - APM
-      - UNKNOWN
-      title: Payment Type
-    ElvCardAccount:
-      description: Details of the ELV card account associated with the transaction.
-      type: object
-      properties:
-        sort_code:
-          description: ELV card sort code.
-          type: string
-          example: '87096214'
-        last_4_digits:
-          description: ELV card account number last 4 digits.
-          type: string
-          example: '5674'
-        sequence_no:
-          description: ELV card sequence number.
-          type: integer
-          example: 1
-        iban:
-          description: ELV IBAN.
-          type: string
-          example: DE60870962140012345674
-      title: ELV Card Account
-    TransactionEvent:
-      description: Detailed information about a transaction event.
-      type: object
-      properties:
-        id:
-          $ref: '#/components/schemas/EventID'
-        event_type:
-          $ref: '#/components/schemas/EventType'
-        status:
-          $ref: '#/components/schemas/EventStatus'
-        amount:
-          description: Amount of the event.
-          type: number
-          format: decimal
-          example: 58.8
-        due_date:
-          description: Date when the transaction event is due to occur.
-          type: string
-          format: date
-          example: 2020-05-25
-        date:
-          description: Date when the transaction event occurred.
-          type: string
-          format: date
-          example: 2020-05-25
-        installment_number:
-          description: Consecutive number of the installment that is paid. Applicable only payout events, i.e. `event_type = PAYOUT`.
-          type: integer
-          example: 1
-        timestamp:
-          description: Date and time of the transaction event.
-          type: string
-          format: date-time
-          example: 2020-05-25 10:49:42.784000+00:00
-      title: Transaction Event
-    Error:
-      description: Error message structure.
-      type: object
-      properties:
-        message:
-          description: Short description of the error.
-          type: string
-          example: Resource not found
-        error_code:
-          description: Platform code for the error.
-          type: string
-          example: NOT_FOUND
-      title: Error
-    Device:
-      description: Details of the device used to create the transaction.
-      type: object
-      properties:
-        name:
-          description: Device name.
-          type: string
-          example: m0xx
-        system_name:
-          description: Device OS.
-          type: string
-          example: Android
-        model:
-          description: Device model.
-          type: string
-          example: GT-I9300
-        system_version:
-          description: Device OS version.
-          type: string
-          example: '4.3'
-        uuid:
-          description: Device UUID.
-          type: string
-          example: 3ae2a6b7-fb0d-3b50-adbf-cb7e2db30cd2
-      title: Device
     CardResponse:
       description: Details of the payment card.
       type: object
@@ -972,193 +1112,53 @@ components:
         type:
           $ref: '#/components/schemas/CardType'
       title: Card Response
-    EntryMode:
-      description: Entry mode of the payment details.
-      type: string
-      enum:
-      - BOLETO
-      - SOFORT
-      - IDEAL
-      - BANCONTACT
-      - EPS
-      - MYBANK
-      - SATISPAY
-      - BLIK
-      - P24
-      - GIROPAY
-      - PIX
-      - QR_CODE_PIX
-      - APPLE_PAY
-      - GOOGLE_PAY
-      - PAYPAL
-      - TWINT
-      - NONE
-      - CHIP
-      - MANUAL_ENTRY
-      - CUSTOMER_ENTRY
-      - MAGSTRIPE_FALLBACK
-      - MAGSTRIPE
-      - DIRECT_DEBIT
-      - CONTACTLESS
-      - MOTO
-      - CONTACTLESS_MAGSTRIPE
-      - N/A
-      title: Entry Mode
-    TransactionID:
-      description: Unique ID of the transaction.
-      type: string
-      title: Transaction ID
-    Event:
-      description: High-level transaction event details.
+    TransactionCheckoutInfo:
+      description: Checkout-specific fields associated with a transaction.
       type: object
       properties:
-        id:
-          $ref: '#/components/schemas/EventID'
-        transaction_id:
-          $ref: '#/components/schemas/TransactionID'
-        type:
-          $ref: '#/components/schemas/EventType'
-        status:
-          $ref: '#/components/schemas/EventStatus'
-        amount:
-          description: Amount of the event.
-          type: number
-          format: float
-        timestamp:
-          description: Date and time of the transaction event.
+        merchant_code:
+          description: Unique code of the registered merchant to whom the payment is made.
           type: string
-          format: date-time
-        fee_amount:
-          description: Amount of the fee related to the event.
-          type: number
-          format: float
-        installment_number:
-          description: Consecutive number of the installment.
-          type: integer
-        deducted_amount:
-          description: Amount deducted for the event.
-          type: number
-          format: float
-        deducted_fee_amount:
-          description: Amount of the fee deducted for the event.
-          type: number
-          format: float
-      title: Event
-    EventID:
-      description: Unique ID of the transaction event.
-      type: integer
-      format: int64
-      title: Event ID
-    Product:
-      description: Purchase product.
-      type: object
-      properties:
-        name:
-          description: Product name.
-          type: string
-          example: Purchase reader for merchant with code ME3FCAVF
-        price_label:
-          description: Product description.
-          type: string
-        price:
-          description: Product price.
-          type: number
-          format: decimal
-          example: 100
-        vat_rate:
-          description: VAT percentage.
-          type: number
-          format: decimal
-        single_vat_amount:
-          description: VAT amount for a single product.
-          type: number
-          format: decimal
-        price_with_vat:
-          description: Product price incl. VAT.
-          type: number
-          format: decimal
+          example: MH4H92C7
         vat_amount:
-          description: VAT amount.
+          description: Amount of the applicable VAT (out of the total transaction amount).
           type: number
-          format: decimal
-        quantity:
-          description: Product quantity.
-          type: integer
-          example: 1
-        total_price:
-          description: Quantity x product price.
+          format: float
+          example: 6
+        tip_amount:
+          description: Amount of the tip (out of the total transaction amount).
           type: number
-          format: decimal
-          example: 100
-        total_with_vat:
-          description: Total price incl. VAT.
-          type: number
-          format: decimal
-      title: Product
-    TransactionHistory:
-      description: Transaction entry returned in history listing responses.
-      allOf:
-      - $ref: '#/components/schemas/TransactionBase'
-      - $ref: '#/components/schemas/TransactionMixinHistory'
-      - type: object
-        properties:
-          transaction_id:
-            $ref: '#/components/schemas/TransactionID'
-          client_transaction_id:
-            description: Client-specific ID of the transaction.
-            type: string
-          user:
-            description: Email address of the registered user (merchant) to whom the payment is made.
-            type: string
-            format: email
-          type:
-            description: Type of the transaction for the registered user specified in the `user` property.
-            type: string
-            enum:
-            - PAYMENT
-            - REFUND
-            - CHARGE_BACK
-          card_type:
-            $ref: '#/components/schemas/CardType'
-          payout_date:
-            description: Payout date (if paid out at once).
-            type: string
-            format: date
-            example: 2019-08-28
-          payout_type:
-            description: Payout type.
-            type: string
-            example: BANK_ACCOUNT
-            enum:
-            - BANK_ACCOUNT
-            - PREPAID_CARD
-          refunded_amount:
-            description: Total refunded amount.
-            type: number
-            format: decimal
-            example: 0
-      title: Transaction History
-    TransactionStatus:
-      description: 'Current status of the transaction.
-
-
-        - `PENDING`: The transaction has been created but its final outcome is not known yet.
-
-        - `SUCCESSFUL`: The transaction completed successfully.
-
-        - `CANCELLED`: The transaction was cancelled or otherwise reversed before completion.
-
-        - `FAILED`: The transaction attempt did not complete successfully.
-
-        - `REFUNDED`: The transaction was refunded in full or in part.'
+          format: float
+          example: 3
+        entry_mode:
+          $ref: '#/components/schemas/EntryMode'
+        auth_code:
+          description: Authorization code for the transaction sent by the payment card issuer or bank. Applicable only to card payments.
+          type: string
+          example: '053201'
+      title: Transaction Checkout Info
+    Currency:
+      description: Three-letter [ISO4217](https://en.wikipedia.org/wiki/ISO_4217) code of the currency for the amount. Currently supported currency values are enumerated above.
       type: string
+      example: EUR
       enum:
-      - SUCCESSFUL
-      - CANCELLED
-      - FAILED
-      - PENDING
-      - REFUNDED
-      title: Transaction Status
+      - BGN
+      - BRL
+      - CHF
+      - CLP
+      - COP
+      - CZK
+      - DKK
+      - EUR
+      - GBP
+      - HRK
+      - HUF
+      - NOK
+      - PLN
+      - RON
+      - SEK
+      - USD
+      title: Currency
   securitySchemes:
     apiKey:
       description: API keys allow you easily interact with SumUp APIs. API keys are static tokens. You can create API keys from the [Dashboard](https://me.sumup.com/settings/api-keys)

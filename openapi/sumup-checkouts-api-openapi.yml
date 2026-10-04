@@ -921,76 +921,246 @@ paths:
       x-scopes: []
 components:
   schemas:
-    Currency:
-      description: Three-letter [ISO4217](https://en.wikipedia.org/wiki/ISO_4217) code of the currency for the amount. Currently supported currency values are enumerated above.
+    CardType:
+      description: Issuing card network of the payment card used for the transaction.
       type: string
-      example: EUR
       enum:
-      - BGN
-      - BRL
-      - CHF
-      - CLP
-      - COP
-      - CZK
-      - DKK
-      - EUR
-      - GBP
-      - HRK
-      - HUF
-      - NOK
-      - PLN
-      - RON
-      - SEK
-      - USD
-      title: Currency
-    TransactionCheckoutInfo:
-      description: Checkout-specific fields associated with a transaction.
+      - ALELO
+      - AMEX
+      - CONECS
+      - CUP
+      - DINERS
+      - DISCOVER
+      - EFTPOS
+      - ELO
+      - ELV
+      - GIROCARD
+      - HIPERCARD
+      - INTERAC
+      - JCB
+      - MAESTRO
+      - MASTERCARD
+      - PLUXEE
+      - SWILE
+      - TICKET
+      - VISA
+      - VISA_ELECTRON
+      - VISA_VPAY
+      - VPAY
+      - VR
+      - UNKNOWN
+      title: Card Type
+    ErrorForbidden:
+      description: Error message for forbidden requests.
       type: object
       properties:
-        merchant_code:
-          description: Unique code of the registered merchant to whom the payment is made.
+        error_message:
+          description: Short description of the error.
           type: string
-          example: MH4H92C7
-        vat_amount:
-          description: Amount of the applicable VAT (out of the total transaction amount).
-          type: number
-          format: float
-          example: 6
-        tip_amount:
-          description: Amount of the tip (out of the total transaction amount).
-          type: number
-          format: float
-          example: 3
-        entry_mode:
-          $ref: '#/components/schemas/EntryMode'
-        auth_code:
-          description: Authorization code for the transaction sent by the payment card issuer or bank. Applicable only to card payments.
+          example: request_not_allowed
+        error_code:
+          description: Platform code for the error.
           type: string
-          example: '053201'
-      title: Transaction Checkout Info
-    MandateResponse:
-      description: Details of the mandate linked to the saved payment instrument.
+          example: FORBIDDEN
+        status_code:
+          description: HTTP status code for the error.
+          type: string
+          example: '403'
+      title: Error Forbidden
+    Card:
+      description: __Required when payment type is `card`.__ Details of the payment card.
       type: object
       properties:
-        type:
-          description: Type of mandate stored for the checkout or payment instrument.
+        name:
+          description: Name of the cardholder as it appears on the payment card.
           type: string
-        status:
-          description: Current lifecycle status of the mandate.
+          example: FIRSTNAME LASTNAME
+          writeOnly: true
+        number:
+          description: Number of the payment card (without spaces).
           type: string
-          example: active
+          example: '1234567890123456'
+          writeOnly: true
+        expiry_year:
+          description: Year from the expiration time of the payment card. Accepted formats are `YY` and `YYYY`.
+          type: string
+          example: '2023'
+          maxLength: 4
+          minLength: 2
+          writeOnly: true
+        expiry_month:
+          description: Month from the expiration time of the payment card. Accepted format is `MM`.
+          type: string
           enum:
-          - active
-          - inactive
-        merchant_code:
-          description: Merchant account for which the mandate is valid.
+          - '01'
+          - '02'
+          - '03'
+          - '04'
+          - '05'
+          - '06'
+          - '07'
+          - 08
+          - 09
+          - '10'
+          - '11'
+          - '12'
+          writeOnly: true
+        cvv:
+          description: Three or four-digit card verification value (security code) of the payment card.
           type: string
-          example: MH4H92C7
-      example:
-        type: recurrent
-        status: active
-        merchant_code: MH4H92C7
-      title: Mandate Response
+          example: '123'
+          maxLength: 4
+          minLength: 3
+          writeOnly: true
+        zip_code:
+          description: Required five-digit ZIP code. Applicable only to merchant users in the USA.
+          type: string
+          example: '12345'
+          maxLength: 5
+          minLength: 5
+          writeOnly: true
+        type:
+          $ref: '#/components/schemas/CardType'
+      required:
+      - name
+      - number
+      - expiry_month
+      - expiry_year
+      - cvv
+      - type
+      title: Card
+    DetailsError:
+      description: Error message structure.
+      type: object
+      properties:
+        title:
+          description: Short title of the error.
+          type: string
+          example: Bad Request
+        details:
+          description: Details of the error.
+          type: string
+          example: One or more of the parameters are invalid.
+        status:
+          description: The status code.
+          type: number
+          example: 400
+        failed_constraints:
+          description: List of violated validation constraints.
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+              reference:
+                type: string
+          example:
+          - message: Currency must also be specified when filtering by amount
+            reference: currency
+      title: Details Error
+    TransactionStatus:
+      description: 'Current status of the transaction.
+
+
+        - `PENDING`: The transaction has been created but its final outcome is not known yet.
+
+        - `SUCCESSFUL`: The transaction completed successfully.
+
+        - `CANCELLED`: The transaction was cancelled or otherwise reversed before completion.
+
+        - `FAILED`: The transaction attempt did not complete successfully.
+
+        - `REFUNDED`: The transaction was refunded in full or in part.'
+      type: string
+      enum:
+      - SUCCESSFUL
+      - CANCELLED
+      - FAILED
+      - PENDING
+      - REFUNDED
+      title: Transaction Status
+    EntryMode:
+      description: Entry mode of the payment details.
+      type: string
+      enum:
+      - BOLETO
+      - SOFORT
+      - IDEAL
+      - BANCONTACT
+      - EPS
+      - MYBANK
+      - SATISPAY
+      - BLIK
+      - P24
+      - GIROPAY
+      - PIX
+      - QR_CODE_PIX
+      - APPLE_PAY
+      - GOOGLE_PAY
+      - PAYPAL
+      - TWINT
+      - NONE
+      - CHIP
+      - MANUAL_ENTRY
+      - CUSTOMER_ENTRY
+      - MAGSTRIPE_FALLBACK
+      - MAGSTRIPE
+      - DIRECT_DEBIT
+      - CONTACTLESS
+      - MOTO
+      - CONTACTLESS_MAGSTRIPE
+      - N/A
+      title: Entry Mode
+    PaymentType:
+      description: Payment type used for the transaction.
+      type: string
+      enum:
+      - CASH
+      - POS
+      - ECOM
+      - RECURRING
+      - BITCOIN
+      - BALANCE
+      - MOTO
+      - BOLETO
+      - DIRECT_DEBIT
+      - APM
+      - UNKNOWN
+      title: Payment Type
+    CheckoutSuccess:
+      description: Checkout resource returned after a synchronous processing attempt. In addition to the base checkout fields, it can include the resulting transaction identifiers and any newly created payment instrument token.
+      allOf:
+      - $ref: '#/components/schemas/Checkout'
+      - type: object
+        properties:
+          transaction_code:
+            description: Transaction code of the successful transaction with which the payment for the checkout is completed.
+            type: string
+            example: TEENSK4W2K
+            readOnly: true
+          transaction_id:
+            description: Transaction ID of the successful transaction with which the payment for the checkout is completed.
+            type: string
+            example: 410fc44a-5956-44e1-b5cc-19c6f8d727a4
+            readOnly: true
+          merchant_name:
+            description: Name of the merchant
+            type: string
+            example: Sample Merchant
+          redirect_url:
+            description: URL where the payer is redirected after a redirect-based payment or SCA flow completes.
+            type: string
+            example: https://mysite.com/completed_purchase
+          payment_instrument:
+            description: Details of the saved payment instrument created or reused during checkout processing.
+            type: object
+            properties:
+              token:
+                description: Token value
+                type: string
+                example: e76d7e5c-9375-4fac-a7e7-b19dc5302fbc
+      title: Checkout Success
     PersonalDetails:
       description: Personal details for the customer.
       type: object
@@ -1024,6 +1194,86 @@ components:
         address:
           $ref: '#/components/schemas/AddressLegacy'
       title: Personal Details
+    CheckoutAccepted:
+      description: Response returned when checkout processing requires an additional payer action, such as a 3DS challenge or a redirect to an external payment method page.
+      type: object
+      properties:
+        next_step:
+          description: Instructions for the next action the payer or client must take.
+          type: object
+          properties:
+            url:
+              description: URL to open or submit in order to continue processing.
+              type: string
+              example: https://dummy-3ds-gateway.com/cap?RID=1233&VAA=A
+            method:
+              description: HTTP method to use when following the next step.
+              type: string
+              example: POST
+            redirect_url:
+              description: Merchant URL where the payer returns after the external flow finishes.
+              type: string
+              example: https://mysite.com/completed_purchase
+            mechanism:
+              description: Allowed presentation mechanisms for the next step. `iframe` means the flow can be embedded, while `browser` means it can be completed through a full-page redirect.
+              type: array
+              items:
+                type: string
+                enum:
+                - iframe
+                - browser
+            payload:
+              description: Parameters required to complete the next step. The exact keys depend on the payment provider and flow type.
+              type: object
+              example:
+                PaReq: eJxVUttu2zAM/RXDr4MjyY5dO6BVuE27FZuDZHGG9VGRmMSFb/Wljff1k9KkF0APPCR1eHQouD6WhfWCbZfXVWyzCbUtrGSt8mof25vs3gltq+tFpURRVxjbI3b2NYfs0CLO1yiHFjmk2HVij1auYrsRW1+F0U4qZxfKwJlur4QTYcQcJoIdc+XO2/poc1gmv/GZw3k216MnLpAL1JytPIiq5yDk883Dgk+DwPV9IGcIJbYPc84o1Ye6lHqu5wVA3tJQiRL5eiiHxlqKscSq76xfeZn3qICciiDroerbkYeuvnYBMLQFP/R9MyOkM9cnCoGYJJAPScvBRJ0mOeaKr/6l08XT6jXN7tx0vvHSbOMtsj1dzB9jIKYDlOiRu1omYyy0WDCj0YxFQE55EKWZzj2f6ee9xdCYEcmnwucEaN9bvaeRR1ehFn9BgMdGr0l3aCvfYyAfem9/GENlrz36ufpTBPTv07r8lm3qpPiOo1y/7u+SJImNzacmw5hrX1wt/kRpABBDQ84bJOf16+jLt/gPhUvGGw==
+                MD: b1a536c0-29b9-11eb-adc1-0242ac120002
+                TermUrl: https://api.sumup.com/v0.1/checkouts/e552de3b-1777-4c91-bdb8-756967678572/complete_payment
+              additionalProperties:
+                type: string
+      title: Checkout Accepted
+    AddressLegacy:
+      description: Profile's personal address information.
+      type: object
+      properties:
+        city:
+          description: City name from the address.
+          type: string
+          example: Berlin
+        country:
+          description: Two letter country code formatted according to [ISO3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2).
+          type: string
+          example: DE
+        line_1:
+          description: First line of the address with details of the street name and number.
+          type: string
+          example: Sample street
+        line_2:
+          description: Second line of the address with details of the building, unit, apartment, and floor numbers.
+          type: string
+          example: ap. 5
+        postal_code:
+          description: Postal code from the address.
+          type: string
+          example: '10115'
+        state:
+          description: State name or abbreviation from the address.
+          type: string
+          example: Berlin
+      title: Address Legacy
+    Error:
+      description: Error message structure.
+      type: object
+      properties:
+        message:
+          description: Short description of the error.
+          type: string
+          example: Resource not found
+        error_code:
+          description: Platform code for the error.
+          type: string
+          example: NOT_FOUND
+      title: Error
     ProcessCheckout:
       description: Request body for attempting payment on an existing checkout. The required companion fields depend on the selected `payment_type`, for example card details, saved-card data, or payer information required by a specific payment method.
       type: object
@@ -1096,39 +1346,6 @@ components:
       required:
       - payment_type
       title: Process Checkout
-    TransactionBase:
-      description: Details of the transaction.
-      type: object
-      properties:
-        id:
-          description: Unique ID of the transaction.
-          type: string
-          example: 6b425463-3e1b-431d-83fa-1e51c2925e99
-        transaction_code:
-          description: Transaction code returned by the acquirer/processing entity after processing the transaction.
-          type: string
-          example: TEENSK4W2K
-        amount:
-          description: Total amount of the transaction.
-          type: number
-          format: float
-          example: 10.1
-        currency:
-          $ref: '#/components/schemas/Currency'
-        timestamp:
-          description: Date and time of the creation of the transaction. Response format expressed according to [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) code.
-          type: string
-          format: date-time
-          example: 2020-02-29 10:56:56.876000+00:00
-        status:
-          $ref: '#/components/schemas/TransactionStatus'
-        payment_type:
-          $ref: '#/components/schemas/PaymentType'
-        installments_count:
-          description: Current number of the installment for deferred payments.
-          type: integer
-          minimum: 1
-      title: Transaction Base
     HostedCheckout:
       description: Hosted Checkout configuration. Enable it to receive a SumUp-hosted payment page URL in the checkout response.
       type: object
@@ -1140,6 +1357,61 @@ components:
       required:
       - enabled
       title: Hosted Checkout
+    MandateResponse:
+      description: Details of the mandate linked to the saved payment instrument.
+      type: object
+      properties:
+        type:
+          description: Type of mandate stored for the checkout or payment instrument.
+          type: string
+        status:
+          description: Current lifecycle status of the mandate.
+          type: string
+          example: active
+          enum:
+          - active
+          - inactive
+        merchant_code:
+          description: Merchant account for which the mandate is valid.
+          type: string
+          example: MH4H92C7
+      example:
+        type: recurrent
+        status: active
+        merchant_code: MH4H92C7
+      title: Mandate Response
+    Problem:
+      description: 'A RFC 9457 problem details object.
+
+
+        Additional properties specific to the problem type may be present.'
+      type: object
+      properties:
+        type:
+          description: A URI reference that identifies the problem type.
+          type: string
+          format: uri
+          example: https://developer.sumup.com/problem/not-found
+        title:
+          description: A short, human-readable summary of the problem type.
+          type: string
+          example: Requested resource couldn't be found.
+        status:
+          description: The HTTP status code generated by the origin server for this occurrence of the problem.
+          type: integer
+          example: 404
+        detail:
+          description: A human-readable explanation specific to this occurrence of the problem.
+          type: string
+          example: The requested resource doesn't exist or does not belong to you.
+        instance:
+          description: A URI reference that identifies the specific occurrence of the problem.
+          type: string
+          format: uri
+      additionalProperties: true
+      required:
+      - type
+      title: Problem
     MandatePayload:
       description: Mandate details used when a checkout should create a reusable card token for future recurring or merchant-initiated payments.
       type: object
@@ -1166,54 +1438,6 @@ components:
       - type
       - user_agent
       title: Mandate Payload
-    ErrorExtended:
-      description: Error payload with the invalid parameter reference.
-      allOf:
-      - $ref: '#/components/schemas/Error'
-      - type: object
-        properties:
-          param:
-            description: Parameter name (with relative location) to which the error applies. Parameters from embedded resources are displayed using dot notation. For example, `card.name` refers to the `name` parameter embedded in the `card` object.
-            type: string
-      title: Error Extended
-    CheckoutAccepted:
-      description: Response returned when checkout processing requires an additional payer action, such as a 3DS challenge or a redirect to an external payment method page.
-      type: object
-      properties:
-        next_step:
-          description: Instructions for the next action the payer or client must take.
-          type: object
-          properties:
-            url:
-              description: URL to open or submit in order to continue processing.
-              type: string
-              example: https://dummy-3ds-gateway.com/cap?RID=1233&VAA=A
-            method:
-              description: HTTP method to use when following the next step.
-              type: string
-              example: POST
-            redirect_url:
-              description: Merchant URL where the payer returns after the external flow finishes.
-              type: string
-              example: https://mysite.com/completed_purchase
-            mechanism:
-              description: Allowed presentation mechanisms for the next step. `iframe` means the flow can be embedded, while `browser` means it can be completed through a full-page redirect.
-              type: array
-              items:
-                type: string
-                enum:
-                - iframe
-                - browser
-            payload:
-              description: Parameters required to complete the next step. The exact keys depend on the payment provider and flow type.
-              type: object
-              example:
-                PaReq: eJxVUttu2zAM/RXDr4MjyY5dO6BVuE27FZuDZHGG9VGRmMSFb/Wljff1k9KkF0APPCR1eHQouD6WhfWCbZfXVWyzCbUtrGSt8mof25vs3gltq+tFpURRVxjbI3b2NYfs0CLO1yiHFjmk2HVij1auYrsRW1+F0U4qZxfKwJlur4QTYcQcJoIdc+XO2/poc1gmv/GZw3k216MnLpAL1JytPIiq5yDk883Dgk+DwPV9IGcIJbYPc84o1Ye6lHqu5wVA3tJQiRL5eiiHxlqKscSq76xfeZn3qICciiDroerbkYeuvnYBMLQFP/R9MyOkM9cnCoGYJJAPScvBRJ0mOeaKr/6l08XT6jXN7tx0vvHSbOMtsj1dzB9jIKYDlOiRu1omYyy0WDCj0YxFQE55EKWZzj2f6ee9xdCYEcmnwucEaN9bvaeRR1ehFn9BgMdGr0l3aCvfYyAfem9/GENlrz36ufpTBPTv07r8lm3qpPiOo1y/7u+SJImNzacmw5hrX1wt/kRpABBDQ84bJOf16+jLt/gPhUvGGw==
-                MD: b1a536c0-29b9-11eb-adc1-0242ac120002
-                TermUrl: https://api.sumup.com/v0.1/checkouts/e552de3b-1777-4c91-bdb8-756967678572/complete_payment
-              additionalProperties:
-                type: string
-      title: Checkout Accepted
     CheckoutCreateRequest:
       description: Request body for creating a checkout before processing payment. Define the payment amount, currency, merchant, and optional customer or redirect behavior here.
       type: object
@@ -1273,207 +1497,16 @@ components:
       - currency
       - merchant_code
       title: Checkout Create Request
-    ErrorForbidden:
-      description: Error message for forbidden requests.
-      type: object
-      properties:
-        error_message:
-          description: Short description of the error.
-          type: string
-          example: request_not_allowed
-        error_code:
-          description: Platform code for the error.
-          type: string
-          example: FORBIDDEN
-        status_code:
-          description: HTTP status code for the error.
-          type: string
-          example: '403'
-      title: Error Forbidden
-    Problem:
-      description: 'A RFC 9457 problem details object.
-
-
-        Additional properties specific to the problem type may be present.'
-      type: object
-      properties:
-        type:
-          description: A URI reference that identifies the problem type.
-          type: string
-          format: uri
-          example: https://developer.sumup.com/problem/not-found
-        title:
-          description: A short, human-readable summary of the problem type.
-          type: string
-          example: Requested resource couldn't be found.
-        status:
-          description: The HTTP status code generated by the origin server for this occurrence of the problem.
-          type: integer
-          example: 404
-        detail:
-          description: A human-readable explanation specific to this occurrence of the problem.
-          type: string
-          example: The requested resource doesn't exist or does not belong to you.
-        instance:
-          description: A URI reference that identifies the specific occurrence of the problem.
-          type: string
-          format: uri
-      additionalProperties: true
-      required:
-      - type
-      title: Problem
-    CardType:
-      description: Issuing card network of the payment card used for the transaction.
-      type: string
-      enum:
-      - ALELO
-      - AMEX
-      - CONECS
-      - CUP
-      - DINERS
-      - DISCOVER
-      - EFTPOS
-      - ELO
-      - ELV
-      - GIROCARD
-      - HIPERCARD
-      - INTERAC
-      - JCB
-      - MAESTRO
-      - MASTERCARD
-      - PLUXEE
-      - SWILE
-      - TICKET
-      - VISA
-      - VISA_ELECTRON
-      - VISA_VPAY
-      - VPAY
-      - VR
-      - UNKNOWN
-      title: Card Type
-    PaymentType:
-      description: Payment type used for the transaction.
-      type: string
-      enum:
-      - CASH
-      - POS
-      - ECOM
-      - RECURRING
-      - BITCOIN
-      - BALANCE
-      - MOTO
-      - BOLETO
-      - DIRECT_DEBIT
-      - APM
-      - UNKNOWN
-      title: Payment Type
-    Error:
-      description: Error message structure.
-      type: object
-      properties:
-        message:
-          description: Short description of the error.
-          type: string
-          example: Resource not found
-        error_code:
-          description: Platform code for the error.
-          type: string
-          example: NOT_FOUND
-      title: Error
-    EntryMode:
-      description: Entry mode of the payment details.
-      type: string
-      enum:
-      - BOLETO
-      - SOFORT
-      - IDEAL
-      - BANCONTACT
-      - EPS
-      - MYBANK
-      - SATISPAY
-      - BLIK
-      - P24
-      - GIROPAY
-      - PIX
-      - QR_CODE_PIX
-      - APPLE_PAY
-      - GOOGLE_PAY
-      - PAYPAL
-      - TWINT
-      - NONE
-      - CHIP
-      - MANUAL_ENTRY
-      - CUSTOMER_ENTRY
-      - MAGSTRIPE_FALLBACK
-      - MAGSTRIPE
-      - DIRECT_DEBIT
-      - CONTACTLESS
-      - MOTO
-      - CONTACTLESS_MAGSTRIPE
-      - N/A
-      title: Entry Mode
-    Card:
-      description: __Required when payment type is `card`.__ Details of the payment card.
-      type: object
-      properties:
-        name:
-          description: Name of the cardholder as it appears on the payment card.
-          type: string
-          example: FIRSTNAME LASTNAME
-          writeOnly: true
-        number:
-          description: Number of the payment card (without spaces).
-          type: string
-          example: '1234567890123456'
-          writeOnly: true
-        expiry_year:
-          description: Year from the expiration time of the payment card. Accepted formats are `YY` and `YYYY`.
-          type: string
-          example: '2023'
-          maxLength: 4
-          minLength: 2
-          writeOnly: true
-        expiry_month:
-          description: Month from the expiration time of the payment card. Accepted format is `MM`.
-          type: string
-          enum:
-          - '01'
-          - '02'
-          - '03'
-          - '04'
-          - '05'
-          - '06'
-          - '07'
-          - 08
-          - 09
-          - '10'
-          - '11'
-          - '12'
-          writeOnly: true
-        cvv:
-          description: Three or four-digit card verification value (security code) of the payment card.
-          type: string
-          example: '123'
-          maxLength: 4
-          minLength: 3
-          writeOnly: true
-        zip_code:
-          description: Required five-digit ZIP code. Applicable only to merchant users in the USA.
-          type: string
-          example: '12345'
-          maxLength: 5
-          minLength: 5
-          writeOnly: true
-        type:
-          $ref: '#/components/schemas/CardType'
-      required:
-      - name
-      - number
-      - expiry_month
-      - expiry_year
-      - cvv
-      - type
-      title: Card
+    ErrorExtended:
+      description: Error payload with the invalid parameter reference.
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        properties:
+          param:
+            description: Parameter name (with relative location) to which the error applies. Parameters from embedded resources are displayed using dot notation. For example, `card.name` refers to the `name` parameter embedded in the `card` object.
+            type: string
+      title: Error Extended
     Checkout:
       description: Core checkout resource returned by the Checkouts API. A checkout is created before payment processing and then updated as payment attempts, redirects, and resulting transactions are attached to it.
       type: object
@@ -1564,119 +1597,86 @@ components:
             auth_code: '012345'
           uniqueItems: true
       title: Checkout
-    DetailsError:
-      description: Error message structure.
+    TransactionBase:
+      description: Details of the transaction.
       type: object
       properties:
-        title:
-          description: Short title of the error.
+        id:
+          description: Unique ID of the transaction.
           type: string
-          example: Bad Request
-        details:
-          description: Details of the error.
+          example: 6b425463-3e1b-431d-83fa-1e51c2925e99
+        transaction_code:
+          description: Transaction code returned by the acquirer/processing entity after processing the transaction.
           type: string
-          example: One or more of the parameters are invalid.
-        status:
-          description: The status code.
+          example: TEENSK4W2K
+        amount:
+          description: Total amount of the transaction.
           type: number
-          example: 400
-        failed_constraints:
-          description: List of violated validation constraints.
-          type: array
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-              reference:
-                type: string
-          example:
-          - message: Currency must also be specified when filtering by amount
-            reference: currency
-      title: Details Error
-    CheckoutSuccess:
-      description: Checkout resource returned after a synchronous processing attempt. In addition to the base checkout fields, it can include the resulting transaction identifiers and any newly created payment instrument token.
-      allOf:
-      - $ref: '#/components/schemas/Checkout'
-      - type: object
-        properties:
-          transaction_code:
-            description: Transaction code of the successful transaction with which the payment for the checkout is completed.
-            type: string
-            example: TEENSK4W2K
-            readOnly: true
-          transaction_id:
-            description: Transaction ID of the successful transaction with which the payment for the checkout is completed.
-            type: string
-            example: 410fc44a-5956-44e1-b5cc-19c6f8d727a4
-            readOnly: true
-          merchant_name:
-            description: Name of the merchant
-            type: string
-            example: Sample Merchant
-          redirect_url:
-            description: URL where the payer is redirected after a redirect-based payment or SCA flow completes.
-            type: string
-            example: https://mysite.com/completed_purchase
-          payment_instrument:
-            description: Details of the saved payment instrument created or reused during checkout processing.
-            type: object
-            properties:
-              token:
-                description: Token value
-                type: string
-                example: e76d7e5c-9375-4fac-a7e7-b19dc5302fbc
-      title: Checkout Success
-    TransactionStatus:
-      description: 'Current status of the transaction.
-
-
-        - `PENDING`: The transaction has been created but its final outcome is not known yet.
-
-        - `SUCCESSFUL`: The transaction completed successfully.
-
-        - `CANCELLED`: The transaction was cancelled or otherwise reversed before completion.
-
-        - `FAILED`: The transaction attempt did not complete successfully.
-
-        - `REFUNDED`: The transaction was refunded in full or in part.'
-      type: string
-      enum:
-      - SUCCESSFUL
-      - CANCELLED
-      - FAILED
-      - PENDING
-      - REFUNDED
-      title: Transaction Status
-    AddressLegacy:
-      description: Profile's personal address information.
+          format: float
+          example: 10.1
+        currency:
+          $ref: '#/components/schemas/Currency'
+        timestamp:
+          description: Date and time of the creation of the transaction. Response format expressed according to [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) code.
+          type: string
+          format: date-time
+          example: 2020-02-29 10:56:56.876000+00:00
+        status:
+          $ref: '#/components/schemas/TransactionStatus'
+        payment_type:
+          $ref: '#/components/schemas/PaymentType'
+        installments_count:
+          description: Current number of the installment for deferred payments.
+          type: integer
+          minimum: 1
+      title: Transaction Base
+    TransactionCheckoutInfo:
+      description: Checkout-specific fields associated with a transaction.
       type: object
       properties:
-        city:
-          description: City name from the address.
+        merchant_code:
+          description: Unique code of the registered merchant to whom the payment is made.
           type: string
-          example: Berlin
-        country:
-          description: Two letter country code formatted according to [ISO3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2).
+          example: MH4H92C7
+        vat_amount:
+          description: Amount of the applicable VAT (out of the total transaction amount).
+          type: number
+          format: float
+          example: 6
+        tip_amount:
+          description: Amount of the tip (out of the total transaction amount).
+          type: number
+          format: float
+          example: 3
+        entry_mode:
+          $ref: '#/components/schemas/EntryMode'
+        auth_code:
+          description: Authorization code for the transaction sent by the payment card issuer or bank. Applicable only to card payments.
           type: string
-          example: DE
-        line_1:
-          description: First line of the address with details of the street name and number.
-          type: string
-          example: Sample street
-        line_2:
-          description: Second line of the address with details of the building, unit, apartment, and floor numbers.
-          type: string
-          example: ap. 5
-        postal_code:
-          description: Postal code from the address.
-          type: string
-          example: '10115'
-        state:
-          description: State name or abbreviation from the address.
-          type: string
-          example: Berlin
-      title: Address Legacy
+          example: '053201'
+      title: Transaction Checkout Info
+    Currency:
+      description: Three-letter [ISO4217](https://en.wikipedia.org/wiki/ISO_4217) code of the currency for the amount. Currently supported currency values are enumerated above.
+      type: string
+      example: EUR
+      enum:
+      - BGN
+      - BRL
+      - CHF
+      - CLP
+      - COP
+      - CZK
+      - DKK
+      - EUR
+      - GBP
+      - HRK
+      - HUF
+      - NOK
+      - PLN
+      - RON
+      - SEK
+      - USD
+      title: Currency
   securitySchemes:
     apiKey:
       description: API keys allow you easily interact with SumUp APIs. API keys are static tokens. You can create API keys from the [Dashboard](https://me.sumup.com/settings/api-keys)
