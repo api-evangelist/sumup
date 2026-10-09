@@ -1,3 +1,7 @@
+# Provenance stamped 2026-10-07 (roadmap#943): written by an API Evangelist sweep (undated — the file carries no date and git cannot supply one), not
+# harvested from the provider. `method: generated` so the economics campaign may replace it with a
+# dated, verbatim transcription; every figure below is unverified until it does.
+method: generated
 name: SumUp Plans and Pricing
 description: SumUp offers pay-as-you-go transaction pricing with no monthly fees on
   the standard plan, plus optional subscription plans for POS with Connect that reduce
@@ -66,3 +70,39 @@ notes:
     with merchant account registration at no additional cost.
   - Test/sandbox API access is free and does not require a paid plan.
   - OAuth 2.0 and API key authentication are available to all registered developers.
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models: []
+  units: []
+  plans:
+  - name: Standard (Pay-As-You-Go)
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods: []
+  - name: POS with Connect Plus
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods: []
+  - name: POS with Connect Pro
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods: []
+  - name: SumUp One (UK/EU)
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods: []
+  - name: Custom / Enterprise
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods: []
