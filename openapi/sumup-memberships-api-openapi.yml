@@ -146,15 +146,60 @@ paths:
       x-scopes: []
 components:
   schemas:
-    MembershipStatus:
-      description: The status of the membership.
+    ResourceType:
+      description: 'The type of the membership resource.
+
+        Possible values are:
+
+        * `merchant` - merchant account(s)
+
+        * `organization` - organization(s)'
       type: string
-      enum:
-      - accepted
-      - pending
-      - expired
-      - disabled
-      - unknown
+      example: merchant
+    Attributes:
+      description: Object attributes that are modifiable only by SumUp applications.
+      type: object
+      example: {}
+      additionalProperties: true
+    MembershipResource:
+      description: Information about the resource the membership is in.
+      type: object
+      properties:
+        id:
+          description: ID of the resource the membership is in.
+          type: string
+          example: M2DDT39A
+        type:
+          $ref: '#/components/schemas/ResourceType'
+        name:
+          description: Display name of the resource.
+          type: string
+          example: Acme Corp
+        logo:
+          description: Logo fo the resource.
+          type: string
+          format: uri
+          example: https://images.sumup.com/img_2x4y6z8a0b1c2d3e4f5g6h7j8k.png
+          maxLength: 256
+        created_at:
+          description: The timestamp of when the membership resource was created.
+          type: string
+          format: date-time
+          example: 2023-01-20 15:16:17+00:00
+        updated_at:
+          description: The timestamp of when the membership resource was last updated.
+          type: string
+          format: date-time
+          example: 2023-01-20 15:16:17+00:00
+        attributes:
+          $ref: '#/components/schemas/Attributes'
+      required:
+      - id
+      - type
+      - name
+      - created_at
+      - updated_at
+      title: Resource
     Problem:
       description: 'A RFC 9457 problem details object.
 
@@ -187,16 +232,6 @@ components:
       required:
       - type
       title: Problem
-    ResourceType:
-      description: 'The type of the membership resource.
-
-        Possible values are:
-
-        * `merchant` - merchant account(s)
-
-        * `organization` - organization(s)'
-      type: string
-      example: merchant
     Membership:
       description: A membership associates a user with a resource, memberships is defined by user, resource, resource type, and associated roles.
       type: object
@@ -265,56 +300,6 @@ components:
       - status
       - resource
       title: Membership
-    MembershipResource:
-      description: Information about the resource the membership is in.
-      type: object
-      properties:
-        id:
-          description: ID of the resource the membership is in.
-          type: string
-          example: M2DDT39A
-        type:
-          $ref: '#/components/schemas/ResourceType'
-        name:
-          description: Display name of the resource.
-          type: string
-          example: Acme Corp
-        logo:
-          description: Logo fo the resource.
-          type: string
-          format: uri
-          example: https://images.sumup.com/img_2x4y6z8a0b1c2d3e4f5g6h7j8k.png
-          maxLength: 256
-        created_at:
-          description: The timestamp of when the membership resource was created.
-          type: string
-          format: date-time
-          example: 2023-01-20 15:16:17+00:00
-        updated_at:
-          description: The timestamp of when the membership resource was last updated.
-          type: string
-          format: date-time
-          example: 2023-01-20 15:16:17+00:00
-        attributes:
-          $ref: '#/components/schemas/Attributes'
-      required:
-      - id
-      - type
-      - name
-      - created_at
-      - updated_at
-      title: Resource
-    Attributes:
-      description: Object attributes that are modifiable only by SumUp applications.
-      type: object
-      example: {}
-      additionalProperties: true
-    Metadata:
-      description: Set of user-defined key-value pairs attached to the object. Partial updates are not supported. When updating, always submit whole metadata. Maximum of 64 parameters are allowed in the object.
-      type: object
-      example: {}
-      additionalProperties: true
-      maxProperties: 64
     Invite:
       description: Pending invitation for membership.
       type: object
@@ -332,6 +317,21 @@ components:
       - email
       - expires_at
       title: Invite
+    Metadata:
+      description: Set of user-defined key-value pairs attached to the object. Partial updates are not supported. When updating, always submit whole metadata. Maximum of 64 parameters are allowed in the object.
+      type: object
+      example: {}
+      additionalProperties: true
+      maxProperties: 64
+    MembershipStatus:
+      description: The status of the membership.
+      type: string
+      enum:
+      - accepted
+      - pending
+      - expired
+      - disabled
+      - unknown
   securitySchemes:
     apiKey:
       description: API keys allow you easily interact with SumUp APIs. API keys are static tokens. You can create API keys from the [Dashboard](https://me.sumup.com/settings/api-keys)
