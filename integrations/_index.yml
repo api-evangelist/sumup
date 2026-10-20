@@ -85,3 +85,43 @@
     identity_note: register-name 'sumup' = sumup; no wikidata P856
   status: not-a-workflow
   arazzo: null
+- slug: sumup-emvco-approved-products-acceptance-devices
+  label: 'EMVCo (Approved Products: acceptance devices)'
+  partner_name: 'EMVCo (Approved Products: acceptance devices)'
+  category: Card acceptance type approval
+  type: register
+  channel: standard-directory
+  evidence: https://www.emvco.com/approved-products/sumup_soloul_ifm-version-1-1/
+  source: edge
+  relationship: standard-participant
+  contract_reference:
+    register: EMVCo Approved Products, Acceptance Device (emvco.com/approved-products-search)
+    standard: EMVCo
+    spec_file: null
+    role: emvco-approved-acceptance-device-vendor
+    registered_name: SumUp Limited
+    register_id: https://www.emvco.com/approved-products/sumup_soloul_ifm-version-1-1/
+    matched_domain: null
+    matched_by: register-name
+    identity_source: register-name
+    identity_note: register-name 'sumup' = sumup; no wikidata P856
+    certified_products:
+    - product: EMVCo L1 Contact IFMs
+      approval_type: L1 Contact IFMs
+      lapsed: false
+      latest_valid_to: '2030-09-09'
+    - product: EMVCo L1 Contactless PCDs
+      approval_type: L1 Contactless PCDs
+      lapsed: false
+      latest_valid_to: '2032-02-17'
+    - product: EMVCo L2 Contact Kernels
+      approval_type: L2 Contact Kernels
+      lapsed: false
+      latest_valid_to: '2030-01-26'
+    signal_note: certified_products = one entry per EMVCo acceptance-device approval TYPE (L1 contact IFM, L1 contactless
+      PCD, L2 contact kernel, contactless product, C-8 kernel, terminal ESD); lapsed = every approval of that type
+      is past its valid-to date; approval / product / version counts are never recorded or counted
+    detected_by: sweep-emv-card-terminals.py
+    detected: '2026-10-20'
+  status: not-a-workflow
+  arazzo: null
