@@ -475,3 +475,9 @@ components:
             payment_instruments: Manage customers and their payment instruments.
             user.payout-settings: View and manage your payout settings.
             user.subaccounts: View and manage the user profile details of your employee.
+x-provenance:
+  method: harvested
+  publisher: SumUp
+  source: https://raw.githubusercontent.com/sumup/sumup-openapi/refs/heads/main/openapi.json
+  note: split by refine-openapis from the provider's own published document, verified by fetch (openapi/_original/*.fetch.json);
+    stamped by stamp-openapi-provenance.py (roadmap#793)
